@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
 use App\Models\User;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Image;
 use File;
 use DB;
@@ -25,13 +25,13 @@ class UserController extends Controller
         $data = User::orderBy('id','DESC')->get();
         return view('backEnd.users.index',compact('data'));
     }
-    
+
     public function create()
     {
         $roles = Role::select('name')->get();
         return view('backEnd.users.create',compact('roles'));
     }
-    
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -40,13 +40,13 @@ class UserController extends Controller
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
-        // image with intervention 
+        // image with intervention
         $image = $request->file('image');
         $name =  time().'-'.$image->getClientOriginalName();
         $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
         $name = strtolower(preg_replace('/\s+/', '-', $name));
         $uploadpath = 'public/uploads/users/';
-        $imageUrl = $uploadpath.$name; 
+        $imageUrl = $uploadpath.$name;
         $img=Image::make($image->getRealPath());
         $img->encode('webp', 90);
         $width = 100;
@@ -60,20 +60,20 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $input['image'] = $imageUrl;
-        
+
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('users.index');
     }
-    
+
     public function edit($id)
     {
         $edit_data = User::find($id);
         $roles = Role::get();
         return view('backEnd.users.edit',compact('edit_data','roles'));
     }
-    
+
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -82,26 +82,26 @@ class UserController extends Controller
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
-        
+
         $update_data = User::find($request->hidden_id);
 
         // new password
         $input = $request->all();
-        if(!empty($input['password'])){ 
+        if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
         }else{
-            $input = Arr::except($input,array('password'));    
+            $input = Arr::except($input,array('password'));
         }
 
         // new image
         $image = $request->file('image');
         if($image){
-            // image with intervention 
+            // image with intervention
             $name =  time().'-'.$image->getClientOriginalName();
             $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
             $name = strtolower(preg_replace('/\s+/', '-', $name));
             $uploadpath = 'public/uploads/users/';
-            $imageUrl = $uploadpath.$name; 
+            $imageUrl = $uploadpath.$name;
             $img=Image::make($image->getRealPath());
             $img->encode('webp', 90);
             $width = 100;
@@ -125,7 +125,7 @@ class UserController extends Controller
         Toastr::success('Success','Data update successfully');
         return redirect()->route('users.index');
     }
- 
+
     public function inactive(Request $request)
     {
         $inactive = User::find($request->hidden_id);

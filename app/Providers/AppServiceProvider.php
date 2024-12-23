@@ -11,6 +11,7 @@ use App\Models\Contact;
 use App\Models\CreatePage;
 use App\Models\Blog;
 use App\Models\Service;
+use App\Models\HowItWork;
 use Config;
 use Session;
 
@@ -57,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
 
             $categories = Category::where('status', 1)->select('id', 'name', 'slug', 'status', 'image')->get();
             $allservices = Service::where('status', 1)->limit(6)->orderBy('id', 'DESC')->select('id', 'title', 'slug', 'status', 'image')->get();
+            $allhowitworks = HowItWork::where('status', 1)->limit(4)->get();
 
             $view->with([
                 'generalsetting' => $generalsetting,
@@ -66,6 +68,7 @@ class AppServiceProvider extends ServiceProvider
                 'pages' => $pages,
                 'recentblogs' => $recentblogs,
                 'allservices' => $allservices,
+                'allhowitworks' => $allhowitworks,
             ]);
         });
     }

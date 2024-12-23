@@ -45,7 +45,7 @@
                                         <div class="body pricing-table-rules">
                                             <ul>
                                                 @foreach ($value->pricings as $index => $price)
-                                                    <li>{{ $price->name }} ({{ $price->new_price }})</li>
+                                                    <li>{{ $price->name }} (${{ $price->new_price }})</li>
                                                 @endforeach
                                             </ul>
                                         </div>

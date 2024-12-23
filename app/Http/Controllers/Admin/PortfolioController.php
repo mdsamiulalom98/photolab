@@ -81,8 +81,8 @@ class PortfolioController extends Controller
     public function edit($id)
     {
         $edit_data = Portfolio::find($id);
-        $portfolios = PortfolioCategory::select('id', 'name')->get();
-        return view('backEnd.portfolio.edit', compact('edit_data', 'portfolios'));
+        $pcategories = PortfolioCategory::select('id', 'name')->get();
+        return view('backEnd.portfolio.edit', compact('edit_data', 'pcategories'));
     }
 
     public function update(Request $request)
@@ -105,11 +105,11 @@ class PortfolioController extends Controller
             $img->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
-            File::delete($update_data->image);
+            File::delete($update_data->image_one);
             $img->save($imageOneUrl);
-            $input['image'] = $imageOneUrl;
+            $input['image_one'] = $imageOneUrl;
         } else {
-            $input['image'] = $update_data->image;
+            $input['image_one'] = $update_data->image_one;
         }
         $imageTwo = $request->file('image_two');
         if ($imageTwo) {
@@ -127,11 +127,11 @@ class PortfolioController extends Controller
             $img->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
-            File::delete($update_data->image);
+            File::delete($update_data->image_two);
             $img->save($imageTwoUrl);
-            $input['image'] = $imageTwoUrl;
+            $input['image_two'] = $imageTwoUrl;
         } else {
-            $input['image'] = $update_data->image;
+            $input['image_two'] = $update_data->image_two;
         }
         $input['status'] = $request->status ? 1 : 0;
         $update_data->update($input);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Counter;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Image;
 use File;
 use DB;
@@ -23,11 +23,11 @@ class CounterController extends Controller
         $show_data = Counter::orderBy('id','DESC')->get();
         return view('backEnd.counter.index',compact('show_data'));
     }
-    
+
     public function create(){
         return view('backEnd.counter.create');
     }
-    
+
     public function store(Request $request){
         $this->validate($request, [
             'icon' => 'required',
@@ -38,12 +38,12 @@ class CounterController extends Controller
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('counter.index');
     }
-    
+
     public function edit($id){
         $edit_data = Counter::find($id);
         return view('backEnd.counter.edit',compact('edit_data'));
     }
-    
+
     public function update(Request $request){
         $this->validate($request, [
             'icon' => 'required',
@@ -57,7 +57,7 @@ class CounterController extends Controller
         Toastr::success('Success','Data update successfully');
         return redirect()->route('counter.index');
     }
- 
+
     public function inactive(Request $request)
     {
         $inactive = Counter::find($request->hidden_id);

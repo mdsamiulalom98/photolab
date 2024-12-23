@@ -10,7 +10,8 @@
     <link rel="shortcut icon" href="{{ asset($generalsetting->favicon) }}" alt="Websolution IT" />
     <meta name="author" content="Websolution IT" />
     <link rel="canonical" href="" />
-    @stack('seo') @stack('css')
+    @stack('seo')
+    @stack('css')
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/animate.css') }}" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/all.min.css') }}" />
@@ -18,8 +19,8 @@
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/owl.theme.default.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/') }}/css/twentytwenty.css" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.0') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=1.0.0') }}" />
     <script src="{{ asset('public/frontEnd/js/jquery-3.7.1.min.js') }}"></script>
 
 </head>
@@ -70,11 +71,16 @@
                                 <ul>
                                     <li><a href="{{ route('home') }}">Home</a></li>
                                     <li><a href="{{ route('about_us') }}">About Us</a></li>
-                                    <li>
-                                        <a type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">Services</a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li class="dropdown-wrapper">
+                                        <a class="">Services</a>
+                                        <ul class="custom-dropdown-menu">
                                             @foreach ($allservices as $key => $value)
-                                            <li><a class="dropdown-item" href="{{ route('service.details', $value->slug) }}">{{ $value->title }}</a></li>
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('service.details', $value->slug) }}">
+                                                        {{ $value->title }}
+                                                    </a>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </li>
@@ -83,8 +89,12 @@
                                     <li><a href="{{ route('faqs') }}">FAQs</a></li>
                                     <li><a href="{{ route('home') }}">Get a quoat</a></li>
                                     <li><a href="{{ route('home') }}">free trial</a></li>
-                                    <li><a href="{{ route('home') }}" class="order_btn"> <i
-                                                class="fa-solid fa-shopping-cart"></i> Order</a></li>
+                                    <li>
+                                        <a href="{{ route('home') }}" class="order_btn">
+                                            <i class="fa-solid fa-shopping-cart"></i>
+                                            Order
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -115,8 +125,12 @@
             <div class="user-and-notification">
                 <div class="mobile-auth">
                     <ul>
-                        <li><a href="{{ route('home') }}/login"><i class="fa-solid fa-right-to-bracket"></i>
-                                Order</a></li>
+                        <li>
+                            <a href="{{ route('home') }}/login">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                                Order
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -124,13 +138,32 @@
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('about_us') }}">About Us</a></li>
                 <li><a href="{{ route('services') }}">Services</a></li>
+                <li>
+                    <button class="" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        Services
+                    </button>
+                    <div class="collapse" id="collapseExample">
+                        <ul>
+                            @foreach ($allservices as $key => $value)
+                                <li>
+                                    <a href="{{ route('service.details', $value->slug) }}">{{ $value->title }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="{{ route('portfolios') }}">Portfolios</a></li>
                 <li><a href="{{ route('pricings') }}">Pricing</a></li>
                 <li><a href="{{ route('faqs') }}">FAQs</a></li>
                 <li><a href="{{ route('home') }}">Get a quoat</a></li>
                 <li><a href="{{ route('home') }}">free trial</a></li>
-                <li><a href="{{ route('home') }}" class="order_btn"> <i class="fa-solid fa-shopping-cart"></i>
-                        Order</a></li>
+                <li>
+                    <a href="{{ route('home') }}" class="order_btn">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                        Order
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -223,12 +256,16 @@
                             </div>
                             <div class="widget-body">
                                 <ul>
-                                    <li><a href="">About Us</a></li>
-                                    <li><a href="">Portfolios</a></li>
+                                    <li><a href="{{ route('about_us') }}">About Us</a></li>
+                                    <li><a href="{{ route('portfolios') }}">Portfolios</a></li>
                                     <li><a href="{{ route('pricings') }}">Pricing</a></li>
                                     <li><a href="{{ route('faqs') }}">Faqs</a></li>
-                                    <li><a href="">Get A Quate</a></li>
-                                    <li><a href="">Free Trial</a></li>
+                                    <li><a href="{{ route('contact') }}">Contact Us</a></li>
+                                    {{-- <li><a href="">Get A Quate</a></li>
+                                    <li><a href="">Free Trial</a></li> --}}
+                                    @foreach ($pages as $page)
+                                        <li><a href="{{ route('page', $page->slug) }}">{{ $page->name }}</a></li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -251,10 +288,25 @@
     <script src="{{ asset('public/frontEnd/js/popper.min.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('public/frontEnd/js/jquery.twentytwenty.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('public/frontEnd/js/jquery.event.move.js') }}"></script>
+    <script src="{{ asset('public/frontEnd/js/jquery.twentytwenty.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/script.js') }}"></script>
+    <script>
+        /*-----------------------------
+                                    -------  twentytwenty  --------
+                                    ------------------------------*/
+        $(window).on('load', function() {
+            $(".portfolio-images").twentytwenty({
+                before_label: '',
+                after_label: '',
+                move_slider_on_hover: true,
+                move_with_handle_only: true,
+                click_to_move: true
+            });
+        });
+    </script>
     @stack('script')
     <script>
         $(".toggle").on("click", function(event) {

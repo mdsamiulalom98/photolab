@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GeneralSetting;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Image;
 use File;
 use DB;
@@ -37,13 +37,13 @@ class GeneralSettingController extends Controller
             'status' => 'required',
         ]);
 
-        // image with intervention 
+        // image with intervention
         $image = $request->file('white_logo');
         $name =  time().'-'.$image->getClientOriginalName();
         $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
         $name = strtolower(preg_replace('/\s+/', '-', $name));
         $uploadpath = 'public/uploads/settings/';
-        $imageUrl = $uploadpath.$name; 
+        $imageUrl = $uploadpath.$name;
         $img=Image::make($image->getRealPath());
         $img->encode('webp', 90);
         $width = '';
@@ -58,7 +58,7 @@ class GeneralSettingController extends Controller
         $name2 = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name2);
         $name2 = strtolower(preg_replace('/\s+/', '-', $name2));
         $uploadpath2 = 'public/uploads/settings/';
-        $image2Url = $uploadpath2.$name2; 
+        $image2Url = $uploadpath2.$name2;
         $img2=Image::make($image2->getRealPath());
         $img2->encode('webp', 90);
         $width2 = '';
@@ -67,13 +67,13 @@ class GeneralSettingController extends Controller
         $img2->resize($width2, $height2);
         $img2->save($image2Url);
 
-        // image with intervention 
+        // image with intervention
         $image3 = $request->file('favicon');
         $name3 =  time().'-'.$image3->getClientOriginalName();
         $name3 = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name3);
         $name3 = strtolower(preg_replace('/\s+/', '-', $name3));
         $uploadpath3 = 'public/uploads/settings/';
-        $image3Url = $uploadpath3.$name3; 
+        $image3Url = $uploadpath3.$name3;
         $img3=Image::make($image3->getRealPath());
         $img3->encode('webp', 90);
         $width3 = '';
@@ -90,13 +90,13 @@ class GeneralSettingController extends Controller
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('settings.index');
     }
-    
+
     public function edit($id)
     {
         $edit_data = GeneralSetting::find($id);
         return view('backEnd.settings.edit',compact('edit_data'));
     }
-    
+
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -107,13 +107,13 @@ class GeneralSettingController extends Controller
         // new white logo
         $image = $request->file('white_logo');
         if($image){
-            // image with intervention 
+            // image with intervention
             $image = $request->file('white_logo');
             $name =  time().'-'.$image->getClientOriginalName();
             $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
             $name = strtolower(preg_replace('/\s+/', '-', $name));
             $uploadpath = 'public/uploads/settings/';
-            $imageUrl = $uploadpath.$name; 
+            $imageUrl = $uploadpath.$name;
             $img=Image::make($image->getRealPath());
             $img->encode('webp', 90);
             $width = '';
@@ -128,13 +128,13 @@ class GeneralSettingController extends Controller
         // new dark logo
         $image2 = $request->file('dark_logo');
         if($image2){
-            // image with intervention 
+            // image with intervention
             $image2 = $request->file('dark_logo');
             $name2 =  time().'-'.$image2->getClientOriginalName();
             $name2 = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name2);
             $name2 = strtolower(preg_replace('/\s+/', '-', $name2));
             $uploadpath2 = 'public/uploads/settings/';
-            $image2Url = $uploadpath2.$name2; 
+            $image2Url = $uploadpath2.$name2;
             $img2=Image::make($image2->getRealPath());
             $img2->encode('webp', 90);
             $width2 = '';
@@ -155,7 +155,7 @@ class GeneralSettingController extends Controller
             $name3 = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name3);
             $name3 = strtolower(preg_replace('/\s+/', '-', $name3));
             $uploadpath3 = 'public/uploads/settings/';
-            $image3Url = $uploadpath3.$name3; 
+            $image3Url = $uploadpath3.$name3;
             $img3=Image::make($image3->getRealPath());
             $img3->encode('webp', 90);
             $width3 = '';
@@ -173,7 +173,7 @@ class GeneralSettingController extends Controller
         Toastr::success('Success','Data update successfully');
         return redirect()->route('settings.index');
     }
- 
+
     public function inactive(Request $request)
     {
         $inactive = GeneralSetting::find($request->hidden_id);

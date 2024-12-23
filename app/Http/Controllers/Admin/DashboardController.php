@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Session;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Auth;
 use DB;
 
@@ -18,9 +18,9 @@ class DashboardController extends Controller
         // $this->middleware('auth')->except(['locked','unlocked']);
     }
     public function dashboard(){
-       
+
         return view('backEnd.admin.dashboard');
-        
+
     }
     public function changepassword()
     {

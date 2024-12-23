@@ -31,41 +31,45 @@
 
                             <div class="col-sm-12">
                                 <div class="mb-3">
-                                    <label for="category" class="form-label"> Category Select</label>
-                                    <select name="category" class="form-select" id="category">
+                                    <label for="category_id" class="form-label"> Category Select</label>
+                                    <select name="category_id" class="form-select" id="category_id">
                                         <option>Select a Category</option>
-                                        <option value="1">Mission</option>
-                                        <option value="2">Vission</option>
-
+                                        @foreach ($pcategories as $key => $value)
+                                        <option {{ $value->id == $edit_data->category_id ? 'selected' : '' }}  value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <!-- col-end -->
-
-                            <!-- =======start-Title======== -->
-                            <div class="form-group">
-                                <label for="title" class="my-2">Title *</label>
-                                <input type="text" id="title" name="title" class="form-control"
-                                    value="{{ $edit_data->title }}">
-                            </div>
-                            <!-- =======end-Title======== -->
-
-
-
-                            <!-- =======start-description======== -->
-                            <div class="col-sm-12 mb-3">
+                            <div class="col-sm-6 mb-3">
                                 <div class="form-group">
-                                    <label for="description" class="form-label">Description *</label>
-                                    <textarea name="description" class="summernote form-control @error('description') is-invalid @enderror" id="description"
-                                        rows="5">{{ $edit_data->description }}</textarea>
-                                    @error('description')
+                                    <label for="image_one" class="form-label">Image One *</label>
+                                    <input type="file" class="form-control @error('image_one') is-invalid @enderror "
+                                        name="image_one" value="{{ old('image_one') }}" id="image_one">
+                                    @error('image_one')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
+                                <img style="height: 60px; width: auto; margin-top: 20px" src="{{ asset($edit_data->image_one) }}" alt="">
                             </div>
-                            <!-- ========== -->
+                            <!-- col end -->
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label for="image_two" class="form-label">Image Two *</label>
+                                    <input type="file" class="form-control @error('image_two') is-invalid @enderror "
+                                        name="image_two" value="{{ old('image_two') }}" id="image_two">
+                                    @error('image_two')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <img style="height: 60px; width: auto; margin-top: 20px" src="{{ asset($edit_data->image_two) }}" alt="">
+                            </div>
+                            <!-- col end -->
+
 
                             <div class="col-sm-6 mb-3">
                                 <div class="form-group">

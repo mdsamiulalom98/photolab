@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BlogCategory;
 use App\Models\Blog;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Image;
 use File;
 use Str;
@@ -36,13 +36,13 @@ class BlogController extends Controller
             'title' => 'required',
             'status' => 'required',
         ]);
-        // image with intervention 
+        // image with intervention
         $image = $request->file('image');
         $name =  time().'-'.$image->getClientOriginalName();
         $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
         $name = strtolower(preg_replace('/\s+/', '-', $name));
         $uploadpath = 'public/uploads/blog/';
-        $imageUrl = $uploadpath.$name; 
+        $imageUrl = $uploadpath.$name;
         $img=Image::make($image->getRealPath());
         $img->encode('webp', 90);
         $width = '';
@@ -61,14 +61,14 @@ class BlogController extends Controller
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('blogs.index');
     }
-    
+
     public function edit($id)
     {
         $edit_data = Blog::find($id);
         $blogcategory = BlogCategory::where('status',1)->get();
         return view('backEnd.blog.edit',compact('edit_data','blogcategory'));
     }
-    
+
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -78,12 +78,12 @@ class BlogController extends Controller
         $input = $request->except('files');
         $image = $request->file('image');
         if($image){
-            // image with intervention 
+            // image with intervention
             $name =  time().'-'.$image->getClientOriginalName();
             $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
             $name = strtolower(preg_replace('/\s+/', '-', $name));
             $uploadpath = 'public/uploads/blog/';
-            $imageUrl = $uploadpath.$name; 
+            $imageUrl = $uploadpath.$name;
             $img=Image::make($image->getRealPath());
             $img->encode('webp', 90);
             $width = '';
@@ -106,7 +106,7 @@ class BlogController extends Controller
         Toastr::success('Success','Data update successfully');
         return redirect()->route('blogs.index');
     }
- 
+
     public function inactive(Request $request)
     {
         $inactive = Blog::find($request->hidden_id);

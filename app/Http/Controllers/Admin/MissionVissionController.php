@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MissionVission;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Image;
 use File;
 
@@ -57,7 +57,7 @@ class MissionVissionController extends Controller
         ]);
         $update_data = MissionVission::find($request->id);
         $input = $request->all();
-       
+
         $input['status'] = $request->status ? 1 : 0;
         $update_data->update($input);
 

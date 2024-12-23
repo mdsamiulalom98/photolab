@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\About;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Image;
 use File;
 
@@ -52,7 +52,7 @@ class AboutController extends Controller
         $img->save($imageUrl);
 
         $input = $request->all();
-       
+
         $input['image'] = $imageUrl;
         // dd($input);
         About::create($input);
@@ -76,12 +76,12 @@ class AboutController extends Controller
         $input = $request->all();
         $image = $request->file('image');
         if($image){
-            // image with intervention 
+            // image with intervention
             $name =  time().'-'.$image->getClientOriginalName();
             $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
             $name = strtolower(preg_replace('/\s+/', '-', $name));
             $uploadpath = 'public/uploads/about/';
-            $imageUrl = $uploadpath.$name; 
+            $imageUrl = $uploadpath.$name;
             $img=Image::make($image->getRealPath());
             $img->encode('webp', 90);
             $width = "";

@@ -14,6 +14,7 @@
     <link href="{{ asset('public/backEnd/') }}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- App css -->
     <link href="{{ asset('public/backEnd/') }}/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/all.min.css') }}" />
     <!-- icons -->
     <link href="{{ asset('public/backEnd/') }}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- toastr css -->
@@ -429,6 +430,25 @@
                                     </li>
                                     <li>
                                         <a href="{{ route('faqs.index') }}"><i data-feather="minus"></i> Manage</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items end -->
+                        <li>
+                            <a href="#sidebar-howitwork" data-bs-toggle="collapse">
+                                <i data-feather="book"></i>
+                                <span> How It Works </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebar-howitwork">
+                                <ul class="nav-second-level">
+                                    <li>
+                                        <a href="{{ route('howitworks.create') }}"><i data-feather="minus"></i>
+                                            Create</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('howitworks.index') }}"><i data-feather="minus"></i> Manage</a>
                                     </li>
                                 </ul>
                             </div>

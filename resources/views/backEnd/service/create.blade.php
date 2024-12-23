@@ -98,7 +98,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="old_prices" class="form-label">Old Price </label>
-                                            <input type="number"
+                                            <input type="number" min="0.0" step="0.01"
                                                 class="form-control @error('old_prices') is-invalid @enderror"
                                                 name="old_prices[]" value="{{ old('old_prices') }}" id="old_prices" />
                                             @error('old_prices')
@@ -112,7 +112,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="new_prices" class="form-label">New Price *</label>
-                                            <input type="number"
+                                            <input type="number" min="0.0" step="0.01"
                                                 class="form-control @error('new_prices') is-invalid @enderror"
                                                 name="new_prices[]" value="{{ old('new_prices') }}" id="new_prices" />
                                             @error('new_prices')
@@ -151,9 +151,9 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="old_prices" class="form-label">Old Price </label>
-                                                <input type="number"
+                                                <input type="number" min="0.0" step="0.01"
                                                     class="form-control @error('old_prices') is-invalid @enderror"
-                                                    name="old_prices[]" value="{{ old('old_prices') }}"
+                                                    name="old_prices[]" value="{{ old('old_prices') }}" min="0.0" step="0.01"
                                                     id="old_prices" />
                                                 @error('old_prices')
                                                     <span class="invalid-feedback" role="alert">
@@ -166,9 +166,9 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="new_prices" class="form-label">New Price *</label>
-                                                <input type="number"
+                                                <input type="number" min="0.0" step="0.01"
                                                     class="form-control @error('new_prices') is-invalid @enderror"
-                                                    name="new_prices[]" value="{{ old('new_prices') }}"
+                                                    name="new_prices[]" value="{{ old('new_prices') }}" min="0.0" step="0.01"
                                                     id="new_prices" />
                                                 @error('new_prices')
                                                     <span class="invalid-feedback" role="alert">

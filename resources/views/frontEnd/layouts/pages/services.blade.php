@@ -54,30 +54,18 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="work-process">
-                        <div class="wrok-process-item step-up">
-                            <i class="fa-regular fa-envelope"></i>
-                            <h3>Request Quote</h3>
-                            <p>Get a quote in your inbox within 45 minutes.</p>
-                        </div>
-                        <!-- wrok-process-item -->
-                        <div class="wrok-process-item step-down">
-                            <i class="fa-solid fa-cart-plus"></i>
-                            <h3>Place Order</h3>
-                            <p>Get a quote in your inbox within 45 minutes.</p>
-                        </div>
-                        <!-- wrok-process-item -->
-                        <div class="wrok-process-item  step-up">
-                            <i class="fa-solid fa-dollar-sign"></i>
-                            <h3>Pay your bill</h3>
-                            <p>Get a quote in your inbox within 45 minutes.</p>
-                        </div>
-                        <!-- wrok-process-item -->
-                        <div class="wrok-process-item">
-                            <i class="fa-solid fa-download"></i>
-                            <h3>Download File</h3>
-                            <p>Get a quote in your inbox within 45 minutes.</p>
-                        </div>
-                        <!-- wrok-process-item -->
+                        @php
+                            $lastKey = $allhowitworks->keys()->last(); // Get the last index/key of the collection
+                        @endphp
+                        @foreach ($allhowitworks as $key => $value)
+                            <div
+                                class="wrok-process-item {{ $key % 2 == 0 ? 'step-up' : ($key == $lastKey ? 'final-step' : 'step-down') }}">
+                                <i class="{{ $value->icon }}"></i>
+                                <h3>{{ $value->name }}</h3>
+                                <p>{{ $value->description }}</p>
+                            </div>
+                            <!-- wrok-process-item -->
+                        @endforeach
                     </div>
                 </div>
             </div>

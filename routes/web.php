@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\MissionVissionController;
 use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Admin\PortfolioCategoryController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\HowItWorkController;
 
 Auth::routes();
 
@@ -40,7 +41,6 @@ Route::get('/cc', function () {
     return "Cleared!";
 });
 
-
 Route::group(['namespace' => 'Frontend', 'middleware' => ['check_refer']], function () {
     Route::get('/', [FrontendController::class, 'index'])->name('home');
     Route::get('about-us', [FrontendController::class, 'about_us'])->name('about_us');
@@ -51,6 +51,8 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['check_refer']], funct
     Route::get('service-details/{slug}', [FrontendController::class, 'service_details'])->name('service.details');
     Route::get('faqs', [FrontendController::class, 'faqs'])->name('faqs');
     Route::get('pricing', [FrontendController::class, 'pricings'])->name('pricings');
+    Route::get('contact', [FrontendController::class, 'contact'])->name('contact');
+    Route::get('page/{slug}', [FrontendController::class, 'page'])->name('page');
 });
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['customer', 'ipcheck', 'check_refer']], function () {
@@ -289,6 +291,17 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('faq/inactive', [FaqController::class, 'inactive'])->name('faqs.inactive');
     Route::post('faq/active', [FaqController::class, 'active'])->name('faqs.active');
     Route::post('faq/destroy', [FaqController::class, 'destroy'])->name('faqs.destroy');
+
+    // faq routes
+    Route::get('howitwork/manage', [HowItWorkController::class, 'index'])->name('howitworks.index');
+    Route::get('howitwork/{id}/show', [HowItWorkController::class, 'show'])->name('howitworks.show');
+    Route::get('howitwork/create', [HowItWorkController::class, 'create'])->name('howitworks.create');
+    Route::post('howitwork/save', [HowItWorkController::class, 'store'])->name('howitworks.store');
+    Route::get('howitwork/{id}/edit', [HowItWorkController::class, 'edit'])->name('howitworks.edit');
+    Route::post('howitwork/update', [HowItWorkController::class, 'update'])->name('howitworks.update');
+    Route::post('howitwork/inactive', [HowItWorkController::class, 'inactive'])->name('howitworks.inactive');
+    Route::post('howitwork/active', [HowItWorkController::class, 'active'])->name('howitworks.active');
+    Route::post('howitwork/destroy', [HowItWorkController::class, 'destroy'])->name('howitworks.destroy');
 
     // portfolio categories
     Route::get('portfolio-category/manage', [PortfolioCategoryController::class, 'index'])->name('portfolio_category.index');

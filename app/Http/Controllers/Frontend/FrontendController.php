@@ -64,6 +64,11 @@ class FrontendController extends Controller
         $brands = Brand::where('status', 1)->get();
         return view('frontEnd.layouts.pages.blogs', compact('blogs', 'brands'));
     }
+
+    public function testblade()
+    {
+        return view('frontEnd.layouts.pages.testblade');
+    }
     public function portfolios()
     {
         $pcategories = PortfolioCategory::where('status', 1)->get();
@@ -91,5 +96,14 @@ class FrontendController extends Controller
     {
         $services = Service::where(['status' => 1])->get();
         return view('frontEnd.layouts.pages.pricing', compact( 'services'));
+    }
+    public function contact()
+    {
+        return view('frontEnd.layouts.pages.contact');
+    }
+    public function page($slug)
+    {
+        $pageinfo = CreatePage::where('slug', $slug)->first();
+        return view('frontEnd.layouts.pages.morepages', compact('pageinfo'));
     }
 }

@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use DB;
 class RoleController extends Controller
 {
@@ -16,19 +16,19 @@ class RoleController extends Controller
     //      $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
     //      $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     // }
-    
+
     public function index(Request $request)
     {
         $show_data = Role::orderBy('id','DESC')->get();
         return view('backEnd.roles.index',compact('show_data'));
     }
-    
+
     public function create()
     {
         $permission = Permission::get();
         return view('backEnd.roles.create',compact('permission'));
     }
-    
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -46,14 +46,14 @@ class RoleController extends Controller
         Toastr::success('Success','Data store successfully');
         return redirect()->route('roles.index');
     }
-    
+
     public function show($id)
     {
         $role = Role::find($id);
         $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
             ->where("role_has_permissions.role_id",$id)
             ->get();
-    
+
         return view('backEnd.roles.show',compact('role','rolePermissions'));
     }
     public function edit($id)
@@ -65,7 +65,7 @@ class RoleController extends Controller
             ->all();
         return view('backEnd.roles.edit',compact('edit_data','permission','rolePermissions'));
     }
-    
+
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -79,7 +79,7 @@ class RoleController extends Controller
         $input = $request->all();
         $update_data = Role::find($request->hidden_id);
         $update_data->update($input);
-    
+
         $update_data->syncPermissions($permissionsID);
         Toastr::success('Success','Data update successfully');
         return redirect()->route('roles.index');

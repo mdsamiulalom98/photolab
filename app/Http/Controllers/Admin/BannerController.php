@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BannerCategory;
 use App\Models\Banner;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Image;
 use File;
 class BannerController extends Controller
@@ -35,8 +35,8 @@ class BannerController extends Controller
             'link' => 'required',
             'status' => 'required',
         ]);
-        
-        // image with intervention 
+
+        // image with intervention
         $file = $request->file('image');
         $name = time().$file->getClientOriginalName();
         $uploadPath = 'public/uploads/banner/';
@@ -50,14 +50,14 @@ class BannerController extends Controller
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('banners.index');
     }
-    
+
     public function edit($id)
     {
         $edit_data = Banner::find($id);
         $bcategories = BannerCategory::select('id','name')->get();
         return view('backEnd.banner.edit',compact('edit_data','bcategories'));
     }
-    
+
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -67,7 +67,7 @@ class BannerController extends Controller
         $input = $request->all();
         $image = $request->file('image');
         if($image){
-           // image with intervention 
+           // image with intervention
             $file = $request->file('image');
             $name = time().$file->getClientOriginalName();
             $uploadPath = 'public/uploads/banner/';
@@ -85,7 +85,7 @@ class BannerController extends Controller
         Toastr::success('Success','Data update successfully');
         return redirect()->route('banners.index');
     }
- 
+
     public function inactive(Request $request)
     {
         $inactive = Banner::find($request->hidden_id);

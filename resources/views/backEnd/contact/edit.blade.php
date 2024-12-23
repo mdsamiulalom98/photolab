@@ -102,6 +102,19 @@
                                 </div>
                             </div>
                             <!-- col-end -->
+                            <div class="col-sm-6">
+                                <div class="form-group mb-3">
+                                    <label for="google_map" class="form-label">Google Map</label>
+                                    <input type="text" class="form-control @error('google_map') is-invalid @enderror"
+                                        name="google_map" value="{{ old('google_map') }}" id="google_map">
+                                    @error('google_map')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <!-- col-end -->
                             <div class="col-sm-6 mb-3">
                                 <div class="form-group">
                                     <label for="status" class="d-block">Status</label>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\WhyChoose;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Image;
 use File;
 use DB;
@@ -21,11 +21,11 @@ class WhyChooseController extends controller
         $show_data = WhyChoose::orderBy('id','DESC')->get();
         return view('backEnd.whychoose.index',compact('show_data'));
     }
-    
+
     public function create(){
         return view('backEnd.whychoose.create');
     }
-    
+
     public function store(Request $request){
         $this->validate($request, [
             'icon' => 'required',
@@ -37,12 +37,12 @@ class WhyChooseController extends controller
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('whychoose.index');
     }
-    
+
     public function edit($id){
         $edit_data = WhyChoose::find($id);
         return view('backEnd.whychoose.edit',compact('edit_data'));
     }
-    
+
     public function update(Request $request){
         $this->validate($request, [
             'icon' => 'required',
@@ -57,7 +57,7 @@ class WhyChooseController extends controller
         Toastr::success('Success','Data update successfully');
         return redirect()->route('whychoose.index');
     }
- 
+
     public function inactive(Request $request)
     {
         $inactive = WhyChoose::find($request->hidden_id);
