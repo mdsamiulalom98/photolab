@@ -12,6 +12,8 @@ use App\Models\CreatePage;
 use App\Models\Blog;
 use App\Models\Service;
 use App\Models\HowItWork;
+use App\Models\OrderStatus;
+use App\Models\Message;
 use Config;
 use Session;
 
@@ -56,9 +58,14 @@ class AppServiceProvider extends ServiceProvider
                 return Blog::where('status', 1)->orderBy('id', 'DESC')->limit(2)->get();
             });
 
+            $orderstatus = Cache::remember('orderstatus', now()->addDays(7), function () {
+                return OrderStatus::where('status', 1)->get();
+            });
+
             $categories = Category::where('status', 1)->select('id', 'name', 'slug', 'status', 'image')->get();
             $allservices = Service::where('status', 1)->limit(6)->orderBy('id', 'DESC')->select('id', 'title', 'slug', 'status', 'image')->get();
             $allhowitworks = HowItWork::where('status', 1)->limit(4)->get();
+            $pending_messages = Message::where('status', 0)->whereNot('username', 'admin')->get();
 
             $view->with([
                 'generalsetting' => $generalsetting,
@@ -69,6 +76,8 @@ class AppServiceProvider extends ServiceProvider
                 'recentblogs' => $recentblogs,
                 'allservices' => $allservices,
                 'allhowitworks' => $allhowitworks,
+                'orderstatus' => $orderstatus,
+                'pending_messages' => $pending_messages,
             ]);
         });
     }

@@ -19,10 +19,9 @@
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/owl.theme.default.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/') }}/css/twentytwenty.css" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.0') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.2') }}" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=1.0.0') }}" />
     <script src="{{ asset('public/frontEnd/js/jquery-3.7.1.min.js') }}"></script>
-
 </head>
 
 <body class="gotop">
@@ -47,7 +46,7 @@
                                 @foreach ($socialicons as $social)
                                     <li><a href="{{ $social->link }}"><i class="{{ $social->icon }}"></i></a></li>
                                 @endforeach
-                                <li><a href=""><i class="fa-solid fa-user"></i> Login</a></li>
+                                <li><a href="{{ Auth::guard('member')->user() ? route('member.dashboard') : route('member.login') }}"><i class="fa-solid fa-user"></i> {{ Auth::guard('member')->user()->name ?? 'Login' }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -126,7 +125,7 @@
                 <div class="mobile-auth">
                     <ul>
                         <li>
-                            <a href="{{ route('home') }}/login">
+                            <a href="{{ route('member.login') }}">
                                 <i class="fa-solid fa-right-to-bracket"></i>
                                 Order
                             </a>
@@ -293,6 +292,8 @@
     <script src="{{ asset('public/frontEnd/js/jquery.event.move.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/jquery.twentytwenty.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/script.js') }}"></script>
+    <script src="{{asset('public/backEnd/')}}/assets/js/toastr.min.js"></script>
+        {!! Toastr::message() !!}
     <script>
         /*-----------------------------
                                     -------  twentytwenty  --------

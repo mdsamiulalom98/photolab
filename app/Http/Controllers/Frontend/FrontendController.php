@@ -81,6 +81,22 @@ class FrontendController extends Controller
         $brands = Brand::where('status', 1)->get();
         return view('frontEnd.layouts.pages.services', compact('services', 'brands'));
     }
+    public function ajax_services(Request $request)
+    {
+        $services = Service::where('title', 'LIKE', '%' . $request->name . "%")->where('status', 1)->get();
+        if (empty($request->name || !$services)) {
+            $services = [];
+        }
+        return view('frontEnd.layouts.ajax.serviceitems', compact('services'));
+    }
+    public function ajax_service_add(Request $request) {
+        $service = Service::find($request->id);
+        return response()->json([
+            'success' => $service ? true : false,
+            'service' => $service
+        ]);
+    }
+
     public function service_details($slug)
     {
         $details = Service::where('slug', $slug)->first();

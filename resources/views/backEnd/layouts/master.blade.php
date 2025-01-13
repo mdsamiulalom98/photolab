@@ -6,6 +6,7 @@
 
     <title>@yield('title') - {{ $generalsetting->name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset($generalsetting->favicon) }}" />
@@ -20,7 +21,7 @@
     <!-- toastr css -->
     <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
     <!-- custom css -->
-    <link href="{{ asset('public/backEnd/') }}/assets/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('public/backEnd/') }}/assets/css/custom.css?v=1.0.0" rel="stylesheet" type="text/css" />
     <!-- Head js -->
     @yield('css')
     <script src="{{ asset('public/backEnd/') }}/assets/js/head.js"></script>
@@ -74,6 +75,46 @@
                                     </span>
                                     Orders
                                 </h5>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown notification-list topbar-dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <i class="fe-message-square noti-icon"></i>
+                            <span class="badge bg-danger rounded-circle noti-icon-badge">{{ $pending_messages->count() }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-lg">
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h5 class="m-0">
+                                    <span class="float-end">
+                                        <a href="" class="text-dark">
+                                            <small>View All</small>
+                                        </a>
+                                    </span>
+                                    Orders
+                                </h5>
+                            </div>
+
+                            <div class="noti-scroll" data-simplebar>
+                                @foreach ($pending_messages as $pending)
+                                    <!-- item-->
+                                    <a href="{{ route('admin.orders', ['slug' => 'pending']) }}"
+                                        class="dropdown-item notify-item active">
+                                        <div class="notify-icon">
+                                            <img src="{{ asset($pending->member->image ?? '') }}"
+                                                class="img-fluid rounded-circle" alt="" />
+                                        </div>
+                                        <p class="notify-details">{{ $pending->member->name ?? ''}}
+                                        </p>
+                                        <p class="text-muted mb-0 user-msg">
+                                            <small>Message : {{ $pending->message }}</small>
+                                        </p>
+                                    </a>
+                                @endforeach
+
+                                <!-- item-->
                             </div>
                         </div>
                     </li>
@@ -149,7 +190,8 @@
 
                     <li class="dropdown d-none d-xl-block">
                         <a class="nav-link dropdown-toggle waves-effect waves-light " href="{{ route('home') }}"
-                            target="_blank"> <span class="btn btn-success waves-effect waves-light  rounded-pill"> <i data-feather="airplay"></i> Visit Site</span> </a>
+                            target="_blank"> <span class="btn btn-success waves-effect waves-light  rounded-pill"> <i
+                                    data-feather="airplay"></i> Visit Site</span> </a>
                     </li>
                 </ul>
                 <div class="clearfix"></div>
@@ -162,7 +204,8 @@
             <div class="h-100" data-simplebar>
                 <!-- User box -->
                 <div class="user-box text-center">
-                    <img src="{{ asset('public/backEnd/') }}/assets/images/users/user-1.jpg" alt="user-img" class="rounded-circle avatar-md" />
+                    <img src="{{ asset('public/backEnd/') }}/assets/images/users/user-1.jpg" alt="user-img"
+                        class="rounded-circle avatar-md" />
                     <div class="dropdown">
                         <a href="javascript: void(0);" class="text-dark dropdown-toggle h5 mt-2 mb-1 d-block"
                             data-bs-toggle="dropdown">{{ Auth::user()->name }}</a>
@@ -206,7 +249,7 @@
                 <div id="sidebar-menu">
                     <div class="main-logo">
                         <a href="{{ url('admin/dashboard') }}">
-                            <img src="{{asset($generalsetting->white_logo)}}" alt="">
+                            <img src="{{ asset($generalsetting->white_logo) }}" alt="">
                         </a>
                     </div>
                     <ul id="side-menu">
@@ -216,6 +259,58 @@
                                 <span> Dashboard </span>
                             </a>
                         </li>
+                        <li>
+                            <a href="#sidebar-createOrders" data-bs-toggle="collapse">
+                                <i data-feather="shopping-cart"></i>
+                                <span> Seller Orders </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebar-createOrders">
+                                <ul class="nav-second-level">
+                                    <li>
+                                        <a href="{{ route('admin.order.create', ['type' => 'seller']) }}"><i
+                                                data-feather="minus"></i> Seller Order</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.orders', ['slug' => 'all', 'type' => 'seller']) }}"><i
+                                                data-feather="minus"></i> All Order</a>
+                                    </li>
+                                    @foreach ($orderstatus as $value)
+                                        <li>
+                                            <a
+                                                href="{{ route('admin.orders', ['slug' => $value->slug, 'type' => 'seller']) }}"><i
+                                                    data-feather="minus"></i>{{ $value->name }}</a>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items -->
+                        <li>
+                            <a href="#sidebar-orders" data-bs-toggle="collapse">
+                                <i data-feather="shopping-cart"></i>
+                                <span> Buyer Orders </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebar-orders">
+                                <ul class="nav-second-level">
+
+                                    <li>
+                                        <a href="{{ route('admin.orders', ['slug' => 'all', 'type' => 'buyer']) }}"><i
+                                                data-feather="minus"></i> All Order</a>
+                                    </li>
+                                    @foreach ($orderstatus as $value)
+                                        <li>
+                                            <a
+                                                href="{{ route('admin.orders', ['slug' => $value->slug, 'type' => 'buyer']) }}"><i
+                                                    data-feather="minus"></i>{{ $value->name }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items -->
                         <li>
                             <a href="#sidebar-category" data-bs-toggle="collapse">
                                 <i data-feather="airplay"></i>
@@ -271,7 +366,8 @@
                             <div class="collapse" id="siebar-slider">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="{{ route('slider.create') }}"><i data-feather="minus"></i> Create</a>
+                                        <a href="{{ route('slider.create') }}"><i data-feather="minus"></i>
+                                            Create</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('slider.index') }}"><i data-feather="minus"></i>
@@ -290,7 +386,8 @@
                             <div class="collapse" id="siebar-service">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="{{ route('service.create') }}"><i data-feather="minus"></i> Create</a>
+                                        <a href="{{ route('service.create') }}"><i data-feather="minus"></i>
+                                            Create</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('service.index') }}"><i data-feather="minus"></i>
@@ -309,7 +406,8 @@
                             <div class="collapse" id="siebar-whychoose">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="{{ route('whychoose.create') }}"><i data-feather="minus"></i> Create</a>
+                                        <a href="{{ route('whychoose.create') }}"><i data-feather="minus"></i>
+                                            Create</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('whychoose.index') }}"><i data-feather="minus"></i>
@@ -328,7 +426,8 @@
                             <div class="collapse" id="siebar-counter">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="{{ route('counter.create') }}"><i data-feather="minus"></i> Create</a>
+                                        <a href="{{ route('counter.create') }}"><i data-feather="minus"></i>
+                                            Create</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('counter.index') }}"><i data-feather="minus"></i>
@@ -347,7 +446,8 @@
                             <div class="collapse" id="siebar-company">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="{{ route('abouts.index') }}"><i data-feather="minus"></i> About Us</a>
+                                        <a href="{{ route('abouts.index') }}"><i data-feather="minus"></i> About
+                                            Us</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('missionvission.index') }}"><i data-feather="minus"></i>
@@ -366,8 +466,8 @@
                             <div class="collapse" id="siebar-blog">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="{{ route('blog_category.index') }}"><i
-                                                data-feather="minus"></i> Blog Category</a>
+                                        <a href="{{ route('blog_category.index') }}"><i data-feather="minus"></i>
+                                            Blog Category</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('blogs.index') }}"><i data-feather="minus"></i>
@@ -410,7 +510,8 @@
                                             Create</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('testimonials.index') }}"><i data-feather="minus"></i> Manage</a>
+                                        <a href="{{ route('testimonials.index') }}"><i data-feather="minus"></i>
+                                            Manage</a>
                                     </li>
                                 </ul>
                             </div>
@@ -448,7 +549,8 @@
                                             Create</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('howitworks.index') }}"><i data-feather="minus"></i> Manage</a>
+                                        <a href="{{ route('howitworks.index') }}"><i data-feather="minus"></i>
+                                            Manage</a>
                                     </li>
                                 </ul>
                             </div>
@@ -467,7 +569,8 @@
                                             Portfolio</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('portfolio_category.index') }}"><i data-feather="minus"></i> Portfolio Category</a>
+                                        <a href="{{ route('portfolio_category.index') }}"><i
+                                                data-feather="minus"></i> Portfolio Category</a>
                                     </li>
                                 </ul>
                             </div>
@@ -483,8 +586,8 @@
                             <div class="collapse" id="siebar-banner">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="{{ route('banner_category.index') }}"><i
-                                                data-feather="minus"></i> Banner Category</a>
+                                        <a href="{{ route('banner_category.index') }}"><i data-feather="minus"></i>
+                                            Banner Category</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('banners.index') }}"><i data-feather="minus"></i>
@@ -517,7 +620,8 @@
                                     </li>
 
                                     <li>
-                                        <a href="{{ route('pages.index') }}"><i data-feather="minus"></i> Create Page</a>
+                                        <a href="{{ route('pages.index') }}"><i data-feather="minus"></i> Create
+                                            Page</a>
                                     </li>
                                 </ul>
                             </div>

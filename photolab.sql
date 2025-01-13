@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 21, 2024 at 06:32 AM
+-- Generation Time: Jan 04, 2025 at 11:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -210,6 +210,7 @@ CREATE TABLE `contacts` (
   `email` varchar(50) NOT NULL,
   `address` varchar(255) NOT NULL,
   `whatsapp` varchar(255) DEFAULT NULL,
+  `google_map` text DEFAULT NULL,
   `status` tinyint(4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -219,8 +220,8 @@ CREATE TABLE `contacts` (
 -- Dumping data for table `contacts`
 --
 
-INSERT INTO `contacts` (`id`, `hotline`, `hotmail`, `phone`, `email`, `address`, `whatsapp`, `status`, `created_at`, `updated_at`) VALUES
-(1, '01711991963', 'photolab365@gmail.com', '01711991963', 'photolab365@gmail.com', 'Mohammadpur,Dhaka-1207', '01711991963', 1, '2023-01-22 10:35:29', '2024-12-20 16:06:30');
+INSERT INTO `contacts` (`id`, `hotline`, `hotmail`, `phone`, `email`, `address`, `whatsapp`, `google_map`, `status`, `created_at`, `updated_at`) VALUES
+(1, '01711991963', 'photolab365@gmail.com', '01711991963', 'photolab365@gmail.com', 'Mohammadpur,Dhaka-1207', '01711991963', NULL, 1, '2023-01-22 10:35:29', '2024-12-20 16:06:30');
 
 -- --------------------------------------------------------
 
@@ -270,12 +271,9 @@ CREATE TABLE `create_pages` (
 --
 
 INSERT INTO `create_pages` (`id`, `name`, `slug`, `title`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(5, 'Refund & Return Policy', 'refund-&-return-policy', 'Refund & Return Policy', '<ul style=\"padding: 0px 0px 0px 20px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border: 0px; list-style: none; color: rgb(33, 37, 41); font-family: Jost, sans-serif;\"><li style=\"margin: 0px; padding: 0px; border: 0px; list-style: initial;\">প্রোডাক্ট সফলভাবে ডেলিভারি করা হলে কোনো প্রকার রিফান্ড প্রযোজ্য হবে না।</li><li style=\"margin: 0px; padding: 0px; border: 0px; list-style: initial;\">প্রোডাক্ট সফলভাবে ডেলিভারি করতে না পারলে অবশ্যই ক্রেতা উক্ত পেমেন্ট ৫ মিনিট থেকে সর্বোচ্চ ১২ ঘন্টার ভিতর রিফান্ড পাবে।</li><li style=\"margin: 0px; padding: 0px; border: 0px; list-style: initial;\">প্রোডাক্ট সফলভাবে ডেলিভারি করতে না পারলে ক্রেতা চাইলে উক্ত পেমেন্টের সমপরিমাণ মূল্যের অন্য প্রোডাক্ট অর্ডার করতে পারবে।</li></ul>', 1, '2023-10-04 07:03:42', '2024-05-13 19:30:47'),
-(6, 'Terms & Conditions', 'terms-&-conditions', 'Terms & Conditions', '<div>শপিং ঘরে আপনাকে স্বাগতম<span style=\"background-color: var(--ct-card-bg); font-size: var(--ct-body-font-size); font-weight: var(--ct-body-font-weight); text-align: var(--ct-body-text-align);\">!</span></div>', 1, '2023-10-04 07:04:05', '2024-05-13 18:57:37'),
-(7, 'Privacy Policy', 'privacy-policy', 'Privacy Policy', '<div>শপিং ঘোর জন্য গোপনীয়তা নীতি</div><div><br></div><div>গোপনীয়তা নীতি</div><div>শেষ আপডেট: মে 08, 2024</div><div><br></div><div>এই গোপনীয়তা নীতি আপনার তথ্য সংগ্রহ, ব্যবহার এবং প্রকাশের বিষয়ে আমাদের নীতি এবং পদ্ধতিগুলি বর্ণনা করে যখন আপনি পরিষেবাটি ব্যবহার করেন এবং আপনাকে আপনার গোপনীয়তার অধিকার এবং আইন আপনাকে কীভাবে সুরক্ষা দেয় সে সম্পর্কে আপনাকে বলে৷</div><div><br></div><div>আমরা পরিষেবা প্রদান এবং উন্নত করতে আপনার ব্যক্তিগত ডেটা ব্যবহার করি। পরিষেবা ব্যবহার করে, আপনি এই গোপনীয়তা নীতি অনুসারে তথ্য সংগ্রহ এবং ব্যবহারে সম্মত হন। এই গোপনীয়তা নীতিটি গোপনীয়তা নীতি জেনারেটরের সাহায্যে তৈরি করা হয়েছে।</div><div><br></div><div>ব্যাখ্যা এবং সংজ্ঞা</div><div>ব্যাখ্যা</div><div>যে শব্দগুলির প্রাথমিক অক্ষর বড় আকারের হয় সেগুলির অর্থ নিম্নলিখিত শর্তে সংজ্ঞায়িত করা হয়েছে। একবচনে বা বহুবচনে প্রদর্শিত হোক না কেন নিম্নলিখিত সংজ্ঞাগুলির একই অর্থ থাকবে।</div><div><br></div><div>সংজ্ঞা</div><div>এই গোপনীয়তা নীতির উদ্দেশ্যে:</div><div><br></div><div>অ্যাকাউন্ট মানে আমাদের পরিষেবা বা আমাদের পরিষেবার অংশগুলি অ্যাক্সেস করার জন্য আপনার জন্য তৈরি করা একটি অনন্য অ্যাকাউন্ট।</div><div><br></div><div>অ্যাফিলিয়েট মানে এমন একটি সত্তা যা নিয়ন্ত্রণ করে, নিয়ন্ত্রিত হয় বা একটি পক্ষের সাথে সাধারণ নিয়ন্ত্রণে থাকে, যেখানে \"নিয়ন্ত্রণ\" মানে 50% বা তার বেশি শেয়ারের মালিকানা, ইক্যুইটি সুদ বা অন্যান্য সিকিউরিটিজের পরিচালক বা অন্য ব্যবস্থাপনা কর্তৃপক্ষের নির্বাচনের জন্য ভোট দেওয়ার অধিকার .</div><div><br></div><div>কোম্পানি (এই চুক্তিতে \"কোম্পানি\", \"আমরা\", \"আমাদের\" বা \"আমাদের\" হিসাবে উল্লেখ করা হয়েছে) কেনাকাটা ঘোরকে বোঝায়।</div><div><br></div><div>কুকিগুলি হল ছোট ফাইল যা আপনার কম্পিউটার, মোবাইল ডিভাইস বা অন্য কোনো ডিভাইসে ওয়েবসাইট দ্বারা স্থাপন করা হয়, যার অনেকগুলি ব্যবহারের মধ্যে সেই ওয়েবসাইটে আপনার ব্রাউজিং ইতিহাসের বিবরণ রয়েছে।</div><div><br></div><div>দেশ বলতে: বাংলাদেশ</div><div><div>ডিভাইস মানে যে কোনো ডিভাইস যা পরিষেবা অ্যাক্সেস করতে পারে যেমন একটি কম্পিউটার, একটি সেলফোন বা একটি ডিজিটাল ট্যাবলেট।</div><div><br></div><div>ব্যক্তিগত ডেটা হল এমন কোনো তথ্য যা একজন চিহ্নিত বা শনাক্তযোগ্য ব্যক্তির সাথে সম্পর্কিত।</div><div><br></div><div>পরিষেবা ওয়েবসাইট বোঝায়.</div><div><br></div><div>পরিষেবা প্রদানকারী মানে যে কোনও প্রাকৃতিক বা আইনি ব্যক্তি যিনি কোম্পানির পক্ষে ডেটা প্রক্রিয়া করেন। এটি পরিষেবার সুবিধার্থে, কোম্পানির পক্ষ থেকে পরিষেবা প্রদান করার জন্য, পরিষেবা সম্পর্কিত পরিষেবাগুলি সম্পাদন করতে বা পরিষেবাটি কীভাবে ব্যবহার করা হয় তা বিশ্লেষণে কোম্পানিকে সহায়তা করার জন্য কোম্পানির দ্বারা নিযুক্ত তৃতীয় পক্ষের কোম্পানি বা ব্যক্তিদের বোঝায়।</div><div><br></div><div>ব্যবহারের ডেটা স্বয়ংক্রিয়ভাবে সংগৃহীত ডেটা বোঝায়, হয় পরিষেবা ব্যবহার করে বা পরিষেবা পরিকাঠামো থেকে তৈরি হয় (উদাহরণস্বরূপ, একটি পৃষ্ঠা দেখার সময়কাল)।</div><div><br></div><div>ওয়েবসাইট শপিংঘর বোঝায়, shoppingghor.com থেকে অ্যাক্সেসযোগ্য</div><div><br></div><div>আপনি মানে সেই ব্যক্তি যিনি পরিষেবাটি অ্যাক্সেস করছেন বা ব্যবহার করছেন, বা কোম্পানি, বা অন্য আইনি সত্তা যার পক্ষে এই ধরনের ব্যক্তি পরিষেবাটি অ্যাক্সেস করছে বা ব্যবহার করছে, যেমন প্রযোজ্য।</div><div><br></div><div>আপনার ব্যক্তিগত ডেটা সংগ্রহ এবং ব্যবহার করা</div><div>সংগৃহীত ডেটার ধরন</div><div>ব্যক্তিগত তথ্য</div><div>আমাদের পরিষেবা ব্যবহার করার সময়, আমরা আপনাকে কিছু ব্যক্তিগতভাবে শনাক্তযোগ্য তথ্য প্রদান করতে বলতে পারি যা আপনার সাথে যোগাযোগ করতে বা সনাক্ত করতে ব্যবহার করা যেতে পারে। ব্যক্তিগতভাবে সনাক্তযোগ্য তথ্য অন্তর্ভুক্ত হতে পারে, কিন্তু সীমাবদ্ধ নয়:</div><div><br></div><div>ইমেইল ঠিকানা</div><div><br></div><div>ফোন নম্বর</div><div><br></div><div>ঠিকানা, রাজ্য, প্রদেশ, জিপ/পোস্টাল কোড, শহর</div><div><br></div><div>ব্যবহারের ডেটা</div><div><br></div><div>ব্যবহারের ডেটা</div><div>পরিষেবা ব্যবহার করার সময় ব্যবহারের ডেটা স্বয়ংক্রিয়ভাবে সংগ্রহ করা হয়।</div><div><div>ব্যবহারের ডেটাতে আপনার ডিভাইসের ইন্টারনেট প্রোটোকল ঠিকানা (যেমন আইপি ঠিকানা), ব্রাউজারের ধরন, ব্রাউজারের সংস্করণ, আপনি যে আমাদের পরিষেবার পৃষ্ঠাগুলি দেখেন, আপনার দেখার সময় এবং তারিখ, সেই পৃষ্ঠাগুলিতে ব্যয় করা সময়, অনন্য ডিভাইসের মতো তথ্য অন্তর্ভুক্ত থাকতে পারে। শনাক্তকারী এবং অন্যান্য ডায়গনিস্টিক ডেটা।</div><div><br></div><div>যখন আপনি একটি মোবাইল ডিভাইসের মাধ্যমে বা এর মাধ্যমে পরিষেবাটি অ্যাক্সেস করেন, তখন আমরা স্বয়ংক্রিয়ভাবে কিছু তথ্য সংগ্রহ করতে পারি, যার মধ্যে আপনি যে ধরনের মোবাইল ডিভাইস ব্যবহার করেন, আপনার মোবাইল ডিভাইসের অনন্য আইডি, আপনার মোবাইল ডিভাইসের আইপি ঠিকানা, আপনার মোবাইল সহ, কিন্তু সীমাবদ্ধ নয় অপারেটিং সিস্টেম, আপনি যে ধরনের মোবাইল ইন্টারনেট ব্রাউজার ব্যবহার করেন, অনন্য ডিভাইস শনাক্তকারী এবং অন্যান্য ডায়াগনস্টিক ডেটা।</div><div><br></div><div>আপনি যখনই আমাদের পরিষেবাতে যান বা যখন আপনি কোনও মোবাইল ডিভাইসের মাধ্যমে বা মাধ্যমে পরিষেবাটি অ্যাক্সেস করেন তখন আমরা আপনার ব্রাউজার যে তথ্য পাঠায় তা সংগ্রহ করতে পারি।</div><div><br></div><div>ট্র্যাকিং প্রযুক্তি এবং কুকিজ</div><div>আমরা আমাদের পরিষেবাতে কার্যকলাপ ট্র্যাক করতে এবং নির্দিষ্ট তথ্য সংরক্ষণ করতে কুকিজ এবং অনুরূপ ট্র্যাকিং প্রযুক্তি ব্যবহার করি। ট্র্যাকিং প্রযুক্তিগুলি হল বীকন, ট্যাগ এবং স্ক্রিপ্টগুলি তথ্য সংগ্রহ ও ট্র্যাক করতে এবং আমাদের পরিষেবার উন্নতি ও বিশ্লেষণ করতে। আমরা যে প্রযুক্তিগুলি ব্যবহার করি তাতে অন্তর্ভুক্ত থাকতে পারে:</div><div><br></div><div>কুকিজ বা ব্রাউজার কুকিজ। কুকি হল আপনার ডিভাইসে রাখা একটি ছোট ফাইল। আপনি আপনার ব্রাউজারকে সমস্ত কুকি প্রত্যাখ্যান করতে বা কখন একটি কুকি পাঠানো হচ্ছে তা নির্দেশ করতে পারেন। যাইহোক, আপনি যদি কুকিজ গ্রহণ না করেন, আপনি আমাদের পরিষেবার কিছু অংশ ব্যবহার করতে পারবেন না। যদি না আপনি আপনার ব্রাউজার সেটিং সামঞ্জস্য করেন যাতে এটি কুকিজ প্রত্যাখ্যান করে, আমাদের পরিষেবা কুকিজ ব্যবহার করতে পারে।</div><div>ওয়েব বীকন। আমাদের পরিষেবার কিছু বিভাগ এবং আমাদের ইমেলগুলিতে ওয়েব বীকন নামে পরিচিত ছোট ইলেকট্রনিক ফাইল থাকতে পারে (এছাড়াও পরিষ্কার gifs, পিক্সেল ট্যাগ এবং একক-পিক্সেল gif হিসাবে উল্লেখ করা হয়) যা কোম্পানিকে অনুমতি দেয়, উদাহরণস্বরূপ, সেই সমস্ত পৃষ্ঠাগুলি পরিদর্শন করা ব্যবহারকারীদের গণনা করার জন্য অথবা একটি ইমেল এবং অন্যান্য সম্পর্কিত ওয়েবসাইটের পরিসংখ্যানের জন্য (উদাহরণস্বরূপ, একটি নির্দিষ্ট বিভাগের জনপ্রিয়তা রেকর্ড করা এবং সিস্টেম এবং সার্ভারের অখণ্ডতা যাচাই করা)।</div><div>কুকিজ \"অস্থির\" বা \"সেশন\" কুকি হতে পারে। আপনি অফলাইনে গেলে আপনার ব্যক্তিগত কম্পিউটার বা মোবাইল ডিভাইসে স্থায়ী কুকিজ থাকে, যখন আপনি আপনার ওয়েব ব্রাউজার বন্ধ করার সাথে সাথে সেশন কুকিজ মুছে ফেলা হয়। আপনি TermsFeed ওয়েবসাইট নিবন্ধে কুকিজ সম্পর্কে আরও জানতে পারেন।</div><div><br></div><div>আমরা সেশন এবং ক্রমাগত কুকি উভয়ই ব্যবহার করি নিচের উদ্দেশ্যগুলির জন্য:</div><div><br></div><div>প্রয়োজনীয়/প্রয়োজনীয় কুকিজ</div><div><br></div><div>প্রকার: সেশন কুকিজ</div><div><div>দ্বারা পরিচালিত: আমাদের</div><div><br></div><div>উদ্দেশ্য: এই কুকিগুলি আপনাকে ওয়েবসাইটের মাধ্যমে উপলব্ধ পরিষেবাগুলি সরবরাহ করতে এবং এর কিছু বৈশিষ্ট্য ব্যবহার করতে সক্ষম করার জন্য অপরিহার্য৷ তারা ব্যবহারকারীদের প্রমাণীকরণ করতে এবং ব্যবহারকারীর অ্যাকাউন্টের প্রতারণামূলক ব্যবহার প্রতিরোধ করতে সহায়তা করে। এই কুকিজ ব্যতীত, আপনি যে পরিষেবাগুলির জন্য অনুরোধ করেছেন তা প্রদান করা যাবে না এবং আমরা কেবলমাত্র সেই পরিষেবাগুলি আপনাকে প্রদান করার জন্য এই কুকিগুলি ব্যবহার করি।</div><div><br></div><div>কুকিজ নীতি / বিজ্ঞপ্তি গ্রহণ কুকিজ</div><div><br></div><div>প্রকার: স্থায়ী কুকিজ</div><div><br></div><div>দ্বারা পরিচালিত: আমাদের</div><div><br></div><div>উদ্দেশ্য: এই কুকিগুলি চিহ্নিত করে যে ব্যবহারকারীরা ওয়েবসাইটে কুকির ব্যবহার স্বীকার করেছেন কিনা৷</div><div><br></div><div>কার্যকারিতা কুকিজ</div><div><br></div><div>প্রকার: স্থায়ী কুকিজ</div><div><br></div><div>দ্বারা পরিচালিত: আমাদের</div><div><br></div><div>উদ্দেশ্য: এই কুকিগুলি আমাদেরকে আপনি ওয়েবসাইট ব্যবহার করার সময় আপনার করা পছন্দগুলি মনে রাখার অনুমতি দেয়, যেমন আপনার লগইন বিবরণ বা ভাষা পছন্দ মনে রাখা। এই কুকিগুলির উদ্দেশ্য হল আপনাকে আরও ব্যক্তিগত অভিজ্ঞতা প্রদান করা এবং প্রতিবার আপনি ওয়েবসাইটটি ব্যবহার করার সময় আপনার পছন্দগুলি পুনরায় প্রবেশ করা এড়াতে।</div><div><br></div><div>আমরা যে কুকিগুলি ব্যবহার করি এবং কুকি সংক্রান্ত আপনার পছন্দগুলি সম্পর্কে আরও তথ্যের জন্য, অনুগ্রহ করে আমাদের কুকিজ নীতি বা আমাদের গোপনীয়তা নীতির কুকিজ বিভাগে যান৷</div><div><br></div><div>আপনার ব্যক্তিগত তথ্য ব্যবহার</div><div>কোম্পানি নিম্নলিখিত উদ্দেশ্যে ব্যক্তিগত ডেটা ব্যবহার করতে পারে:</div><div><br></div><div>আমাদের পরিষেবা প্রদান এবং বজায় রাখা, আমাদের পরিষেবার ব্যবহার নিরীক্ষণ সহ।</div><div><div>আপনার অ্যাকাউন্ট পরিচালনা করতে: পরিষেবার ব্যবহারকারী হিসাবে আপনার নিবন্ধন পরিচালনা করতে। আপনি যে ব্যক্তিগত ডেটা প্রদান করেন তা আপনাকে পরিষেবার বিভিন্ন কার্যকারিতাগুলিতে অ্যাক্সেস দিতে পারে যা একটি নিবন্ধিত ব্যবহারকারী হিসাবে আপনার কাছে উপলব্ধ।</div><div><br></div><div>একটি চুক্তি সম্পাদনের জন্য: পরিষেবার মাধ্যমে আপনি যে পণ্য, আইটেম বা পরিষেবাগুলি কিনেছেন বা আমাদের সাথে অন্য কোনও চুক্তি করেছেন তার জন্য ক্রয় চুক্তির বিকাশ, সম্মতি এবং উদ্যোগ।</div><div><br></div><div>আপনার সাথে যোগাযোগ করতে: ইমেল, টেলিফোন কল, এসএমএস বা অন্যান্য সমতুল্য বৈদ্যুতিন যোগাযোগের মাধ্যমে আপনার সাথে যোগাযোগ করতে, যেমন নিরাপত্তা আপডেট সহ কার্যকারিতা, পণ্য বা চুক্তিবদ্ধ পরিষেবাগুলির সাথে সম্পর্কিত আপডেট বা তথ্যমূলক যোগাযোগ সম্পর্কিত মোবাইল অ্যাপ্লিকেশনের পুশ বিজ্ঞপ্তি, যখন তাদের বাস্তবায়নের জন্য প্রয়োজন বা যুক্তিসঙ্গত।</div><div><br></div><div>আপনাকে খবর, বিশেষ অফার এবং অন্যান্য পণ্য, পরিষেবা এবং ইভেন্টগুলির বিষয়ে সাধারণ তথ্য সরবরাহ করতে যা আমরা অফার করি যা আপনি ইতিমধ্যেই কিনেছেন বা অনুসন্ধান করেছেন সেগুলির অনুরূপ যদি না আপনি এই ধরনের তথ্য না পাওয়ার সিদ্ধান্ত নেন৷</div><div><br></div><div>আপনার অনুরোধগুলি পরিচালনা করতে: আমাদের কাছে আপনার অনুরোধগুলি উপস্থিত এবং পরিচালনা করতে।</div><div><br></div><div>ব্যবসায়িক স্থানান্তরের জন্য: আমরা আপনার তথ্য মূল্যায়ন বা পরিচালনা করতে ব্যবহার করতে পারি একীভূতকরণ, বিভক্তকরণ, পুনর্গঠন, পুনর্গঠন, বিলুপ্তি, বা আমাদের কিছু বা সমস্ত সম্পত্তির অন্যান্য বিক্রয় বা স্থানান্তর, তা চলমান উদ্বেগ হিসাবে বা দেউলিয়া হওয়া, অবসানের অংশ হিসাবে, বা অনুরূপ প্রক্রিয়া, যেখানে আমাদের পরিষেবা ব্যবহারকারীদের সম্পর্কে আমাদের কাছে থাকা ব্যক্তিগত ডেটা স্থানান্তরিত সম্পদের মধ্যে রয়েছে।</div><div><br></div><div>অন্যান্য উদ্দেশ্যে: আমরা অন্যান্য উদ্দেশ্যে আপনার তথ্য ব্যবহার করতে পারি, যেমন ডেটা বিশ্লেষণ, ব্যবহারের প্রবণতা সনাক্ত করা, আমাদের প্রচারমূলক প্রচারণার কার্যকারিতা নির্ধারণ এবং আমাদের পরিষেবা, পণ্য, পরিষেবা, বিপণন এবং আপনার অভিজ্ঞতার মূল্যায়ন ও উন্নতি করতে।</div><div><br></div><div>আমরা নিম্নলিখিত পরিস্থিতিতে আপনার ব্যক্তিগত তথ্য শেয়ার করতে পারি:</div><div><div>পরিষেবা প্রদানকারীদের সাথে: আপনার সাথে যোগাযোগ করার জন্য আমরা আমাদের পরিষেবার ব্যবহার নিরীক্ষণ এবং বিশ্লেষণ করতে পরিষেবা প্রদানকারীদের সাথে আপনার ব্যক্তিগত তথ্য শেয়ার করতে পারি।</div><div>ব্যবসায়িক স্থানান্তরের জন্য: আমরা আপনার ব্যক্তিগত তথ্য শেয়ার বা হস্তান্তর করতে পারি যে কোনো একীভূতকরণ, কোম্পানির সম্পদ বিক্রি, অর্থায়ন, বা আমাদের ব্যবসার একটি অংশ অন্য কোম্পানিতে অধিগ্রহণের সাথে বা আলোচনার সময়।</div><div>অ্যাফিলিয়েটদের সাথে: আমরা আপনার তথ্য আমাদের সহযোগীদের সাথে শেয়ার করতে পারি, সেক্ষেত্রে আমরা সেই অ্যাফিলিয়েটদের এই গোপনীয়তা নীতি মেনে চলতে চাই। অ্যাফিলিয়েটদের মধ্যে রয়েছে আমাদের মূল কোম্পানি এবং অন্য কোনো সহযোগী, যৌথ উদ্যোগ অংশীদার বা অন্যান্য কোম্পানি যা আমরা নিয়ন্ত্রণ করি বা যেগুলি আমাদের সাথে সাধারণ নিয়ন্ত্রণে থাকে।</div><div>ব্যবসায়িক অংশীদারদের সাথে: আমরা আপনাকে কিছু পণ্য, পরিষেবা বা প্রচার অফার করার জন্য আমাদের ব্যবসায়িক অংশীদারদের সাথে আপনার তথ্য শেয়ার করতে পারি।</div><div>অন্যান্য ব্যবহারকারীদের সাথে: আপনি যখন ব্যক্তিগত তথ্য শেয়ার করেন বা অন্যথায় অন্যান্য ব্যবহারকারীদের সাথে পাবলিক এলাকায় ইন্টারঅ্যাক্ট করেন, তখন এই ধরনের তথ্য সমস্ত ব্যবহারকারীদের দ্বারা দেখা যেতে পারে এবং সর্বজনীনভাবে বাইরে বিতরণ করা হতে পারে।</div><div>আপনার সম্মতিতে: আমরা আপনার সম্মতিতে অন্য কোনো উদ্দেশ্যে আপনার ব্যক্তিগত তথ্য প্রকাশ করতে পারি।</div><div>আপনার ব্যক্তিগত তথ্য ধারণ</div><div>এই গোপনীয়তা নীতিতে নির্ধারিত উদ্দেশ্যগুলির জন্য যতক্ষণ প্রয়োজন ততক্ষণ কোম্পানি আপনার ব্যক্তিগত ডেটা সংরক্ষণ করবে। আমরা আমাদের আইনি বাধ্যবাধকতাগুলি মেনে চলার জন্য প্রয়োজনীয় পরিমাণে আপনার ব্যক্তিগত ডেটা বজায় রাখব এবং ব্যবহার করব (উদাহরণস্বরূপ, প্রযোজ্য আইন মেনে চলার জন্য যদি আমাদের আপনার ডেটা ধরে রাখতে হয়), বিরোধগুলি সমাধান করতে এবং আমাদের আইনি চুক্তি এবং নীতিগুলি প্রয়োগ করতে হয়।</div><div><br></div><div>কোম্পানি অভ্যন্তরীণ বিশ্লেষণের উদ্দেশ্যে ব্যবহারের ডেটাও ধরে রাখবে। ব্যবহারের ডেটা সাধারণত অল্প সময়ের জন্য ধরে রাখা হয়, যখন এই ডেটা নিরাপত্তা জোরদার করতে বা আমাদের পরিষেবার কার্যকারিতা উন্নত করতে ব্যবহার করা হয়, অথবা আমরা এই ডেটা দীর্ঘ সময়ের জন্য ধরে রাখতে আইনিভাবে বাধ্য।</div><div><br></div><div>আপনার ব্যক্তিগত তথ্য স্থানান্তর</div><div>আপনার তথ্য, ব্যক্তিগত ডেটা সহ, কোম্পানির অপারেটিং অফিসে এবং অন্য যেকোন জায়গায় যেখানে প্রক্রিয়াকরণের সাথে জড়িত দলগুলি অবস্থিত সেখানে প্রক্রিয়া করা হয়। এর মানে হল যে এই তথ্যগুলি আপনার রাজ্য, প্রদেশ, দেশ বা অন্যান্য সরকারী এখতিয়ারের বাইরে অবস্থিত কম্পিউটারগুলিতে — এবং রক্ষণাবেক্ষণ করা যেতে পারে যেখানে ডেটা সুরক্ষা আইনগুলি আপনার এখতিয়ারের থেকে আলাদা হতে পারে৷</div><div><br></div><div>এই গোপনীয়তা নীতিতে আপনার সম্মতি এবং এই ধরনের তথ্য আপনার জমা দেওয়ার পরে সেই স্থানান্তরের আপনার চুক্তির প্রতিনিধিত্ব করে।</div><div><div>আপনার ডেটা নিরাপদে এবং এই গোপনীয়তা নীতি অনুসারে ব্যবহার করা হয় তা নিশ্চিত করার জন্য কোম্পানি যুক্তিসঙ্গতভাবে প্রয়োজনীয় সমস্ত পদক্ষেপ নেবে এবং আপনার ব্যক্তিগত ডেটা কোনও সংস্থা বা কোনও দেশে স্থানান্তর করা হবে না যদি না নিরাপত্তা সহ পর্যাপ্ত নিয়ন্ত্রণ না থাকে। আপনার ডেটা এবং অন্যান্য ব্যক্তিগত তথ্য।</div><div><br></div><div>আপনার ব্যক্তিগত তথ্য মুছুন</div><div>আমরা আপনার সম্পর্কে যে ব্যক্তিগত ডেটা সংগ্রহ করেছি তা মুছে ফেলতে আমরা সাহায্য করি তা মুছে ফেলার বা অনুরোধ করার অধিকার আপনার আছে।</div><div><br></div><div>আমাদের পরিষেবা আপনাকে পরিষেবার মধ্যে থেকে আপনার সম্পর্কে কিছু তথ্য মুছে ফেলার ক্ষমতা দিতে পারে৷</div><div><br></div><div>আপনি আপনার অ্যাকাউন্টে সাইন ইন করে যেকোনো সময় আপনার তথ্য আপডেট করতে, সংশোধন করতে বা মুছে ফেলতে পারেন, যদি আপনার কাছে থাকে, এবং অ্যাকাউন্ট সেটিংস বিভাগে যান যা আপনাকে আপনার ব্যক্তিগত তথ্য পরিচালনা করতে দেয়। এছাড়াও আপনি আমাদের সাথে যোগাযোগ করতে পারেন অ্যাক্সেসের অনুরোধ করতে, সংশোধন করতে বা মুছে ফেলার জন্য যে কোনো ব্যক্তিগত তথ্য আপনি আমাদের প্রদান করেছেন।</div><div><br></div><div>অনুগ্রহ করে মনে রাখবেন, যাইহোক, যখন আমাদের আইনগত বাধ্যবাধকতা বা আইনগত ভিত্তি থাকে তখন আমাদের কিছু তথ্য ধরে রাখতে হবে।</div><div><br></div><div>আপনার ব্যক্তিগত তথ্য প্রকাশ</div><div>ব্যবসায়িক লেনদেন</div><div>কোম্পানি যদি একীভূতকরণ, অধিগ্রহণ বা সম্পদ বিক্রির সাথে জড়িত থাকে, তাহলে আপনার ব্যক্তিগত ডেটা স্থানান্তরিত হতে পারে। আপনার ব্যক্তিগত ডেটা স্থানান্তরিত হওয়ার আগে এবং একটি ভিন্ন গোপনীয়তা নীতির অধীন হওয়ার আগে আমরা বিজ্ঞপ্তি প্রদান করব।</div><div><br></div><div>আইন প্রয়োগকারী</div><div>কিছু নির্দিষ্ট পরিস্থিতিতে, আইন দ্বারা বা সরকারী কর্তৃপক্ষের (যেমন একটি আদালত বা সরকারী সংস্থা) দ্বারা বৈধ অনুরোধের প্রতিক্রিয়ায় এটি করার প্রয়োজন হলে কোম্পানিকে আপনার ব্যক্তিগত ডেটা প্রকাশ করতে হতে পারে।</div><div><br></div><div>অন্যান্য আইনি প্রয়োজনীয়তা</div><div>কোম্পানি আপনার ব্যক্তিগত ডেটা প্রকাশ করতে পারে এই বিশ্বাসে যে এই ধরনের পদক্ষেপের জন্য প্রয়োজনীয়:</div><div><div>একটি আইনি বাধ্যবাধকতা মেনে চলুন</div><div>কোম্পানির অধিকার বা সম্পত্তি রক্ষা ও রক্ষা করুন</div><div>পরিষেবার সাথে সম্পর্কিত সম্ভাব্য অন্যায় প্রতিরোধ বা তদন্ত</div><div>পরিষেবার ব্যবহারকারী বা জনসাধারণের ব্যক্তিগত নিরাপত্তা রক্ষা করুন</div><div>আইনি দায় থেকে রক্ষা করুন</div><div>আপনার ব্যক্তিগত তথ্য নিরাপত্তা</div><div>আপনার ব্যক্তিগত ডেটার নিরাপত্তা আমাদের কাছে গুরুত্বপূর্ণ, কিন্তু মনে রাখবেন যে ইন্টারনেটের মাধ্যমে সংক্রমণের কোনো পদ্ধতি বা ইলেকট্রনিক স্টোরেজ পদ্ধতি 100% নিরাপদ নয়। যদিও আমরা আপনার ব্যক্তিগত ডেটা সুরক্ষার জন্য বাণিজ্যিকভাবে গ্রহণযোগ্য উপায়গুলি ব্যবহার করার চেষ্টা করি, আমরা এর পরম নিরাপত্তার নিশ্চয়তা দিতে পারি না।</div><div><br></div><div>শিশুদের গোপনীয়তা</div><div>আমাদের পরিষেবা 13 বছরের কম বয়সী কাউকে সম্বোধন করে না। আমরা জেনেশুনে 13 বছরের কম বয়সী কারও কাছ থেকে ব্যক্তিগতভাবে শনাক্তযোগ্য তথ্য সংগ্রহ করি না। আপনি যদি একজন অভিভাবক বা অভিভাবক হন এবং আপনি সচেতন হন যে আপনার সন্তান আমাদের ব্যক্তিগত ডেটা সরবরাহ করেছে, অনুগ্রহ করে যোগাযোগ করুন. যদি আমরা সচেতন হই যে আমরা পিতামাতার সম্মতি যাচাই ছাড়াই 13 বছরের কম বয়সী কারও কাছ থেকে ব্যক্তিগত ডেটা সংগ্রহ করেছি, আমরা আমাদের সার্ভারগুলি থেকে সেই তথ্যগুলি সরানোর জন্য পদক্ষেপ নিই৷</div><div><br></div><div>যদি আমাদের আপনার তথ্য প্রক্রিয়াকরণের জন্য আইনি ভিত্তি হিসাবে সম্মতির উপর নির্ভর করতে হয় এবং আপনার দেশের অভিভাবকের কাছ থেকে সম্মতির প্রয়োজন হয়, আমরা সেই তথ্য সংগ্রহ ও ব্যবহার করার আগে আপনার পিতামাতার সম্মতির প্রয়োজন হতে পারে।</div><div><br></div><div>অন্যান্য ওয়েবসাইটের লিঙ্ক</div><div>আমাদের পরিষেবাতে অন্য ওয়েবসাইটগুলির লিঙ্ক থাকতে পারে যা আমাদের দ্বারা পরিচালিত হয় না। আপনি যদি তৃতীয় পক্ষের লিঙ্কে ক্লিক করেন, আপনাকে সেই তৃতীয় পক্ষের সাইটে নির্দেশিত করা হবে। আমরা আপনাকে দৃঢ়ভাবে পরামর্শ দিচ্ছি যে আপনি প্রতিটি সাইটের গোপনীয়তা নীতি পর্যালোচনা করুন।</div><div><br></div><div>আমাদের কোনো নিয়ন্ত্রণ নেই এবং কোনো তৃতীয় পক্ষের সাইট বা পরিষেবার বিষয়বস্তু, গোপনীয়তা নীতি বা অনুশীলনের জন্য কোনো দায়বদ্ধতা নেই।</div><div><br></div><div>এই গোপনীয়তা নীতি পরিবর্তন</div><div>আমরা সময়ে সময়ে আমাদের গোপনীয়তা নীতি আপডেট করতে পারি। আমরা এই পৃষ্ঠায় নতুন গোপনীয়তা নীতি পোস্ট করে কোনো পরিবর্তন সম্পর্কে আপনাকে অবহিত করব।</div><div><br></div><div>পরিবর্তনটি কার্যকর হওয়ার আগে আমরা আপনাকে ইমেল এবং/অথবা আমাদের পরিষেবাতে একটি বিশিষ্ট বিজ্ঞপ্তির মাধ্যমে জানাব এবং এই গোপনীয়তা নীতির শীর্ষে \"শেষ আপডেট করা\" তারিখটি আপডেট করব৷</div><div><br></div><div>যেকোনো পরিবর্তনের জন্য আপনাকে পর্যায়ক্রমে এই গোপনীয়তা নীতি পর্যালোচনা করার পরামর্শ দেওয়া হচ্ছে। এই গোপনীয়তা নীতিতে পরিবর্তনগুলি কার্যকর হয় যখন সেগুলি এই পৃষ্ঠায় পোস্ট করা হয়৷</div><div><br></div><div>যোগাযোগ করুন</div><div>এই গোপনীয়তা নীতি সম্পর্কে আপনার কোন প্রশ্ন থাকলে, আপনি আমাদের সাথে যোগাযোগ করতে পারেন:</div><div><br></div><div>ইমেল দ্বারা: info@shoppingghor.com</div><div><br></div><div>ফোন নম্বর দ্বারা: 01938282000</div></div></div></div></div></div></div></div>', 1, '2023-10-04 07:04:19', '2024-05-13 19:48:37'),
-(8, 'Facebook', 'facebook', '#', '<p>Facebook Page</p>', 1, '2024-07-28 16:47:29', '2024-07-28 16:47:29'),
-(9, 'Instagram', 'instagram', '#', '<p>Instagram&nbsp;</p>', 1, '2024-07-28 16:48:43', '2024-07-28 16:48:43'),
-(10, 'YouTube', 'youtube', '#', '<p>You Tube</p>', 1, '2024-07-28 16:49:50', '2024-07-28 16:49:50');
+(5, 'Refund & Return Policy', 'refund-&-return-policy', 'Refund & Return Policy', '<ul style=\"padding: 0px 0px 0px 20px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border: 0px; list-style: none; color: rgb(33, 37, 41); font-family: Jost, sans-serif;\"><li style=\"margin: 0px; padding: 0px; border: 0px; list-style: initial;\"><p data-pm-slice=\"1 1 []\"><strong>Refund &amp; Return Policy</strong></p><p>Effective Date: [Insert Date]</p><p>At Photolab, we aim to ensure customer satisfaction with every order. This Refund &amp; Return Policy outlines the conditions under which refunds and returns may be processed. Please read carefully.</p><div><hr></div><h3>1. <strong>Eligibility for Refunds and Returns</strong></h3><h4>1.1 <strong>Damaged or Defective Products</strong></h4><p>If the product you receive is damaged or defective, you are eligible for a refund or replacement. Claims must be submitted within 7 days of receiving the product.</p><h4>1.2 <strong>Incorrect Orders</strong></h4><p>If you receive an incorrect order, please notify us within 7 days. We will correct the error at no additional cost.</p><h4>1.3 <strong>Non-Refundable Items</strong></h4><p>The following are not eligible for refunds:</p><ul data-spread=\"false\"><li><p>Digital photo editing services once completed and delivered</p></li><li><p>Customized or personalized photo products</p></li><li><p>Errors due to incorrect information or uploads provided by the customer</p></li></ul><div><hr></div><h3>2. <strong>Process for Refunds and Returns</strong></h3><h4>2.1 <strong>Refund Requests</strong></h4><p>To request a refund:</p><ul data-spread=\"false\"><li><p>Contact our customer service at [Insert Email Address] or [Insert Phone Number]</p></li><li><p>Provide your order number and a description of the issue</p></li><li><p>Attach photos of the damaged or defective item, if applicable</p></li></ul><h4>2.2 <strong>Return Process</strong></h4><p>For physical products:</p><ul data-spread=\"false\"><li><p>Return the item in its original condition and packaging</p></li><li><p>Include proof of purchase with the return</p></li><li><p>Ship the return to the address provided by our customer service team</p></li></ul><div><hr></div><h3>3. <strong>Refund Timeline</strong></h3><p>Refunds are processed within 7-10 business days after the returned item is received and inspected or after the refund request is approved for digital services.</p><div><hr></div><h3>4. <strong>Cancellation Policy</strong></h3><h4>4.1 <strong>Before Processing</strong></h4><p>Orders can be canceled without penalty if the request is made before processing begins.</p><h4>4.2 <strong>After Processing</strong></h4><p>Once processing has started, cancellations may not be eligible for a full refund.</p><div><hr></div><h3>5. <strong>Contact Us</strong></h3><p>If you have any questions or concerns about this Refund &amp; Return Policy, please contact us:</p><p><strong>Photolab</strong><br>Email: [Insert Email Address]<br>Phone: [Insert Phone Number]<br>Address: [Insert Address]</p><p>We value your trust and strive to provide the best service possible.</p><p></p></li></ul>', 1, '2023-10-04 07:03:42', '2024-12-23 11:06:35'),
+(6, 'Terms & Conditions', 'terms-&-conditions', 'Terms & Conditions', '<p data-pm-slice=\"1 1 []\"><strong>Terms and Conditions for Photolab</strong></p><p>Effective Date: [Insert Date]</p><p>Welcome to Photolab. By accessing or using our website and services, you agree to be bound by these Terms and Conditions. Please read them carefully.</p><div><hr></div><h3>1. <strong>Acceptance of Terms</strong></h3><p>By using our services, you confirm that you have read, understood, and agreed to these Terms and Conditions. If you do not agree, please refrain from using our services.</p><div><hr></div><h3>2. <strong>Services Offered</strong></h3><p>Photolab provides photo editing, printing, and related services. The specific terms for each service will be outlined at the time of purchase.</p><div><hr></div><h3>3. <strong>User Responsibilities</strong></h3><p>When using our services, you agree to:</p><ul data-spread=\"false\"><li><p>Provide accurate and complete information</p></li><li><p>Not upload or share content that is unlawful, obscene, or infringes on intellectual property rights</p></li><li><p>Ensure that you have the rights to the photos or content you upload</p></li></ul><div><hr></div><h3>4. <strong>Payment and Pricing</strong></h3><h4>4.1 <strong>Pricing</strong></h4><p>Prices for our services are displayed on our website and are subject to change without notice.</p><h4>4.2 <strong>Payment</strong></h4><p>Payment is required at the time of order placement. We accept major credit cards and other payment methods as listed on our website.</p><h4>4.3 <strong>Refunds</strong></h4><p>Refunds are only issued under specific circumstances as outlined in our Refund Policy.</p><div><hr></div><h3>5. <strong>Content Ownership and Usage</strong></h3><p>You retain ownership of any photos or content you upload to our website. By uploading, you grant Photolab a non-exclusive, royalty-free license to use your content solely for the purpose of providing the requested services.</p><div><hr></div><h3>6. <strong>Delivery of Services</strong></h3><p>We aim to deliver all orders within the specified timeframes. Delays may occur due to unforeseen circumstances. Photolab is not responsible for delays caused by third-party service providers or events beyond our control.</p><div><hr></div><h3>7. <strong>Limitation of Liability</strong></h3><p>Photolab will not be held liable for any indirect, incidental, or consequential damages arising from the use of our services. Our maximum liability is limited to the amount paid for the specific service.</p><div><hr></div><h3>8. <strong>Termination</strong></h3><p>We reserve the right to terminate or suspend your access to our services without prior notice if you violate these Terms and Conditions or engage in prohibited activities.</p><div><hr></div><h3>9. <strong>Governing Law</strong></h3><p>These Terms and Conditions are governed by the laws of [Insert Jurisdiction]. Any disputes arising from these terms will be resolved in the courts of [Insert Jurisdiction].</p><div><hr></div><h3>10. <strong>Changes to Terms and Conditions</strong></h3><p>We may update these Terms and Conditions from time to time. The revised terms will be posted on this page and are effective immediately upon posting. Your continued use of our services constitutes acceptance of the revised terms.</p><div><hr></div><h3>11. <strong>Contact Us</strong></h3><p>If you have any questions about these Terms and Conditions, please contact us at:</p><p><strong>Photolab</strong><br>Email: [Insert Email Address]<br>Phone: [Insert Phone Number]<br>Address: [Insert Address]</p><p>Thank you for choosing Photolab.</p>', 1, '2023-10-04 07:04:05', '2024-12-23 11:05:15'),
+(7, 'Privacy Policy', 'privacy-policy', 'Privacy Policy', '<p data-pm-slice=\"1 1 []\"><strong>Privacy Policy for Photolab</strong></p><p>Effective Date: [Insert Date]</p><p>Welcome to Photolab. Your privacy is important to us, and this Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.</p><div><hr></div><h3>1. <strong>Information We Collect</strong></h3><h4>1.1 <strong>Personal Information</strong></h4><p>We may collect personal information that you voluntarily provide to us when you:</p><ul data-spread=\"false\"><li><p>Register an account</p></li><li><p>Place an order for photo editing or printing services</p></li><li><p>Contact customer support</p></li></ul><p>Examples of personal information include:</p><ul data-spread=\"false\"><li><p>Name</p></li><li><p>Email address</p></li><li><p>Phone number</p></li><li><p>Billing and shipping address</p></li><li><p>Payment information</p></li></ul><h4>1.2 <strong>Non-Personal Information</strong></h4><p>We automatically collect certain non-personal information when you visit our website, such as:</p><ul data-spread=\"false\"><li><p>IP address</p></li><li><p>Browser type and version</p></li><li><p>Operating system</p></li><li><p>Referring URL</p></li><li><p>Pages viewed</p></li><li><p>Time and date of access</p></li></ul><h4>1.3 <strong>Uploaded Content</strong></h4><p>When you upload photos for editing or printing, we collect and store the images and any associated data.</p><div><hr></div><h3>2. <strong>How We Use Your Information</strong></h3><p>We use the information we collect to:</p><ul data-spread=\"false\"><li><p>Process and fulfill your orders</p></li><li><p>Provide customer support</p></li><li><p>Improve and personalize your experience on our website</p></li><li><p>Send updates, promotions, or service-related communications</p></li><li><p>Detect and prevent fraud or unauthorized activities</p></li><li><p>Comply with legal obligations</p></li></ul><div><hr></div><h3>3. <strong>How We Share Your Information</strong></h3><p>We do not sell or rent your personal information to third parties. However, we may share your information in the following scenarios:</p><h4>3.1 <strong>Service Providers</strong></h4><p>We may share your information with trusted third-party vendors and service providers who assist in operating our website, processing payments, or delivering services. These parties are bound by confidentiality agreements.</p><h4>3.2 <strong>Legal Requirements</strong></h4><p>We may disclose your information if required by law or if we believe such action is necessary to:</p><ul data-spread=\"false\"><li><p>Comply with legal processes</p></li><li><p>Protect and defend our rights or property</p></li><li><p>Prevent fraud or illegal activity</p></li></ul><h4>3.3 <strong>Business Transfers</strong></h4><p>In the event of a merger, acquisition, or sale of assets, your information may be transferred to the involved parties.</p><div><hr></div><h3>4. <strong>How We Protect Your Information</strong></h3><p>We implement reasonable technical, administrative, and physical security measures to protect your personal information from unauthorized access, use, or disclosure. However, no method of transmission over the internet or electronic storage is 100% secure.</p><div><hr></div><h3>5. <strong>Your Rights and Choices</strong></h3><h4>5.1 <strong>Access and Update</strong></h4><p>You can access and update your personal information by logging into your account.</p><h4>5.2 <strong>Opt-Out</strong></h4><p>You may opt out of receiving promotional emails by following the unsubscribe link in our emails. Note that you may still receive non-promotional communications regarding your account or orders.</p><h4>5.3 <strong>Delete Your Information</strong></h4><p>You can request the deletion of your personal data by contacting us at [Insert Email Address].</p><div><hr></div><h3>6. <strong>Cookies and Tracking Technologies</strong></h3><p>We use cookies and similar technologies to enhance your browsing experience. You can control or disable cookies through your browser settings, but some features of our website may not function properly.</p><div><hr></div><h3>7. <strong>Children\'s Privacy</strong></h3><p>Our services are not intended for individuals under the age of 13. We do not knowingly collect personal information from children under 13. If we learn that we have collected such information, we will delete it promptly.</p><div><hr></div><h3>8. <strong>Third-Party Links</strong></h3><p>Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of those websites. We encourage you to read their privacy policies.</p><div><hr></div><h3>9. <strong>Changes to This Privacy Policy</strong></h3><p>We may update this Privacy Policy from time to time. Any changes will be effective immediately upon posting the revised policy on this page. We encourage you to review this page periodically.</p><div><hr></div><h3>10. <strong>Contact Us</strong></h3><p>If you have any questions or concerns about this Privacy Policy or our practices, please contact us at:</p><p><strong>Photolab</strong><br>Email: [Insert Email Address]<br>Phone: [Insert Phone Number]<br>Address: [Insert Address]</p><p>Thank you for trusting Photolab with your photos and personal information.</p>', 1, '2023-10-04 07:04:19', '2024-12-23 11:04:03');
 
 -- --------------------------------------------------------
 
@@ -292,6 +290,32 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faqs`
+--
+
+CREATE TABLE `faqs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `question` varchar(255) NOT NULL,
+  `answer` text NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `faqs`
+--
+
+INSERT INTO `faqs` (`id`, `question`, `answer`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'What is your return policy?', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum ipsam odio voluptates ab quae beatae nihil illo alias vitae minima cumque atque, deleniti quos animi nostrum, veritatis quisquam ullam ducimus laboriosam reprehenderit sapiente, quo necessitatibus dolorem. Impedit sed, similique corporis quo totam, veniam consequatur blanditiis, voluptates ipsa eligendi excepturi incidunt facilis ex tempore? Ut vero voluptatum quis doloremque accusantium saepe.', 1, '2024-12-22 11:52:41', '2024-12-22 12:59:08'),
+(2, 'How do I place an order?', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum ipsam odio voluptates ab quae beatae nihil illo alias vitae minima cumque atque, deleniti quos animi nostrum, veritatis quisquam ullam ducimus laboriosam reprehenderit sapiente, quo necessitatibus dolorem. Impedit sed, similique corporis quo totam, veniam consequatur blanditiis, voluptates ipsa eligendi excepturi incidunt facilis ex tempore? Ut vero voluptatum quis doloremque accusantium saepe.', 1, '2024-12-22 11:53:57', '2024-12-22 12:56:36'),
+(3, 'How can I track my order?', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum ipsam odio voluptates ab quae beatae nihil illo alias vitae minima cumque atque, deleniti quos animi nostrum, veritatis quisquam ullam ducimus laboriosam reprehenderit sapiente, quo necessitatibus dolorem. Impedit sed, similique corporis quo totam, veniam consequatur blanditiis, voluptates ipsa eligendi excepturi incidunt facilis ex tempore? Ut vero voluptatum quis doloremque accusantium saepe.', 1, '2024-12-22 12:57:48', '2024-12-22 12:58:47'),
+(4, 'Can I modify or cancel my order after placing it?', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum ipsam odio voluptates ab quae beatae nihil illo alias vitae minima cumque atque, deleniti quos animi nostrum, veritatis quisquam ullam ducimus laboriosam reprehenderit sapiente, quo necessitatibus dolorem. Impedit sed, similique corporis quo totam, veniam consequatur blanditiis, voluptates ipsa eligendi excepturi incidunt facilis ex tempore? Ut vero voluptatum quis doloremque accusantium saepe.', 1, '2024-12-22 12:57:55', '2024-12-22 12:58:30'),
+(5, 'What payment methods do you accept?', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum ipsam odio voluptates ab quae beatae nihil illo alias vitae minima cumque atque, deleniti quos animi nostrum, veritatis quisquam ullam ducimus laboriosam reprehenderit sapiente, quo necessitatibus dolorem. Impedit sed, similique corporis quo totam, veniam consequatur blanditiis, voluptates ipsa eligendi excepturi incidunt facilis ex tempore? Ut vero voluptatum quis doloremque accusantium saepe.', 1, '2024-12-22 12:58:01', '2024-12-22 12:58:21');
 
 -- --------------------------------------------------------
 
@@ -320,6 +344,72 @@ CREATE TABLE `general_settings` (
 
 INSERT INTO `general_settings` (`id`, `name`, `white_logo`, `dark_logo`, `favicon`, `copyright`, `meta_description`, `meta_title`, `meta_keyword`, `status`, `created_at`, `updated_at`) VALUES
 (2, 'Photo Lab', 'public/uploads/settings/1734500666-photo-lab.webp', 'public/uploads/settings/1734500666-photo-lab.webp', 'public/uploads/settings/1729703921-favicon.webp', NULL, 'We sell cosmetics clothes jewelery in Bangladesh', 'Photo Lab', '<p>cosmetics, jewellery, clothes</p>', 1, '2023-01-21 12:01:07', '2024-12-18 05:44:26');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `how_it_works`
+--
+
+CREATE TABLE `how_it_works` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `how_it_works`
+--
+
+INSERT INTO `how_it_works` (`id`, `name`, `description`, `icon`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Request Quote', 'Get a quote in your inbox within 45 minutes.', 'fa-regular fa-envelope', 1, '2024-12-23 13:24:08', '2024-12-23 13:24:08'),
+(2, 'Place Order', 'Get a quote in your inbox within 45 minutes.', 'fa-solid fa-cart-plus', 1, '2024-12-23 13:26:10', '2024-12-23 13:29:47'),
+(3, 'Pay your bill', 'Pick the service you are looking for- from the website or the app.', 'fa-solid fa-dollar-sign', 1, '2024-12-23 13:27:05', '2024-12-23 13:29:25'),
+(4, 'Download Image', 'Enjoy up to 40% Off on accommodation when you stay at Adaaran Select Hudhuran Fushi.', 'fa-solid fa-download', 1, '2024-12-23 13:27:58', '2024-12-23 13:29:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `merchants`
+--
+
+CREATE TABLE `merchants` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `shop_name` varchar(255) NOT NULL,
+  `shop_id` int(11) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(55) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL DEFAULT 'public/uploads/default/user.png',
+  `district_id` int(4) DEFAULT NULL,
+  `area_id` int(4) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `default_method` varchar(25) DEFAULT NULL,
+  `payment_type` varchar(55) DEFAULT NULL,
+  `verify` int(11) NOT NULL,
+  `forgot` int(11) DEFAULT NULL,
+  `agree` tinyint(4) NOT NULL,
+  `read_notices` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`read_notices`)),
+  `twofa` tinyint(2) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `merchants`
+--
+
+INSERT INTO `merchants` (`id`, `name`, `shop_name`, `shop_id`, `phone`, `email`, `password`, `image`, `district_id`, `area_id`, `address`, `default_method`, `payment_type`, `verify`, `forgot`, `agree`, `read_notices`, `twofa`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Merchant One', 'Merchant One', 100001, '01766950986', 'info@websolutionit.com', '$2y$10$zC77AtYIcD/gNzE.bofNZ.bvAnzRF.E2YniItAljjBhYUYxGa6WXm', 'public/uploads/default/user.png', 46, 887, 'Dinajpur City College', 'bkash', 'per', 1, NULL, 1, '[2,1]', NULL, 1, '2024-11-05 02:44:41', '2024-11-05 02:46:54'),
+(2, 'Merchant 2', 'Business 2', 100002, '01781013627', 'nm.milon97@gmail.com', '$2y$10$z3mH0ClpjZbZuZedp.43NeiRVYwFDTSHuwtMemuMTE3xid7Z9HK7u', 'public/uploads/default/user.png', 46, 888, 'City College , Dinajpur', NULL, NULL, 1, NULL, 1, '[2,1]', NULL, 1, '2024-11-05 07:48:04', '2024-11-06 10:32:48'),
+(3, 'Ekramul haque', 'other', 100003, '01824416130', 'test@gmail.com', '$2y$10$6i2PD2VvOAllUT8q.7pPw.unsxP2vFMAYxuuqkKE95/r3.Ycr8NH6', 'public/uploads/default/user.png', NULL, NULL, NULL, NULL, NULL, 1, NULL, 1, '[2,1]', NULL, 1, '2024-12-04 05:48:51', '2024-12-04 06:19:07'),
+(4, 'Ekramul haque', 'Test', 100004, '01824416140', 'admin2@gmail.com', '$2y$10$CCLuFiWbiaXofijyJBCxm.jc6ZPKiiLSXu8yX/48nvNRiS5LqFR6a', 'public/uploads/default/user.png', NULL, NULL, NULL, NULL, NULL, 1, NULL, 1, NULL, NULL, 1, '2024-12-30 09:51:40', '2024-12-30 11:29:01');
 
 -- --------------------------------------------------------
 
@@ -359,7 +449,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2023_03_30_050646_create_abouts_table', 7),
 (25, '2024_04_01_084424_create_mission_vissions_table', 7),
 (26, '2024_12_19_125049_create_brands_table', 8),
-(27, '2024_12_19_150607_create_testimonials_table', 8);
+(27, '2024_12_19_150607_create_testimonials_table', 8),
+(28, '2024_12_21_122943_create_portfolios_table', 9),
+(29, '2024_12_21_122952_create_portfolio_categories_table', 9),
+(30, '2024_12_22_173957_create_faqs_table', 10),
+(31, '2024_12_22_174046_create_pricings_table', 10),
+(32, '2024_12_23_185943_create_how_it_works_table', 11);
 
 -- --------------------------------------------------------
 
@@ -414,7 +509,8 @@ CREATE TABLE `model_has_roles` (
 --
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
-(1, 'App\\Models\\User', 1);
+(1, 'App\\Models\\User', 1),
+(1, 'App\\Models\\User', 2);
 
 -- --------------------------------------------------------
 
@@ -490,7 +586,11 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (41, 'counter-list', 'web', '2024-12-18 13:03:32', '2024-12-18 13:03:32'),
 (42, 'counter-create', 'web', '2024-12-18 13:03:39', '2024-12-18 13:03:39'),
 (43, 'counter-edit', 'web', '2024-12-18 13:03:47', '2024-12-18 13:03:47'),
-(44, 'counter-delete', 'web', '2024-12-18 13:03:56', '2024-12-18 13:03:56');
+(44, 'counter-delete', 'web', '2024-12-18 13:03:56', '2024-12-18 13:03:56'),
+(45, 'page-list', 'web', '2024-12-23 11:00:21', '2024-12-23 11:00:21'),
+(46, 'page-create', 'web', '2024-12-23 11:00:30', '2024-12-23 11:00:30'),
+(47, 'page-edit', 'web', '2024-12-23 11:00:37', '2024-12-23 11:00:37'),
+(48, 'page-delete', 'web', '2024-12-23 11:00:47', '2024-12-23 11:00:47');
 
 -- --------------------------------------------------------
 
@@ -510,6 +610,95 @@ CREATE TABLE `personal_access_tokens` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `portfolios`
+--
+
+CREATE TABLE `portfolios` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `image_one` text NOT NULL,
+  `image_two` text NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `portfolios`
+--
+
+INSERT INTO `portfolios` (`id`, `category_id`, `image_one`, `image_two`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'public/uploads/portfolio/1734947310-clipping-path2-before_1605700116.webp', 'public/uploads/portfolio/1734947310-clipping-path2-after_1605700116.webp', 1, '2024-12-21 07:49:33', '2024-12-23 09:48:30'),
+(2, 2, 'public/uploads/portfolio/1734947267-background-removal2-before_1605699377.webp', 'public/uploads/portfolio/1734947267-background-removal2-after_1605699377.webp', 1, '2024-12-21 07:55:06', '2024-12-23 09:47:47'),
+(3, 3, 'public/uploads/portfolio/1734947252-background-removal-before_1605699360.webp', 'public/uploads/portfolio/1734947252-background-removal-after_1605699360.webp', 1, '2024-12-21 07:55:25', '2024-12-23 09:47:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `portfolio_categories`
+--
+
+CREATE TABLE `portfolio_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `portfolio_categories`
+--
+
+INSERT INTO `portfolio_categories` (`id`, `name`, `slug`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Clipping Path', 'clipping-path', 1, '2024-12-21 07:28:13', '2024-12-21 07:28:13'),
+(2, 'Background Removal', 'background-removal', 1, '2024-12-21 07:28:52', '2024-12-21 07:28:52'),
+(3, 'Image Masking', 'image-masking', 1, '2024-12-21 07:29:10', '2024-12-21 07:29:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pricings`
+--
+
+CREATE TABLE `pricings` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `service_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `new_price` decimal(11,2) NOT NULL,
+  `old_price` decimal(11,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pricings`
+--
+
+INSERT INTO `pricings` (`id`, `service_id`, `name`, `new_price`, `old_price`, `created_at`, `updated_at`) VALUES
+(1, 5, 'Easy Ghosting', 1.00, 1.50, '2024-12-22 12:12:40', '2024-12-23 09:31:55'),
+(2, 5, 'Medium Ghosting', 2.00, 2.50, '2024-12-22 12:36:55', '2024-12-23 09:31:55'),
+(3, 5, 'Hard Ghosting', 3.00, 3.45, '2024-12-22 12:37:10', '2024-12-23 09:31:55'),
+(4, 6, 'Easy Retouching', 1.00, 1.40, '2024-12-22 12:38:57', '2024-12-23 09:22:36'),
+(5, 6, 'Medium Retouching', 2.00, 2.40, '2024-12-22 12:38:57', '2024-12-23 09:22:37'),
+(6, 6, 'Hard Retouching', 3.00, 3.40, '2024-12-23 09:22:37', '2024-12-23 09:22:37'),
+(7, 2, 'Easy Background Remove', 1.01, 1.40, '2024-12-23 09:26:40', '2024-12-23 09:32:28'),
+(8, 2, 'Medium Background Remove', 2.00, 2.40, '2024-12-23 09:26:40', '2024-12-23 09:32:28'),
+(9, 2, 'Hard Background Remove', 3.00, 3.40, '2024-12-23 09:26:40', '2024-12-23 09:32:28'),
+(10, 4, 'Easy Drop Shadow', 1.00, 1.45, '2024-12-23 09:28:48', '2024-12-23 09:28:48'),
+(11, 4, 'Medium Drop Shadow', 2.00, 2.45, '2024-12-23 09:28:48', '2024-12-23 09:28:48'),
+(12, 4, 'Hard Drop Shadow', 3.00, 3.45, '2024-12-23 09:28:48', '2024-12-23 09:28:48'),
+(13, 3, 'Easy Masking', 1.00, 1.45, '2024-12-23 09:30:01', '2024-12-23 09:30:01'),
+(14, 3, 'Medium Masking', 2.00, 2.45, '2024-12-23 09:30:01', '2024-12-23 09:30:01'),
+(15, 3, 'Hard Masking', 3.00, 3.45, '2024-12-23 09:30:01', '2024-12-23 09:30:01'),
+(16, 1, 'Easy Clipping path', 1.00, 1.45, '2024-12-23 09:30:55', '2024-12-23 09:30:55'),
+(17, 1, 'Medium Clipping path', 2.00, 2.45, '2024-12-23 09:30:55', '2024-12-23 09:30:55'),
+(18, 1, 'Hard Clipping path', 3.00, 3.45, '2024-12-23 09:30:55', '2024-12-23 09:30:55');
 
 -- --------------------------------------------------------
 
@@ -591,7 +780,11 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (41, 1),
 (42, 1),
 (43, 1),
-(44, 1);
+(44, 1),
+(45, 1),
+(46, 1),
+(47, 1),
+(48, 1);
 
 -- --------------------------------------------------------
 
@@ -602,6 +795,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 CREATE TABLE `services` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
   `short_description` text NOT NULL,
   `description` text NOT NULL,
   `image` varchar(255) NOT NULL,
@@ -614,13 +808,13 @@ CREATE TABLE `services` (
 -- Dumping data for table `services`
 --
 
-INSERT INTO `services` (`id`, `title`, `short_description`, `description`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Clipping path', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512587-clipping-path.webp', 1, '2024-12-18 06:48:53', '2024-12-18 09:08:22'),
-(2, 'Background Removal', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512653-background-removal.webp', 1, '2024-12-18 06:50:36', '2024-12-18 09:08:34'),
-(3, 'Image Masking', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512663-image-masking.webp', 1, '2024-12-18 06:53:00', '2024-12-18 09:08:58'),
-(4, 'Drop Shadow', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512679-drop-shadow.webp', 1, '2024-12-18 06:54:00', '2024-12-18 09:08:50'),
-(5, 'Ghost Mannequin', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512705-ghost-mannequin.webp', 1, '2024-12-18 06:55:09', '2024-12-18 09:09:14'),
-(6, 'Photo Retouching', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512715-photo-retouching.webp', 1, '2024-12-18 07:10:56', '2024-12-18 09:08:42');
+INSERT INTO `services` (`id`, `title`, `slug`, `short_description`, `description`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Clipping path', 'clipping-path', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512587-clipping-path.webp', 1, '2024-12-18 06:48:53', '2024-12-22 06:24:44'),
+(2, 'Background Removal', 'background-removal', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512653-background-removal.webp', 1, '2024-12-18 06:50:36', '2024-12-22 06:24:49'),
+(3, 'Image Masking', 'image-masking', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512663-image-masking.webp', 1, '2024-12-18 06:53:00', '2024-12-22 06:24:54'),
+(4, 'Drop Shadow', 'drop-shadow', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512679-drop-shadow.webp', 1, '2024-12-18 06:54:00', '2024-12-22 06:24:39'),
+(5, 'Ghost Mannequin', 'ghost-mannequin', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512705-ghost-mannequin.webp', 1, '2024-12-18 06:55:09', '2024-12-22 06:24:35'),
+(6, 'Photo Retouching', 'photo-retouching', 'Clipping path is an exceptional choice of quality background removal priority service from Clipping Path India Pro.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'public/uploads/service/1734512715-photo-retouching.webp', 1, '2024-12-18 07:10:56', '2024-12-22 06:24:28');
 
 -- --------------------------------------------------------
 
@@ -720,7 +914,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `image`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$NUTmZoutuuOliWdRlt/GhuCyFp4Cab6GdosfNeKf7pCp1mymJDpse', '', 1, NULL, '2024-10-29 02:01:47', '2024-10-29 03:15:10'),
-(2, 'Editor', 'editor@gmail.com', NULL, '$2y$10$LQ6sazU8yAiJ/MxGxWS0reqf8/cNWYyJCyqzifYr9EjRE82xmwm2u', 'public/uploads/users/1730193421-favicon.webp', 1, NULL, '2024-10-29 03:17:01', '2024-10-29 03:17:01');
+(2, 'Photo Lab', 'info@photolab.com', NULL, '$2y$10$g9U0UarpP.wHBP/HRbU8M.a059TKvsgXtb2rnGjJBCPH.0tJ3mk5u', 'public/uploads/users/1734968805-hub-user.webp', 1, NULL, '2024-10-29 03:17:01', '2024-12-23 15:46:45');
 
 -- --------------------------------------------------------
 
@@ -803,6 +997,29 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- Indexes for table `faqs`
+--
+ALTER TABLE `faqs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `how_it_works`
+--
+ALTER TABLE `how_it_works`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `merchants`
+--
+ALTER TABLE `merchants`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `merchants_phone_unique` (`phone`) USING BTREE,
+  ADD UNIQUE KEY `merchants_email_unique` (`email`) USING BTREE,
+  ADD KEY `merchants_district_index` (`district_id`) USING BTREE,
+  ADD KEY `merchants_area_index` (`area_id`) USING BTREE,
+  ADD KEY `merchants_status_index` (`status`) USING BTREE;
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -849,6 +1066,24 @@ ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `portfolios`
+--
+ALTER TABLE `portfolios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `portfolio_categories`
+--
+ALTER TABLE `portfolio_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pricings`
+--
+ALTER TABLE `pricings`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `roles`
@@ -954,10 +1189,28 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `faqs`
+--
+ALTER TABLE `faqs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `how_it_works`
+--
+ALTER TABLE `how_it_works`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `merchants`
+--
+ALTER TABLE `merchants`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `mission_vissions`
@@ -969,13 +1222,31 @@ ALTER TABLE `mission_vissions`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `portfolios`
+--
+ALTER TABLE `portfolios`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `portfolio_categories`
+--
+ALTER TABLE `portfolio_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `pricings`
+--
+ALTER TABLE `pricings`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -987,7 +1258,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `sliders`

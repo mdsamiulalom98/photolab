@@ -3,10 +3,10 @@
 @section('css')
     <link href="{{ asset('public/backEnd') }}/assets/libs/summernote/summernote-lite.min.css" rel="stylesheet"
         type="text/css" />
-@endsection
+@endsection 
 @section('content')
 <div class="container-fluid">
-    
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -17,8 +17,8 @@
                 <h4 class="page-title">About Create</h4>
             </div>
         </div>
-    </div>       
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
    <div class="row justify-content-center">
     <div class="col-lg-8">
         <div class="card">
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <!-- col-end -->
-                    
+
                     <div class="col-sm-12 mb-3">
                         <div class="form-group">
                             <label for="description" class="form-label">Description *</label>

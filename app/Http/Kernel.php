@@ -67,7 +67,7 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         'lock' => \App\Http\Middleware\LockAccount::class,
-        'customer' => \App\Http\Middleware\Customer::class,
+        'member' => \App\Http\Middleware\MemberMiddleware::class,
         'ipcheck' => \App\Http\Middleware\IpFilter::class,
         'check_refer' => \App\Http\Middleware\CheckReffer::class,
     ];

@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\Frontend\MemberController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\ShoppingController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\MerchantManageController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -30,6 +32,7 @@ use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Admin\PortfolioCategoryController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\HowItWorkController;
+use App\Http\Controllers\Admin\OrderController;
 
 Auth::routes();
 
@@ -53,12 +56,81 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['check_refer']], funct
     Route::get('pricing', [FrontendController::class, 'pricings'])->name('pricings');
     Route::get('contact', [FrontendController::class, 'contact'])->name('contact');
     Route::get('page/{slug}', [FrontendController::class, 'page'])->name('page');
+
+    // ajax routes
+    Route::get('ajax-services', [FrontendController::class, 'ajax_services'])->name('ajax.services');
+    Route::post('ajax-service-add', [FrontendController::class, 'ajax_service_add'])->name('ajax.service.add');
 });
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['customer', 'ipcheck', 'check_refer']], function () {
     Route::get('locked', [DashboardController::class, 'locked'])->name('locked');
     Route::post('unlocked', [DashboardController::class, 'unlocked'])->name('unlocked');
 });
+Route::group(['namespace' => 'FrontEnd', 'middleware' => ['check_refer']], function () {
+    Route::get('ajax-district', [FrontendController::class, 'ajax_district'])->name('ajax.districts');
+    Route::get('ajax-area', [FrontendController::class, 'ajax_area'])->name('ajax.areas');
+    Route::get('ajax-zone', [FrontendController::class, 'ajax_zone'])->name('ajax.zones');
+    Route::post('member/logout', [MemberController::class, 'logout'])->name('member.logout');
+    Route::post('/verify-account', [MemberController::class, 'account_verify'])->name('member.account.verify');
+    Route::post('/two-verify', [MemberController::class, 'twoverify_verify'])->name('member.account.twoverify');
+});
+
+//buyer manage route
+Route::group(['namespace' => 'FrontEnd', 'middleware' => ['check_refer']], function () {
+    Route::get('/login', [MemberController::class, 'login'])->name('member.login');
+    Route::post('/signin', [MemberController::class, 'signin'])->name('member.signin');
+    Route::get('/register', [MemberController::class, 'register'])->name('member.register');
+    Route::post('/store', [MemberController::class, 'store'])->name('member.store');
+    Route::get('/verify', [MemberController::class, 'verify'])->name('member.verify');
+
+    Route::post('/resend-otp', [MemberController::class, 'resendotp'])->name('member.resendotp');
+    Route::get('/forgot-password', [MemberController::class, 'forgot_password'])->name('member.forgot.password');
+    Route::post('/forgot-verify', [MemberController::class, 'forgot_verify'])->name('member.forgot.verify');
+    Route::get('/forgot-password/reset', [MemberController::class, 'forgot_reset'])->name('member.forgot.reset');
+    Route::post('/forgot-password/store', [MemberController::class, 'forgot_store'])->name('member.forgot.store');
+    Route::post('/forgot-password/resendotp', [MemberController::class, 'forgot_resend'])->name('member.forgot.resendotp');
+    Route::get('/order', [MemberController::class, 'order_create'])->name('member.order.create');
+    Route::post('order/save', [MemberController::class, 'order_store'])->name('member.order.store');
+    Route::get('/order-success/{id}', [MemberController::class, 'order_success'])->name('member.order.success');
+
+    // shopping controller
+    Route::post('order/item/save', [ShoppingController::class, 'order_item'])->name('order.item.add');
+    Route::get('order/item/destroy', [ShoppingController::class, 'order_item_destroy'])->name('order.item.destroy');
+    Route::get('cart/details', [ShoppingController::class, 'cart_details'])->name('cart.details');
+});
+// member auth
+Route::group(['namespace' => 'FrontEnd', 'middleware' => ['member', 'check_refer']], function () {
+
+    Route::get('/dashboard', [MemberController::class, 'dashboard'])->name('member.dashboard');
+    Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile');
+    Route::get('/settings', [MemberController::class, 'settings'])->name('member.settings');
+    Route::post('/basic-update', [MemberController::class, 'basic_update'])->name('member.basic_update');
+    Route::post('/payment-method', [MemberController::class, 'payment_method'])->name('member.payment_method');
+    Route::get('/change-password', [MemberController::class, 'change_pass'])->name('member.change_pass');
+    Route::post('/password-update', [MemberController::class, 'password_update'])->name('member.password_update');
+    Route::get('/payment', [MemberController::class, 'member_payment'])->name('member.parcel.payment');
+    Route::get('/parcel/payable', [MemberController::class, 'payable_parcel'])->name('member.parcel.payable');
+    Route::post('/payment/request', [MemberController::class, 'payment_request'])->name('member.payment.request');
+    Route::get('/payment/invoice/{id}', [MemberController::class, 'payment_invoice'])->name('member.payment.invoice');
+    Route::get('/parcel/fraud-checker', [MemberController::class, 'fraud_checker'])->name('member.parcel.fraud_checker');
+    Route::get('/buyer/notice', [MemberController::class, 'notice'])->name('member.notice');
+    Route::get('/buyer/notification', [MemberController::class, 'notification'])->name('member.notification');
+    Route::get('/buyer/pricing', [MemberController::class, 'pricing'])->name('member.parcel.pricing');
+    Route::get('consignment-search', [MemberController::class, 'consignment_search'])->name('member.consignment.search');
+    Route::post('order/destroy', [MemberController::class, 'order_destroy'])->name('member.order.destroy');
+    Route::get('/orders', [MemberController::class, 'orders'])->name('member.orders');
+    Route::get('/order/{id}/details', [MemberController::class, 'order_details'])->name('member.order.details');
+    Route::get('/invoice', [MemberController::class, 'invoice'])->name('member.invoice');
+
+    Route::post('message/update', [MemberController::class, 'message_update'])->name('member.message.update');
+    Route::get('message/reload', [MemberController::class, 'message_reload'])->name('member.message.reload');
+    Route::post('message/active', [MemberController::class, 'message_active'])->name('member.message.active');
+
+    Route::get('member/image-zip', [MemberController::class, 'downloadImagesAsZip'])->name('member.image.zip');
+    Route::post('order/change-status', [MemberController::class, 'change_status'])->name('member.order.status_change');
+});
+
+
 // auth route
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_refer'], 'prefix' => 'admin'], function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -125,6 +197,22 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('missionvission/active', [MissionVissionController::class, 'active'])->name('missionvission.active');
     Route::post('missionvission/destroy', [MissionVissionController::class, 'destroy'])->name('missionvission.destroy');
 
+
+    // buyer manage route
+    Route::get('buyer/payment/{status}', [MerchantManageController::class, 'payment'])->name('merchants.payment');
+    Route::get('buyer/invoice/{id}', [MerchantManageController::class, 'invoice'])->name('merchants.invoice');
+    Route::post('buyer/payment/status', [MerchantManageController::class, 'payment_status'])->name('merchants.payment.status');
+    Route::get('buyer/create', [MerchantManageController::class, 'create'])->name('merchants.create');
+    Route::post('buyer/store', [MerchantManageController::class, 'store'])->name('merchants.store');
+    Route::get('buyer/manage', [MerchantManageController::class, 'index'])->name('merchants.index');
+    Route::get('buyer/{id}/edit', [MerchantManageController::class, 'edit'])->name('merchants.edit');
+    Route::post('buyer/update', [MerchantManageController::class, 'update'])->name('merchants.update');
+    Route::post('buyer/inactive', [MerchantManageController::class, 'inactive'])->name('merchants.inactive');
+    Route::post('buyer/active', [MerchantManageController::class, 'active'])->name('merchants.active');
+    Route::get('buyer/profile', [MerchantManageController::class, 'profile'])->name('merchants.profile');
+    Route::post('buyer/adminlog', [MerchantManageController::class, 'adminlog'])->name('merchants.adminlog');
+    Route::get('buyer/manual-payment', [MerchantManageController::class, 'menual_payment'])->name('merchants.menual_payment');
+    Route::post('buyer/manual-payment/paid', [MerchantManageController::class, 'menual_payment_paid'])->name('merchants.menual_payment.paid');
 
     // brands
     Route::get('brands/manage', [BrandController::class, 'index'])->name('brands.index');
@@ -312,4 +400,34 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('portfolio-category/inactive', [PortfolioCategoryController::class, 'inactive'])->name('portfolio_category.inactive');
     Route::post('portfolio-category/active', [PortfolioCategoryController::class, 'active'])->name('portfolio_category.active');
     Route::post('portfolio-category/destroy', [PortfolioCategoryController::class, 'destroy'])->name('portfolio_category.destroy');
+
+    // Order route
+    Route::get('orders/{slug}', [OrderController::class, 'index'])->name('admin.orders');
+    Route::get('order/edit/{invoice_id}', [OrderController::class, 'order_edit'])->name('admin.order.edit');
+    Route::post('order/update', [OrderController::class, 'order_update'])->name('admin.order.update');
+    Route::get('order/invoice/{invoice_id}', [OrderController::class, 'invoice'])->name('admin.order.invoice');
+    Route::get('order/process/{invoice_id}', [OrderController::class, 'process'])->name('admin.order.process');
+    Route::post('order/change', [OrderController::class, 'order_process'])->name('admin.order_change');
+    Route::post('order/destroy', [OrderController::class, 'destroy'])->name('admin.order.destroy');
+    Route::get('order-status', [OrderController::class, 'order_status'])->name('admin.order.status');
+    Route::get('order/{id}/details', [OrderController::class, 'order_details'])->name('admin.order.details');
+    Route::post('order/change', [OrderController::class, 'order_process'])->name('admin.order_change');
+    Route::post('message/update', [OrderController::class, 'message_update'])->name('admin.message.update');
+    Route::get('message/reload', [OrderController::class, 'message_reload'])->name('admin.message.reload');
+    Route::post('message/active', [OrderController::class, 'message_active'])->name('admin.message.active');
+    Route::post('order/change-status', [OrderController::class, 'change_status'])->name('admin.order.status_change');
+    Route::get('order/image-zip', [OrderController::class, 'downloadImagesAsZip'])->name('admin.image.zip');
+
+    Route::get('order/create', [OrderController::class, 'order_create'])->name('admin.order.create');
+    Route::post('order/store', [OrderController::class, 'order_store'])->name('admin.order.store');
+    Route::post('order/cart-add', [OrderController::class, 'cart_add'])->name('admin.order.cart_add');
+    Route::get('order/cart-content', [OrderController::class, 'cart_content'])->name('admin.order.cart_content');
+    Route::get('order/cart-increment', [OrderController::class, 'cart_increment'])->name('admin.order.cart_increment');
+    Route::get('order/cart-decrement', [OrderController::class, 'cart_decrement'])->name('admin.order.cart_decrement');
+    Route::get('order/cart-remove', [OrderController::class, 'cart_remove'])->name('admin.order.cart_remove');
+    Route::get('order/cart-details', [OrderController::class, 'cart_details'])->name('admin.order.cart_details');
+    Route::get('order/cart-clear', [OrderController::class, 'cart_clear'])->name('admin.order.cart_clear');
+    Route::get('order/members', [OrderController::class, 'members'])->name('admin.order.members');
+    Route::post('order/member-add', [OrderController::class, 'member_add'])->name('admin.order.member_add');
+
 });

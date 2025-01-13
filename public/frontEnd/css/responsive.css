@@ -18,6 +18,9 @@
 }
 
 @media only screen and (min-width: 320px) and (max-width: 767px) {
+    .order-content-inner {
+        padding: 20px;
+    }
     .slider-content {
         padding: 40px 10px;
         padding-right: 0;
@@ -564,6 +567,121 @@
     }
     .fixed_whats {
         display: none;
+    }
+
+    .user-sidebar {
+        visibility: hidden;
+        opacity: 0;
+        left: -200px;
+        transition: 0.35s all;
+    }
+    .user-sidebar.active {
+        position: fixed;
+        top: 0;
+        left: 0;
+        visibility: visible;
+        opacity: 1;
+        display: block;
+        background: #fff;
+        height: 100%;
+        z-index: 9999999;
+    }
+
+    /* ==== user panel css start ===   */
+    .website-logo img {
+        width: 60px;
+    }
+    .user-logo img {
+        width: auto;
+        height: 25px;
+    }
+
+    .user-logo {
+        text-align: center;
+    }
+    .user-mheader {
+        display: block;
+    }
+
+    .user-container {
+        padding-left: 0;
+        padding-bottom: 80px;
+    }
+    .user-header {
+        display: none;
+    }
+    .user-mheader {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        align-items: center;
+        padding: 15px 20px;
+        background: #fff;
+    }
+    .user-toggle button {
+        color: var(--primary-color);
+        font-size: 20px;
+    }
+
+    .user-footer {
+        background: #fff;
+        z-index: 999;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: block;
+    }
+
+    .user-footer ul {
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
+        align-items: center;
+        padding: 12px 0;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .parcel-counter {
+        grid-template-columns: repeat(2,1fr);
+        gap: 15px;
+    }
+
+    .counter-item a {
+        grid-template-columns: 1fr;
+        align-items: center;
+        justify-items: center;
+        padding: 0;
+    }
+    .counter-item .icon i {
+        font-size: 30px;
+    }
+    .counter-item h6 {
+        font-weight: 600;
+        text-align: center;
+        margin: 10px;
+        font-size: 1.4rem;
+    }
+    .user-footer ul li {
+        text-align: center;
+    }
+
+    .user-footer ul li p {
+        text-align: center;
+        color: #777 !important;
+    }
+    .user-footer ul li.active p {
+        color: var(--primary-color) !important;
+    }
+
+    .user-footer ul li a i {
+        font-size: 18px;
+        color: #555;
+        border-radius: 50px;
+        height: 35px;
+        width: 36px;
+        line-height: 35px;
+        text-align: center;
+    }
+    .user-footer ul li.active i {
+        background: var(--primary-color);
+        color: #fff;
     }
 }
 

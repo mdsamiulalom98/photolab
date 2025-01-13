@@ -144,7 +144,7 @@
                         </div>
                         <div class="col-sm-6">
                             @foreach ($counters as $key => $value)
-                                <div class="counter-item">
+                                <div class="counter-item mb-3">
                                     <div class="counter-icon">
                                         <i class="{{ $value->icon }}"></i>
                                     </div>
