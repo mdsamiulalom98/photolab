@@ -75,15 +75,17 @@
                         </div> --}}
                     </div>
                 </div>
+                {{-- status change --}}
+                @if ($order->orderimages->count() > 0)
                 <div class="card custom--card mb-4">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="">Images </h5>
                             <a class="btn btn-outline-success btn-sm"
-                                href="{{ route('member.image.zip', ['id' => $order->id]) }}">
+                            href="{{ route('member.image.zip', ['id' => $order->id]) }}">
                                 <i class="fa fa-download"></i> Download Images</a>
+                            </div>
                         </div>
-                    </div>
                     <div class="card-body">
                         <div class="row order-images-row">
                             @foreach ($order->orderimages as $key => $value)
@@ -104,6 +106,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 {{-- status change --}}
                 <div class="card custom--card mb-4">
                     <div class="card-header">

@@ -258,7 +258,7 @@ class OrderController extends Controller
     }
     public function cart_remove(Request $request)
     {
-        $remove = Cart::instance('sale')->remove($request->id);
+        Cart::instance('sale')->remove($request->id);
         $cartinfo = Cart::instance('sale')->content();
         return response()->json($cartinfo);
     }
