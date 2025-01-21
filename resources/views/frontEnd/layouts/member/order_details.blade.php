@@ -25,7 +25,7 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 username <span class="fw-bold"><a
-                                        href="https://script.viserlab.com/cliplab/admin/users/detail/208">{{ $order->member->name ?? '' }}</a></span>
+                                        >{{ $order->member->name ?? '' }}</a></span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Services <span class="fw-bold">
@@ -34,12 +34,7 @@
                                     @endforeach
                                 </span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Plan <span class="fw-bold">Medium</span>
-                            </li>
-                            {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Minimum image quantity <span class="fw-bold">4</span>
-                            </li> --}}
+                            
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Images <span class="fw-bold">{{ $order->orderimages->count() ?? 0 }}</span>
                             </li>
@@ -58,21 +53,7 @@
 
                         </ul>
 
-                        {{-- <div class="d-flex justify-content-end mt-4">
-                            <button class="btn btn-outline--success btn-sm ms-1 confirmationBtn"
-                                data-action="https://script.viserlab.com/cliplab/admin/order/165/approve"
-                                data-question="Are you sure to approve this order?"><i
-                                    class="las la-check-double"></i>Approve</button>
 
-                            <button class="btn btn-outline--warning btn-sm ms-1 changePlanBtn" data-action=""
-                                data-question=""><i class="las la-cog"></i>Change Plan</button>
-
-                            <button class="btn btn-outline--danger btn-sm ms-1 confirmationBtn"
-                                data-action="https://script.viserlab.com/cliplab/admin/order/165/reject"
-                                data-question="Are you sure you want to reject/cancel this order? "><i
-                                    class="las la-ban"></i>
-                                Cancel</button>
-                        </div> --}}
                     </div>
                 </div>
                 {{-- status change --}}

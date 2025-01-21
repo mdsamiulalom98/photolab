@@ -86,8 +86,8 @@
                                     <li><a href="{{ route('portfolios') }}">Portfolios</a></li>
                                     <li><a href="{{ route('pricings') }}">Pricing</a></li>
                                     <li><a href="{{ route('faqs') }}">FAQs</a></li>
-                                    <li><a href="{{ route('home') }}">Get a quoat</a></li>
-                                    <li><a href="{{ route('home') }}">free trial</a></li>
+                                    <li><a href="{{ route('get.quote') }}">Get a quoat</a></li>
+                                    <li><a href="{{ route('free.trial') }}">free trial</a></li>
                                     <li>
                                         <a href="{{ route('home') }}" class="order_btn">
                                             <i class="fa-solid fa-shopping-cart"></i>
@@ -136,7 +136,6 @@
             <ul class="mobile-nav">
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('about_us') }}">About Us</a></li>
-                <li><a href="{{ route('services') }}">Services</a></li>
                 <li>
                     <button class="" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
                         aria-expanded="false" aria-controls="collapseExample">
@@ -157,12 +156,7 @@
                 <li><a href="{{ route('faqs') }}">FAQs</a></li>
                 <li><a href="{{ route('home') }}">Get a quoat</a></li>
                 <li><a href="{{ route('home') }}">free trial</a></li>
-                <li>
-                    <a href="{{ route('home') }}" class="order_btn">
-                        <i class="fa-solid fa-shopping-cart"></i>
-                        Order
-                    </a>
-                </li>
+
             </ul>
         </div>
     </div>
@@ -296,8 +290,8 @@
         {!! Toastr::message() !!}
     <script>
         /*-----------------------------
-                                    -------  twentytwenty  --------
-                                    ------------------------------*/
+        -------  twentytwenty  --------
+        ------------------------------*/
         $(window).on('load', function() {
             $(".portfolio-images").twentytwenty({
                 before_label: '',

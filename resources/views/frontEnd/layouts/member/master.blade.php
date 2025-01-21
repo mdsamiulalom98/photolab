@@ -224,14 +224,14 @@
         $(document).ready(function() {
             $('.user-toggle').on('click', function() {
                 $('.user-sidebar').addClass('active');
-                $('#page-overlay').show();
+                $('#page-overlay').addClass('active');
             });
             $('.search_toggle').on('click', function() {
                 $('.consignment_msearch').addClass('active');
-                $('#page-overlay').show();
+                $('#page-overlay').addClass('active');
             });
             $("#page-overlay,.fa-times").on("click", function() {
-                $("#page-overlay").hide();
+                $("#page-overlay").removeClass('active');
                 $(".user-sidebar").removeClass("active");
                 $(".consignment_msearch").removeClass("active");
             });

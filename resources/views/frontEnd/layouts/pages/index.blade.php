@@ -13,6 +13,7 @@
     <meta property="og:description" content="{{ $generalsetting->meta_description }}" />
 @endpush
 @section('content')
+
     <!-- SLIDER SECTION START -->
     <section class="slider-section">
         <div class="main-slider owl-carousel">
@@ -148,8 +149,8 @@
                                     <div class="counter-icon">
                                         <i class="{{ $value->icon }}"></i>
                                     </div>
-                                    <div class="counter-count">
-                                        <h1>{{ $value->counter }}</h1>
+                                    <div class="counter-count ">
+                                        <h1 class="count-number" data-duration="1500">{{ $value->counter }}</h1>
                                         <p>{{ $value->title }}</p>
                                     </div>
                                 </div>
@@ -212,7 +213,11 @@
             @endforeach
         </div>
     </div>
-
+    @php
+        $count = $testimonials->count();
+        $grid = $count == 2 ? 'template-2' : ($count == 3 ? 'template-3' : 'template-1');
+        $class = $count > 2 ? 'testimonial-carousel owl-carousel' : 'd-grid ' . $grid;
+    @endphp
     <section class="testimonial-area">
         <div class="container">
             <div class="row justify-content-center">
@@ -228,7 +233,7 @@
             <!-- testimonial -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="testimonial-carousel owl-carousel" id="testimonialCarousel">
+                    <div class="{{ $class }}" id="testimonialCarousel">
                         @foreach ($testimonials as $key => $value)
                             <div class="single-testimonial-item">
                                 <div class="description">

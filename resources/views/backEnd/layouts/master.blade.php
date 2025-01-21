@@ -82,7 +82,8 @@
                         <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown"
                             href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="fe-message-square noti-icon"></i>
-                            <span class="badge bg-danger rounded-circle noti-icon-badge">{{ $pending_messages->count() }}</span>
+                            <span
+                                class="badge bg-danger rounded-circle noti-icon-badge">{{ $pending_messages->count() }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-lg">
                             <!-- item-->
@@ -106,7 +107,7 @@
                                             <img src="{{ asset($pending->member->image ?? '') }}"
                                                 class="img-fluid rounded-circle" alt="" />
                                         </div>
-                                        <p class="notify-details">{{ $pending->member->name ?? ''}}
+                                        <p class="notify-details">{{ $pending->member->name ?? '' }}
                                         </p>
                                         <p class="text-muted mb-0 user-msg">
                                             <small>Message : {{ $pending->message }}</small>
@@ -259,6 +260,28 @@
                                 <span> Dashboard </span>
                             </a>
                         </li>
+                        <li>
+                            <a href="#sidebar-trial" data-bs-toggle="collapse">
+                                <i data-feather="shopping-cart"></i>
+                                <span> Trial Orders </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebar-trial">
+                                <ul class="nav-second-level">
+                                    <li>
+                                        <a href="{{ route('admin.trials', ['type' => 1]) }}"><i
+                                                data-feather="minus"></i> Get Quote</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.trials', ['type' => 2]) }}"><i
+                                                data-feather="minus"></i> Free Trial</a>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items -->
                         <li>
                             <a href="#sidebar-createOrders" data-bs-toggle="collapse">
                                 <i data-feather="shopping-cart"></i>
@@ -841,6 +864,37 @@
     <script src="{{ asset('public/backEnd/') }}/assets/js/toastr.min.js"></script>
     {!! Toastr::message() !!}
     <script src="{{ asset('public/backEnd/') }}/assets/js/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $(".delete-confirm").click(function(event) {
+            var form = $(this).closest("form");
+            event.preventDefault();
+            swal({
+                title: `Are you sure you want to delete this record?`,
+                text: "If you delete this, it will be gone forever.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+        });
+        $(".change-confirm").click(function(event) {
+            var form = $(this).closest("form");
+            event.preventDefault();
+            swal({
+                title: `Are you sure you want to change this record?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
     @yield('script')
 </body>
 

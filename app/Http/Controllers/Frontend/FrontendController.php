@@ -23,6 +23,8 @@ use App\Models\Testimonial;
 use App\Models\Portfolio;
 use App\Models\PortfolioCategory;
 use App\Models\Faq;
+use App\Models\TrialOrder;
+use App\Models\Trialimage;
 use Cache;
 use DB;
 use Log;
@@ -121,5 +123,57 @@ class FrontendController extends Controller
     {
         $pageinfo = CreatePage::where('slug', $slug)->first();
         return view('frontEnd.layouts.pages.morepages', compact('pageinfo'));
+    }
+
+    public function free_trial() {
+        $services = Service::where('status', 1)->get();
+        return view('frontEnd.layouts.pages.freetrial', compact('services'));
+    }
+
+    public function get_quote() {
+        $services = Service::where('status', 1)->get();
+        return view('frontEnd.layouts.pages.getquote', compact('services'));
+    }
+
+
+
+    public function free_trial_store(Request $request) {
+        $services = $request->services;
+
+        $trial_order = new TrialOrder();
+        $trial_order->name = $request->name;
+        $trial_order->email = $request->email;
+        $trial_order->type = $request->type;
+        $trial_order->phone = $request->phone;
+        $trial_order->country = $request->country;
+        $trial_order->company = $request->company;
+        $trial_order->website = $request->website;
+        $trial_order->services = json_encode($services);
+        $trial_order->image_size = $request->image_size;
+        $trial_order->width = $request->width;
+        $trial_order->height = $request->height;
+        $trial_order->quantity = $request->quantity;
+        $trial_order->margin = $request->margin;
+        $trial_order->message = $request->message;
+        $trial_order->pre_delivery_time = $request->pre_delivery_time;
+        $trial_order->save();
+
+        $images = $request->file('image');
+        if ($images) {
+            foreach ($images as $key => $image) {
+                $name = time() . '-' . $image->getClientOriginalName();
+                $name = strtolower(preg_replace('/\s+/', '-', $name));
+                $uploadPath = 'public/uploads/trial/';
+                $image->move($uploadPath, $name);
+                $imageUrl = $uploadPath . $name;
+
+                $oimage = new Trialimage();
+                $oimage->trial_id = $trial_order->id;
+                $oimage->image = $imageUrl;
+                $oimage->save();
+            }
+        }
+
+        return redirect()->route('home');
     }
 }

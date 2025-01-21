@@ -733,9 +733,22 @@ div#customerItems {
 #datatable-buttons tbody {
     background-color: #f1f1f1;
 }
-
+.footer {
+    background-color: #071251;
+    left: 0;
+}
+body[data-leftbar-size=condensed] .footer {
+    left: 0px!important;
+    margin-left: 0;
+}
 @media only screen and (min-width: 320px) and (max-width: 767px) {
+    body[data-leftbar-size=condensed]:not([data-layout=compact]) .navbar-custom {
+        margin-left: 0;
+    }
     .navbar-custom, .content-page {
+        margin-left: 0;
+    }
+    footer {
         margin-left: 0;
     }
 }

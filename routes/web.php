@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\PortfolioCategoryController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\HowItWorkController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\TrialOrderController;
 
 Auth::routes();
 
@@ -56,6 +57,9 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['check_refer']], funct
     Route::get('pricing', [FrontendController::class, 'pricings'])->name('pricings');
     Route::get('contact', [FrontendController::class, 'contact'])->name('contact');
     Route::get('page/{slug}', [FrontendController::class, 'page'])->name('page');
+    Route::get('free-trial', [FrontendController::class, 'free_trial'])->name('free.trial');
+    Route::get('get-quote', [FrontendController::class, 'get_quote'])->name('get.quote');
+    Route::post('free-trial-store', [FrontendController::class, 'free_trial_store'])->name('order.free_trial');
 
     // ajax routes
     Route::get('ajax-services', [FrontendController::class, 'ajax_services'])->name('ajax.services');
@@ -430,4 +434,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::get('order/members', [OrderController::class, 'members'])->name('admin.order.members');
     Route::post('order/member-add', [OrderController::class, 'member_add'])->name('admin.order.member_add');
 
+    Route::get('trial/index', [TrialOrderController::class, 'index'])->name('admin.trials');
+    Route::get('trial/{id}/details', [TrialOrderController::class, 'trial_details'])->name('admin.trial.details');
+    Route::get('trial/image-zip', [TrialOrderController::class, 'downloadImagesAsZip'])->name('admin.trial.zip');
 });
