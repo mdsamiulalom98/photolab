@@ -20,9 +20,9 @@
             <div class="row">
                 <div class="col-sm-12 text-right wow zoomIn">
                     <div class="button-group portfolio-isotop-btn">
-                        <button data-filter="*" >all</button>
+                        <button data-filter="*" class="active" >all</button>
                         @foreach ($pcategories as $key => $value)
-                            <button data-filter=".{{ $value->slug }}" class="{{ $key == 0 ? 'active' : '' }}">{{ $value->name }}</button>
+                            <button data-filter=".{{ $value->slug }}" >{{ $value->name }}</button>
                         @endforeach
                     </div>
                 </div>
@@ -31,8 +31,9 @@
                 <div class="col-sm-12">
                     <div class="portfolio-inner">
                         <div class="row">
+
                             @foreach ($portfolios as $key => $value)
-                                <div class=" col-sm-3 single-portfolio {{ $value->category->slug ?? '' }} " style="{{ $key == 0 ? 'display: block' : '' }}">
+                                <div class=" col-sm-3 single-portfolio {{ $value->category->slug ?? '' }} " style="">
                                     <div class="portfolio-item twentytwenty-container portfolio-images">
                                         <img src="{{ asset($value->image_one) }}" alt="">
                                         <img src="{{ asset($value->image_two) }}" alt="">

@@ -1,7 +1,7 @@
 @extends('backEnd.layouts.master')
 @section('title', 'Customer Account')
 @section('css')
-<link rel="stylesheet" href="{{ asset('public/frontEnd/css/lightcase.css') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/lightcase.css') }}" />
 @endsection
 @section('content')
     <div class="page-header">
@@ -10,7 +10,7 @@
     <div class="page-content sm-order-1">
         <div class="row">
             <div class="col-xl-6 col-md-6 mb-30">
-                <div class="card b-radius--10 box--shadow1 mb-4 overflow-hidden">
+                <div class="card b-radius-10 box-shadow1 mb-4 overflow-hidden">
                     <div class="card-header">
                         <h5 class="">Details</h5>
 
@@ -24,8 +24,7 @@
                                 Order ID <span class="fw-bold">{{ $order->order_name }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                username <span class="fw-bold"><a
-                                        >{{ $order->member->name ?? '' }}</a></span>
+                                username <span class="fw-bold"><a>{{ $order->member->name ?? '' }}</a></span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Services <span class="fw-bold">
@@ -34,7 +33,7 @@
                                     @endforeach
                                 </span>
                             </li>
-                            
+
                             {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Minimum image quantity <span class="fw-bold">4</span>
                             </li> --}}
@@ -47,23 +46,39 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Status <span class="fw-bold"><span
-                                        class="badge bg-warning">{{ $order->status->name ?? '' }}</span></span>
+                                        class="badge {{ $order->status->color ?? 'bg-dark' }} font-12" >{{ $order->status->name ?? '' }}</span></span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Payment Status <span class="fw-bold"><span
-                                        class="badge bg-warning">{{ $order->payment->payment_status ?? '' }}</span></span>
+                                        class="badge bg-warning font-12">{{ $order->payment->payment_status ?? '' }}</span></span>
                             </li>
 
                         </ul>
+                        <div class="d-flex justify-content-end mt-4">
+                            @if ($order->order_status == 1)
+                                <button class="btn btn-outline-success btn-sm ms-1 confirmationBtn"
+                                    data-action="{{ route('admin.order.approve') }}"
+                                    data-question="Are you sure to approve this order?"><i
+                                        class="fa fa-check-circle px-1"></i>Approve</button>
+                            @endif
+
+                            @if ($order->order_status < 7)
+                                <button class="btn btn-outline-danger btn-sm ms-1 confirmationBtn"
+                                    data-action="{{ route('admin.order.reject') }}"
+                                    data-question="Are you sure you want to reject/cancel this order? "><i
+                                        class="fa fa-cancel px-1"></i> Cancel</button>
+                            @endif
+                        </div>
 
 
                     </div>
                 </div>
-                <div class="card custom--card">
+                <div class="card custom-card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="">Images </h5>
-                            <a class="btn btn-outline-primary btn-sm" href="{{ route('admin.image.zip', ['id' => $order->id]) }}">
+                            <a class="btn btn-outline-primary btn-sm"
+                                href="{{ route('admin.image.zip', ['id' => $order->id]) }}">
                                 <i class="fa fa-download"></i> Download Images</a>
                         </div>
                     </div>
@@ -89,7 +104,7 @@
                 </div>
 
                 {{-- status change --}}
-                <div class="card custom--card mb-4">
+                <div class="card custom-card mb-4">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="">Change Status </h5>
@@ -99,7 +114,7 @@
                     <div class="card-body">
                         <div class="row order-images-row">
                             <div class="col-sm-12">
-                                <form action="{{ route('admin.order.status_change') }}" method="POST" >
+                                <form action="{{ route('admin.order.status_change') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="order_id" value="{{ $order->id }}">
                                     <div class="form-group mb-3">
@@ -110,7 +125,10 @@
 
                                             <option value="">Select..</option>
                                             @foreach ($orderstatus as $value)
-                                                <option value="{{ $value->id }}" {{ $value->id <= $order->order_status ? 'disabled' : '' }} {{ $value->id == $order->order_status ? 'selected' : ''  }}>{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}"
+                                                    {{ $value->id <= $order->order_status ? 'disabled' : '' }}
+                                                    {{ $value->id == $order->order_status ? 'selected' : '' }}>
+                                                    {{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('order_status')
@@ -130,14 +148,14 @@
                 </div>
             </div>
             <div class="col-xl-6 col-md-6 mb-30">
-                <div class="chat-widget height--fix">
+                <div class="chat-widget height-fix">
                     <div class="chat-widget-header">
                         <div class="left">
                             <h4 class="title mb-0 text-white">
                                 Chat </h4>
                         </div>
                         <div class="right">
-                            <button class="btn btn--primary chat-reload rounded text-white" type="button">
+                            <button class="btn btn-primary chat-reload rounded text-white" type="button">
                                 <i class="fa fa-rotate"></i>
                             </button>
                         </div>
@@ -172,6 +190,30 @@
             </div>
         </div>
     </div>
+
+    <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation Alert!</h5>
+                    <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <form method="POST">
+                    @csrf
+                    <input type="hidden" name="order_id" value="{{ $order->id }}" />
+                    <div class="modal-body">
+                        <p class="question"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary bg-base">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -188,7 +230,7 @@
             message_update(order_id);
             setInterval(() => {
                 message_update(order_id);
-            }, 2000);
+            }, 10000);
         });
 
         function message_update(id) {
@@ -210,5 +252,17 @@
                 },
             });
         }
+    </script>
+    <script>
+        (function($) {
+            "use strict";
+            $(document).on('click', '.confirmationBtn', function() {
+                var modal = $('#confirmationModal');
+                let data = $(this).data();
+                modal.find('.question').text(`${data.question}`);
+                modal.find('form').attr('action', `${data.action}`);
+                modal.modal('show');
+            });
+        })(jQuery);
     </script>
 @endsection

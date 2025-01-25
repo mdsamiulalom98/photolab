@@ -54,7 +54,6 @@ class SliderController extends Controller
 
         $input = $request->all();
         $input['image'] = $imageUrl;
-
         $user = Slider::create($input);
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('slider.index');
@@ -74,9 +73,7 @@ class SliderController extends Controller
         ]);
 
         $update_data = Slider::find($request->hidden_id);
-
-
-
+        $input = $request->except('hidden_id');
         // new image
         $image = $request->file('image');
         if($image){
@@ -101,6 +98,7 @@ class SliderController extends Controller
             $input['image'] = $update_data->image;
         }
         $input['status'] = $request->status?1:0;
+        // return $input;
         $update_data->update($input);
 
         Toastr::success('Success','Data update successfully');

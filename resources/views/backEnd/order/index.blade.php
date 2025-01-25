@@ -10,10 +10,10 @@
             <div class="col-12">
                 <div class="page-title-box">
                     <div class="page-title-right">
-                        <a href="{{ route('admin.order.create', ['type' => $type]) }}" class="btn btn-danger rounded-pill"><i
+                        <a href="{{ route('admin.order.create', ['type' => 'seller']) }}" class="btn btn-danger rounded-pill"><i
                                 class="fe-shopping-cart"></i> Add New</a>
                     </div>
-                    <h4 class="page-title">{{ $order_status->name }} Order ({{ $order_status->orders_count }})</h4>
+                    <h4 class="page-title">{{ $order_status->name }} Order ({{ $show_data->count() }})</h4>
                 </div>
             </div>
         </div>

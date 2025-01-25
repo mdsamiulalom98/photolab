@@ -66,7 +66,7 @@ class AppServiceProvider extends ServiceProvider
             $allservices = Service::where('status', 1)->limit(6)->orderBy('id', 'DESC')->select('id', 'title', 'slug', 'status', 'image')->get();
             $allhowitworks = HowItWork::where('status', 1)->limit(4)->get();
             $pending_messages = Message::where('status', 0)->whereNot('username', 'admin')->get();
-
+            
             $view->with([
                 'generalsetting' => $generalsetting,
                 'categories' => $categories,

@@ -415,7 +415,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('order/destroy', [OrderController::class, 'destroy'])->name('admin.order.destroy');
     Route::get('order-status', [OrderController::class, 'order_status'])->name('admin.order.status');
     Route::get('order/{id}/details', [OrderController::class, 'order_details'])->name('admin.order.details');
-    Route::post('order/change', [OrderController::class, 'order_process'])->name('admin.order_change');
+    Route::post('order/approve', [OrderController::class, 'order_approve'])->name('admin.order.approve');
+    Route::post('order/reject', [OrderController::class, 'order_reject'])->name('admin.order.reject');
     Route::post('message/update', [OrderController::class, 'message_update'])->name('admin.message.update');
     Route::get('message/reload', [OrderController::class, 'message_reload'])->name('admin.message.reload');
     Route::post('message/active', [OrderController::class, 'message_active'])->name('admin.message.active');

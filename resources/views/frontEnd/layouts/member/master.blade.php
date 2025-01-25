@@ -23,6 +23,12 @@
 <body>
     @php
         $member = Auth::guard('member')->user();
+        $my_messasges = \App\Models\Message::where([
+            'status' => 0,
+            'recipient_id' => $member->id,
+            'username' => 'admin',
+        ])
+            ->get();
     @endphp
     <div class="user-panel">
         <div class="user-sidebar">
@@ -63,15 +69,17 @@
                         </li>
                     @endif
                     @if ($member->type == 'buyer')
-                    <li>
-                        <a href="{{ route('member.order.create') }}"
-                            class="{{ request()->is('order') ? 'active' : '' }}"><i class="fa-solid fa-shopping-cart"></i>
-                            Order Create</a>
-                    </li>
+                        <li>
+                            <a href="{{ route('member.order.create') }}"
+                                class="{{ request()->is('order') ? 'active' : '' }}"><i
+                                    class="fa-solid fa-shopping-cart"></i>
+                                Order Create</a>
+                        </li>
                     @endif
                     <li>
                         <a href="{{ route('member.orders', ['slug' => 'pending']) }}"
-                            class="{{ request()->is('orders') ? 'active' : '' }}"><i class="fa-solid fa-shopping-cart"></i>
+                            class="{{ request()->is('orders') ? 'active' : '' }}"><i
+                                class="fa-solid fa-shopping-cart"></i>
                             Orders</a>
                     </li>
                     <li>
@@ -117,14 +125,16 @@
                         <li><a href="" class="notify-icon"><i class="fa-solid fa-file-invoice"></i>
                                 <span>0</span></a></li>
                         <li class="dropdown"><a class="notify-icon" role="button" data-bs-toggle="dropdown"><i
-                                    class="fa-solid fa-bell"></i><span>0</span></a>
+                                    class="fa-solid fa-bell"></i><span>{{ $my_messasges->count() }}</span></a>
                             <ul class="dropdown-menu nofity-dropdown dropdown-menu-end">
+                                @foreach ($my_messasges as $order)
 
-                                <li><a href="" class="fw-bold"><i class="fa-solid fa-bell"></i>
-                                        <p>test <span>0</span></p>
+                                <li class="d-block py-2">
+                                    <a href="{{ route('member.order.details', $order->order_id) }}" class="fw-bold"><i class="fa-solid fa-bell"></i>
+                                        <p>{{ $order->message }} </p>
                                     </a></li>
-                                <li class="d-block"><a href="{{ route('member.notification') }}"
-                                        class="d-block text-center "> See All</a></li>
+                                    @endforeach
+
                             </ul>
                         </li>
                     </ul>
@@ -139,7 +149,8 @@
                                         Account</a></li>
                                 <li><a href="{{ route('member.settings') }}"><i class="fa-solid fa-cog"></i>
                                         Setting</a></li>
-                                <li><a href="{{ route('member.change_pass') }}"><i class="fa-solid fa-key"></i> Change
+                                <li><a href="{{ route('member.change_pass') }}"><i class="fa-solid fa-key"></i>
+                                        Change
                                         Password</a></li>
                                 <li><a href="{{ route('member.logout') }}"
                                         onclick="event.preventDefault();

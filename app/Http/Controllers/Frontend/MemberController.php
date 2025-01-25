@@ -452,11 +452,13 @@ class MemberController extends Controller
         $order = Order::where(['id' => $id, 'member_id' => Auth::guard('member')->user()->id])->with('orderdetails', 'payment', 'shipping', 'member')->firstOrFail();
         $payment = Payment::where(['order_id' => $order->id])->first();
         $messages = Message::where('order_id', $order->id)->get();
-        // return $payment;
+        // $messages = Message::where(['order_id' => $request->id, 'status'=> 0])->where('username', 'admin')->select('id', 'order_id', 'status')->get();
+        // return $messages;
         return view('frontEnd.layouts.member.order_details', compact('order', 'payment', 'messages'));
     }
     public function message_reload(Request $request)
     {
+        Message::where(['order_id' => $request->id, 'status'=> 0])->where('username', 'admin')->select('id', 'order_id', 'status')->update(['status'=>1]);
         $messages = Message::where('order_id', $request->id)->get();
         return view('frontEnd.layouts.ajax.messages', compact('messages'));
     }

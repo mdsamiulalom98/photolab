@@ -214,6 +214,8 @@ class OrderController extends Controller
         Toastr::success('Thanks, Your order place successfully', 'Success!');
         return redirect()->route('admin.orders', ['slug' => 'all']);
     }
+
+
     public function cart_add(Request $request)
     {
         $cartinfo = Cart::instance('sale')->content();
@@ -273,6 +275,8 @@ class OrderController extends Controller
     {
         $order = Order::where(['id' => $id])->with('orderdetails')->first();
         $messages = Message::where('order_id', $order->id)->get();
+        // $messages = Message::where(['order_id' => $order->id, 'status'=> 0])->whereNot('username', 'admin')->select('id', 'order_id', 'status')->get();
+        // return $messages;
         return view('backEnd.order.details', compact('order', 'messages'));
     }
 
@@ -415,6 +419,7 @@ class OrderController extends Controller
         return redirect()->back();
     }
     public function message_reload(Request $request) {
+        Message::where(['order_id' => $request->id, 'status'=> 0])->whereNot('username', 'admin')->select('id', 'order_id', 'status')->update(['status'=>1]);
         $messages = Message::where('order_id',$request->id)->get();
         return view('backEnd.order.messages', compact('messages'));
     }
@@ -426,7 +431,6 @@ class OrderController extends Controller
         $order->save();
         return redirect()->back();
     }
-
 
     public function downloadImagesAsZip(Request $request)
     {
@@ -451,4 +455,20 @@ class OrderController extends Controller
         }
         return redirect()->back();
     }
+
+    public function order_approve(Request $request) {
+        $order_data = Order::where('id' , $request->order_id)->first();
+        $order_data->order_status = 2;
+        $order_data->save();
+        Toastr::success('Success', 'Order status change successfully');
+        return redirect()->back();
+    }
+    public function order_reject(Request $request) {
+        $order_data = Order::where('id' , $request->order_id)->first();
+        $order_data->order_status = 7;
+        $order_data->save();
+        Toastr::success('Success', 'Order status change successfully');
+        return redirect()->back();
+    }
 }
+

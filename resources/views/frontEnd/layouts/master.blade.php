@@ -44,7 +44,7 @@
                         <div class="header-social">
                             <ul>
                                 @foreach ($socialicons as $social)
-                                    <li><a href="{{ $social->link }}"><i class="{{ $social->icon }}"></i></a></li>
+                                    <li><a href="{{ $social->link }}" target="_blank"><i class="{{ $social->icon }}"></i></a></li>
                                 @endforeach
                                 <li><a href="{{ Auth::guard('member')->user() ? route('member.dashboard') : route('member.login') }}"><i class="fa-solid fa-user"></i> {{ Auth::guard('member')->user()->name ?? 'Login' }}</a></li>
                             </ul>
@@ -312,9 +312,9 @@
     </script>
     <script>
         $('#portfolio').imagesLoaded(function() {
-            var $grid = $('.grid').isotope({
-                // options
-            });
+            // var $grid = $('.grid').isotope({
+            //     // options
+            // });
             $('.portfolio-isotop-btn').on('click', 'button', function() {
                 $('button').removeClass("active");
                 $(this).addClass("active");

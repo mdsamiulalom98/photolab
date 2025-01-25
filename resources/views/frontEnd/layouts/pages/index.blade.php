@@ -26,8 +26,8 @@
                                     <p>{{ $value->sub_title }}</p>
                                     <h2>{{ $value->title }}</h2>
                                     <ul>
-                                        <li><a href="" class="quote_btn">Get a quote</a></li>
-                                        <li><a href="" class="trial_btn">Get free trial</a></li>
+                                        <li><a href="{{ route('get.quote') }}" class="quote_btn">Get a quote</a></li>
+                                        <li><a href="{{ route('free.trial') }}" class="trial_btn">Get free trial</a></li>
                                     </ul>
                                 </div>
                             </div>

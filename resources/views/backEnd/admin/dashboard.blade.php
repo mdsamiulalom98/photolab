@@ -24,39 +24,19 @@
         <!-- end page title -->
 
         <div class="row">
+
             <div class="col-md-6 col-xl-4">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body border border-success rounded">
                         <div class="row">
                             <div class="col-6">
-                                
-                                    <h3 class="text-dark my-1 taka-sign"><span data-plugin="counterup"></span></h3>
-                                    <p class="text-muted mb-1 text-truncate">Total Sales</p>
-                                
+                                <h3 class="text-dark my-1 "><span data-plugin="counterup">{{ $total_orders }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Total Orders</p>
                             </div>
                             <div class="col-6">
                                 <div class="float-right">
-                                    <div class="avatar-sm bg-blue rounded">
-                                        <i class="fe-pie-chart avatar-title font-22 text-white"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- end widget-rounded-circle-->
-            </div> <!-- end col-->
-            <div class="col-md-6 col-xl-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <h3 class="text-dark my-1 taka-sign"><span data-plugin="counterup"></span></h3>
-                                <p class="text-muted mb-1 text-truncate">This Month Sales</p>
-                            </div>
-                            <div class="col-6">
-                                <div class="float-right">
-                                    <div class="avatar-sm bg-blue rounded">
-                                        <i class="fe-bar-chart-2 avatar-title font-22 text-white"></i>
+                                    <div class="avatar-md bg-success bg-opacity-25 rounded">
+                                        <i class="fe-bar-chart-2 avatar-title font-22 text-success"></i>
                                     </div>
                                 </div>
                             </div>
@@ -66,16 +46,16 @@
             </div> <!-- end col-->
             <div class="col-md-6 col-xl-4">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body border border-secondary rounded">
                         <div class="row">
                             <div class="col-6">
-                                <h3 class="text-dark my-1 taka-sign"><span data-plugin="counterup"></span></h3>
-                                <p class="text-muted mb-1 text-truncate">Today Sales</p>
+                                <h3 class="text-dark my-1"><span data-plugin="counterup">{{ $buyer_orders }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Buyer Orders</p>
                             </div>
                             <div class="col-6">
                                 <div class="float-right">
-                                    <div class="avatar-sm bg-blue rounded">
-                                        <i class="fe-activity avatar-title font-22 text-white"></i>
+                                    <div class="avatar-md bg-secondary bg-opacity-25 rounded">
+                                        <i class="fe-activity avatar-title font-22 text-secondary"></i>
                                     </div>
                                 </div>
                             </div>
@@ -85,16 +65,36 @@
             </div> <!-- end col-->
             <div class="col-md-6 col-xl-4">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body border border-warning rounded">
                         <div class="row">
                             <div class="col-6">
-                                <h3 class="text-dark my-1"><span data-plugin="counterup"></span></h3>
-                                <p class="text-muted mb-1 text-truncate">Total Order</p>
+                                <h3 class="text-dark my-1"><span data-plugin="counterup">{{ $seller_orders }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Seller Orders</p>
                             </div>
                             <div class="col-6">
                                 <div class="float-right">
-                                    <div class="avatar-sm bg-blue rounded">
-                                        <i class="fe-shopping-cart avatar-title font-22 text-white"></i>
+                                    <div class="avatar-md bg-warning bg-opacity-25 rounded">
+                                        <i class="fe-shopping-cart avatar-title font-22 text-warning"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col-->
+            
+            <div class="col-md-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body border border-danger rounded">
+                        <div class="row">
+                            <div class="col-6">
+                                <h3 class="text-dark my-1"><span data-plugin="counterup">{{ $buyer_count }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Total Buyer</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="float-right">
+                                    <div class="avatar-md bg-danger bg-opacity-25 rounded">
+                                        <i class="fe-users avatar-title font-22 text-danger"></i>
                                     </div>
                                 </div>
                             </div>
@@ -104,35 +104,16 @@
             </div> <!-- end col-->
             <div class="col-md-6 col-xl-4">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body border-primary border rounded">
                         <div class="row">
                             <div class="col-6">
-                                <h3 class="text-dark my-1"><span data-plugin="counterup"></span></h3>
-                                <p class="text-muted mb-1 text-truncate">This Month Orders</p>
+                                <h3 class="text-dark my-1"><span data-plugin="counterup">{{ $seller_count }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Total Seller</p>
                             </div>
                             <div class="col-6">
                                 <div class="float-right">
-                                    <div class="avatar-sm bg-blue rounded">
-                                        <i class="fe-database avatar-title font-22 text-white"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- end col-->
-            <div class="col-md-6 col-xl-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <h3 class="text-dark my-1"><span data-plugin="counterup">0</span></h3>
-                                <p class="text-muted mb-1 text-truncate">Customers</p>
-                            </div>
-                            <div class="col-6">
-                                <div class="float-right">
-                                    <div class="avatar-sm bg-blue rounded">
-                                        <i class="fe-users avatar-title font-22 text-white"></i>
+                                    <div class="avatar-md bg-primary bg-opacity-25 rounded">
+                                        <i class="fe-users avatar-title font-22 text-primary"></i>
                                     </div>
                                 </div>
                             </div>

@@ -34,7 +34,7 @@
                                     @endforeach
                                 </span>
                             </li>
-                            
+
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Images <span class="fw-bold">{{ $order->orderimages->count() ?? 0 }}</span>
                             </li>
@@ -189,7 +189,7 @@
             message_update(order_id);
             setInterval(() => {
                 message_update(order_id);
-            }, 2000);
+            }, 10000);
         });
 
         function message_update(id) {

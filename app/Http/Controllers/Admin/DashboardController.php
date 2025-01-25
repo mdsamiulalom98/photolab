@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Brian2694\Toastr\Facades\Toastr;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Member;
+use App\Models\Order;
 
 class DashboardController extends Controller
 {
@@ -18,9 +18,12 @@ class DashboardController extends Controller
         // $this->middleware('auth')->except(['locked','unlocked']);
     }
     public function dashboard(){
-
-        return view('backEnd.admin.dashboard');
-
+        $buyer_count = Member::where(['status'=> 1, 'type'=>'buyer'])->count();
+        $seller_count = Member::where(['status'=> 1, 'type'=>'seller'])->count();
+        $total_orders = Order::count();
+        $buyer_orders = Order::where('order_type', 'buyer')->count();
+        $seller_orders = Order::where('order_type', 'seller')->count();
+        return view('backEnd.admin.dashboard', compact('seller_count', 'buyer_count', 'total_orders', 'buyer_orders', 'seller_orders'));
     }
     public function changepassword()
     {

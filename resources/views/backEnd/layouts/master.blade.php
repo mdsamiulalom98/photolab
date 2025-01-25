@@ -101,7 +101,7 @@
                             <div class="noti-scroll" data-simplebar>
                                 @foreach ($pending_messages as $pending)
                                     <!-- item-->
-                                    <a href="{{ route('admin.orders', ['slug' => 'pending']) }}"
+                                    <a href="{{ route('admin.order.details', ['id' => $pending->order_id]) }}"
                                         class="dropdown-item notify-item active">
                                         <div class="notify-icon">
                                             <img src="{{ asset($pending->member->image ?? '') }}"
@@ -232,7 +232,7 @@
                             <!-- item-->
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"
+                                document.getElementById('logout-form').submit();"
                                 class="dropdown-item notify-item">
                                 <i class="fe-log-out me-1"></i>
                                 <span>Logout</span>
@@ -254,6 +254,11 @@
                         </a>
                     </div>
                     <ul id="side-menu">
+                        @php
+                            $trial_orders = \App\Models\TrialOrder::select('id', 'type');
+                            $free_trial_count = (clone $trial_orders)->where('type', 1)->count();
+                            $get_quote_count = (clone $trial_orders)->where('type', 2)->count();
+                        @endphp
                         <li>
                             <a href="{{ url('admin/dashboard') }}">
                                 <i data-feather="home"></i>
@@ -261,27 +266,26 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#sidebar-trial" data-bs-toggle="collapse">
-                                <i data-feather="shopping-cart"></i>
-                                <span> Trial Orders </span>
-                                <span class="menu-arrow"></span>
+                            <a href="{{ route('admin.trials', ['type' => 2]) }}" class="d-flex align-items-center">
+                                <i class="fa-quote-left fa-solid"></i>
+                                <span>Get Quote</span>
+                                <span class="badge bg-danger ms-auto mt-0"
+                                    style="padding: 4px 6px 2px;">{{ $get_quote_count }} </span>
                             </a>
-                            <div class="collapse" id="sidebar-trial">
-                                <ul class="nav-second-level">
-                                    <li>
-                                        <a href="{{ route('admin.trials', ['type' => 1]) }}"><i
-                                                data-feather="minus"></i> Get Quote</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('admin.trials', ['type' => 2]) }}"><i
-                                                data-feather="minus"></i> Free Trial</a>
-                                    </li>
-
-
-                                </ul>
-                            </div>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.trials', ['type' => 1]) }}" class="d-flex align-items-center">
+                                <i class="fa-solid fa-gift"></i>
+                                <span> Free Trial </span>
+                                <span class="badge bg-danger ms-auto mt-0"
+                                    style="padding: 4px 6px 2px;">{{ $free_trial_count }} </span>
+                            </a>
+                        </li>
+
                         <!-- nav items -->
+                        @php
+                            $sellerorders = \App\Models\Order::select('id', 'order_type', 'order_status');
+                        @endphp
                         <li>
                             <a href="#sidebar-createOrders" data-bs-toggle="collapse">
                                 <i data-feather="shopping-cart"></i>
@@ -295,21 +299,38 @@
                                                 data-feather="minus"></i> Seller Order</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.orders', ['slug' => 'all', 'type' => 'seller']) }}"><i
-                                                data-feather="minus"></i> All Order</a>
+                                        <a href="{{ route('admin.orders', ['slug' => 'all', 'type' => 'seller']) }}"
+                                            class="d-flex align-items-center">
+                                            <i data-feather="minus"></i>
+                                            <span>All Order </span>
+                                            <span class="badge bg-danger ms-auto mt-0" style="padding: 4px 6px 2px;">
+                                                {{ $sellerorders->where('order_type', 'seller')->count() }}
+                                            </span>
+                                        </a>
                                     </li>
                                     @foreach ($orderstatus as $value)
+                                        @php
+                                            $order_count = $value->orders()->where('order_type', 'seller')->count();
+                                        @endphp
                                         <li>
-                                            <a
-                                                href="{{ route('admin.orders', ['slug' => $value->slug, 'type' => 'seller']) }}"><i
-                                                    data-feather="minus"></i>{{ $value->name }}</a>
+                                            <a href="{{ route('admin.orders', ['slug' => $value->slug, 'type' => 'seller']) }}"
+                                                class="d-flex align-items-center">
+                                                <i data-feather="minus"></i>
+                                                <span>{{ $value->name }}</span>
+                                                <span class="badge bg-info ms-auto mt-0"
+                                                    style="padding: 4px 6px 2px;">
+                                                    {{ $order_count }}
+                                                </span>
+                                            </a>
                                         </li>
                                     @endforeach
-
                                 </ul>
                             </div>
                         </li>
                         <!-- nav items -->
+                        @php
+                            $buyerorders = \App\Models\Order::select('id', 'order_type', 'order_status');
+                        @endphp
                         <li>
                             <a href="#sidebar-orders" data-bs-toggle="collapse">
                                 <i data-feather="shopping-cart"></i>
@@ -318,16 +339,31 @@
                             </a>
                             <div class="collapse" id="sidebar-orders">
                                 <ul class="nav-second-level">
-
                                     <li>
-                                        <a href="{{ route('admin.orders', ['slug' => 'all', 'type' => 'buyer']) }}"><i
-                                                data-feather="minus"></i> All Order</a>
+                                        <a href="{{ route('admin.orders', ['slug' => 'all', 'type' => 'buyer']) }}"
+                                            class="d-flex align-items-center">
+                                            <i data-feather="minus"></i>
+                                            <span>All Order </span>
+                                            <span class="badge bg-danger ms-auto mt-0" style="padding: 4px 6px 2px;">
+                                                {{ $buyerorders->where('order_type', 'buyer')->count() }}
+                                            </span>
+                                        </a>
                                     </li>
                                     @foreach ($orderstatus as $value)
                                         <li>
-                                            <a
-                                                href="{{ route('admin.orders', ['slug' => $value->slug, 'type' => 'buyer']) }}"><i
-                                                    data-feather="minus"></i>{{ $value->name }}</a>
+                                            @php
+                                                $order_count = $value->orders()->where('order_type', 'buyer')->count();
+                                            @endphp
+
+                                            <a href="{{ route('admin.orders', ['slug' => $value->slug, 'type' => 'buyer']) }}"
+                                                class="d-flex align-items-center">
+                                                <i data-feather="minus"></i>
+                                                <span>{{ $value->name }}</span>
+                                                <span class="badge bg-info ms-auto mt-0"
+                                                    style="padding: 4px 6px 2px;">
+                                                    {{ $order_count }}
+                                                </span>
+                                            </a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -593,7 +629,8 @@
                                     </li>
                                     <li>
                                         <a href="{{ route('portfolio_category.index') }}"><i
-                                                data-feather="minus"></i> Portfolio Category</a>
+                                                data-feather="minus"></i>
+                                            Portfolio Category</a>
                                     </li>
                                 </ul>
                             </div>
