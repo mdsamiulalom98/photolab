@@ -10,6 +10,10 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Member;
 use App\Models\Order;
+use App\Models\TrialOrder;
+use App\Models\SubscribeMail;
+use App\Models\Blog;
+use App\Models\Portfolio;
 
 class DashboardController extends Controller
 {
@@ -23,7 +27,12 @@ class DashboardController extends Controller
         $total_orders = Order::count();
         $buyer_orders = Order::where('order_type', 'buyer')->count();
         $seller_orders = Order::where('order_type', 'seller')->count();
-        return view('backEnd.admin.dashboard', compact('seller_count', 'buyer_count', 'total_orders', 'buyer_orders', 'seller_orders'));
+        $get_quote = TrialOrder::where('type', 'get-quote')->count();
+        $free_trial = TrialOrder::where('type', 'free-trial')->count();
+        $subscribes = SubscribeMail::count();
+        $total_blog = Blog::count();
+        $total_portfolio = Portfolio::count();
+        return view('backEnd.admin.dashboard', compact('seller_count', 'buyer_count', 'total_orders', 'buyer_orders', 'seller_orders','get_quote','free_trial','subscribes','total_blog','total_portfolio'));
     }
     public function changepassword()
     {

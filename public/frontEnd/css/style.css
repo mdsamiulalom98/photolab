@@ -292,7 +292,7 @@ button.owl-next {
     right: 40px;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--secondary-color) !important;
+    background: var(--primary-color) !important;
     height: 40px !important;
     width: 40px;
     border-radius: 50px;
@@ -304,7 +304,7 @@ button.owl-prev {
     left: 40px;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--secondary-color) !important;
+    background: var(--primary-color) !important;
     height: 40px !important;
     width: 40px;
     border-radius: 50px;
@@ -409,7 +409,7 @@ button.owl-prev {
     right: -20%;
     width: 110px;
     height: 50px;
-    border-top: 2px dashed #ddd;
+    border-top: 2px dashed var(--primary-color);
     border-radius: 50%;
 }
 
@@ -420,7 +420,7 @@ button.owl-prev {
     right: -20%;
     width: 110px;
     height: 50px;
-    border-bottom: 2px dashed #ddd;
+    border-bottom: 2px dashed var(--primary-color);
     border-radius: 50%;
 }
 
@@ -634,6 +634,10 @@ button.owl-prev {
 /*==== SERVICE CSS END ====  */
 
 /*==== WHY CHOOSE CSS START ====  */
+.why-choose-section {
+    background: #fff;
+}
+
 .why-choose-item {
     text-align: center;
     border: 2px solid var(--primary-color);
@@ -872,7 +876,7 @@ a.read_more {
 /* ======  FOOTER CSS END  ===== */
 
 .footer-top-area {
-    background-color: #161a2f;
+    background-color: var(--primary-color);
     padding: 75px 0 60px 0;
 }
 
@@ -893,7 +897,7 @@ a.read_more {
 .footer-top-area .footer-widget .widget-title .title {
     font-size: 24px;
     line-height: 32px;
-    color: #bdbfca;
+    color: #222;
     text-transform: uppercase;
 }
 
@@ -926,6 +930,7 @@ a.read_more {
     margin-top: 10px;
     display: block;
     border: 2px solid transparent;
+    background: var(--secondary-color);
 }
 
 .submit-btn.btn-rounded {
@@ -938,7 +943,7 @@ a.read_more {
 }
 
 .footer-top-area .footer-widget.pages .widget-body ul li a {
-    color: #a7aab9;
+    color: #fff;
     -webkit-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in;
     position: relative;
@@ -990,7 +995,7 @@ a.read_more {
     font-size: 15px;
     font-weight: 400;
     line-height: 20px;
-    color: #a7aab9;
+    color: #fff;
     -webkit-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in;
 }
@@ -1011,6 +1016,22 @@ a.read_more {
     color: #6b7085;
     -webkit-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in;
+}
+
+.scrolltop {
+    position: fixed;
+    left: 34px !important;
+    bottom: 10px !important;
+    width: 40px !important;
+    background: var(--primary-color) !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    color: #ffff !important;
+    font-size: 24px !important;
+    cursor: pointer;
+    z-index: 99;
 }
 
 /*==== ABOUT CSS START ====  */
@@ -1080,6 +1101,10 @@ a.read_more {
 /*==== PORTFOLIO CSS START ====  */
 .portfolio-section {
     min-height: 490px;
+}
+
+.portfolio-item {
+    overflow: hidden;
 }
 
 .portfolio-isotop-btn {
@@ -1603,10 +1628,8 @@ p.quick_link a {
 }
 
 .user-content table tbody tr td {
-    font-size: 0.8125rem;
-    color: #5b6e88;
+    font-size: 14px;
     text-align: center;
-    font-weight: 500;
     padding: 15px 25px;
     vertical-align: middle;
     white-space: nowrap;
@@ -1650,6 +1673,7 @@ p.quick_link a {
     padding: 8px 30px;
     background-color: transparent;
     border: none;
+    color: #fff;
 }
 
 .user-search form button {
@@ -1794,6 +1818,8 @@ ul.user-header-menu li a.notify-icon span {
 .page-content {
     margin-bottom: 20px;
     border-radius: 5px;
+    background: #fff;
+    padding: 30px;
 }
 
 .inner-chart {
@@ -1817,15 +1843,13 @@ ul.user-header-menu li a.notify-icon span {
     gap: 15px;
 }
 
-
-
 .counter-item a {
     display: grid;
     grid-template-columns: 30% auto;
     align-items: center;
-    background: #E8F6FC;
-    padding: 20px 15px;
-    border-radius: 5px;
+    background: #E8F6FC !important;
+    padding: 30px 25px;
+    border-radius: 10px;
     width: 100%;
 }
 
@@ -1837,6 +1861,15 @@ ul.user-header-menu li a.notify-icon span {
 .counter-item h6 {
     font-weight: 600;
     color: #555;
+}
+
+.parcel-counter .counter-item {
+    padding: 0;
+    border-radius: 10px;
+}
+
+.parcel-counter .counter-item a {
+    background: #fff;
 }
 
 .user-panel {
@@ -2124,24 +2157,30 @@ div#page-overlay {
 .trial-offer-area {
     padding: 115px 0 120px 0;
 }
+
 .form-element.margin-bottom-30 {
     margin-bottom: 27px;
 }
+
 .trial-offer-area .trail-offer-form-wrapper .trial-offer-header {
     padding-bottom: 20px;
 }
+
 .form-element label {
     color: #262b49;
     font-size: 14px;
     font-weight: 700;
     line-height: 32px;
 }
+
 .form-element label span {
     color: var(--primary-color);
 }
+
 .input-field.borderd {
     border: 2px solid rgba(0, 0, 0, 0.1);
 }
+
 .input-field {
     width: 100%;
     height: 55px;
@@ -2149,12 +2188,15 @@ div#page-overlay {
     border-radius: 5px;
     color: #8a8a8a;
 }
+
 .checkbox-element {
     display: inline-block;
 }
+
 .checkbox-wrapper {
     display: inline-block;
 }
+
 .checkbox-inner {
     display: block;
     position: relative;
@@ -2167,11 +2209,13 @@ div#page-overlay {
     -webkit-user-select: none;
     user-select: none;
 }
+
 .checkbox-inner input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
 }
+
 .checkbox-inner .checkmark {
     position: absolute;
     top: 0;
@@ -2181,6 +2225,7 @@ div#page-overlay {
     background-color: transparent;
     border: 2px solid rgba(0, 0, 0, 0.1);
 }
+
 .checkbox-inner .checkmark:after {
     left: 5px;
     top: 2px;
@@ -2191,14 +2236,17 @@ div#page-overlay {
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
 .checkbox-inner .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
-.checkbox-inner input:checked ~ .checkmark:after {
+
+.checkbox-inner input:checked~.checkmark:after {
     display: block;
 }
+
 .custom-control {
     position: relative;
     z-index: 1;
@@ -2208,21 +2256,26 @@ div#page-overlay {
     -webkit-print-color-adjust: exact;
     color-adjust: exact;
 }
+
 .custom-control-label {
     position: relative;
     margin-bottom: 0;
     vertical-align: top;
 }
+
 .custom-control-label::before, .custom-file-label, .custom-select {
-    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
-.custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+
+.custom-radio .custom-control-input:checked~.custom-control-label::before {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
 }
+
 .custom-radio .custom-control-input:checked~.custom-control-label::after {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
 }
+
 .custom-control-label::after {
     position: absolute;
     top: .25rem;
@@ -2233,6 +2286,7 @@ div#page-overlay {
     content: "";
     background: no-repeat 50%/50% 50%;
 }
+
 .custom-control-label::before {
     position: absolute;
     top: .25rem;
@@ -2245,14 +2299,17 @@ div#page-overlay {
     background-color: #fff;
     border: #adb5bd solid 1px;
 }
+
 .custom-control-input:checked~.custom-control-label::before {
     color: #fff;
     border-color: #007bff;
     background-color: #007bff;
 }
+
 .custom-radio .custom-control-label::before {
     border-radius: 50%;
 }
+
 .custom-control-input {
     position: absolute;
     left: 0;
@@ -2261,4 +2318,108 @@ div#page-overlay {
     height: 1.25rem;
     opacity: 0;
 }
-/* ================  GET A QUOTE ENDS  ================= */
+
+tr.complete {
+    border: 1px solid #0aff99;
+}
+
+tr.coundown {
+    border: 1px solid #ff3e3e;
+}
+
+/* =====  GET A QUOTE ENDS  ===== */
+
+/*==== TEAM CSS START ====*/
+.section-padding.why-choose-section {
+    background: #fff;
+}
+
+.team-inner {
+    display: grid;
+    grid-template-columns: 40% auto;
+    background: #fff;
+    gap: 25px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.team-img img {
+    width: 100%;
+}
+
+.team-info {
+    padding: 50px 0;
+}
+
+.team-info .name {
+    font-weight: 700;
+    margin: 5px 0;
+}
+
+.team-info .designation {
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+.team-info i {
+    color: #666;
+    margin-right: 5px;
+}
+
+.team-info p {
+    margin: 5px 0;
+}
+
+/*==== TEAM CSS END ====*/
+/*.note-toolbar {*/
+/*    display: none;*/
+/*}*/
+table {
+    width: 100%;
+    border-collapse: collapse !important;
+    color: #98a6ad !important;
+}
+
+table a {
+    color: #98a6ad !important;
+}
+
+table th, table td {
+    border: 1px solid #454d55;
+    padding: 8px;
+    text-align: left;
+}
+
+table .button-list i {
+    color: #fff !important;
+}
+
+table tr:nth-child(odd) {
+    background-color: #414954 !important;
+}
+
+table tr:nth-child(even) {
+    background-color: #323A46 !important;
+}
+
+.pos_form table {
+    width: 100%;
+    color: #212529 !important;
+    background-color: #fff !important;
+}
+
+.pos_form table th,
+.pos_form table td {
+    border: 1px solid #dee2e6 !important;
+    padding: 8px;
+    text-align: left;
+}
+
+.pos_form table tr:nth-child(odd) {
+    background-color: #f8f9fa !important;
+}
+
+.pos_form table tr:nth-child(even) {
+    background-color: #ffffff !important;
+}

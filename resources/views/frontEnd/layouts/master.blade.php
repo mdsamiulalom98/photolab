@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/owl.theme.default.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/') }}/css/twentytwenty.css" />
+    <link href="{{ asset('public/backEnd') }}/assets/libs/summernote/summernote-lite.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.2') }}" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=1.0.0') }}" />
     <script src="{{ asset('public/frontEnd/js/jquery-3.7.1.min.js') }}"></script>
@@ -68,26 +69,22 @@
                             </div>
                             <div class="main-menu">
                                 <ul>
-                                    <li><a href="{{ route('home') }}">Home</a></li>
-                                    <li><a href="{{ route('about_us') }}">About Us</a></li>
-                                    <li class="dropdown-wrapper">
-                                        <a class="">Services</a>
-                                        <ul class="custom-dropdown-menu">
-                                            @foreach ($allservices as $key => $value)
-                                                <li>
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('service.details', $value->slug) }}">
-                                                        {{ $value->title }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                    @foreach($menusetups as $key=>$menu)
+                                    <li  class="{{$menu->id ==3 ? 'dropdown-wrapper' : ''}}" ><a href="{{ route($menu->route) }}">{{$menu->name}}</a>
+                                        @if($menu->id ==3)
+                                            <ul class="custom-dropdown-menu">
+                                                @foreach ($allservices as $key => $value)
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('service.details', $value->slug) }}">
+                                                            {{ $value->title }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
                                     </li>
-                                    <li><a href="{{ route('portfolios') }}">Portfolios</a></li>
-                                    <li><a href="{{ route('pricings') }}">Pricing</a></li>
-                                    <li><a href="{{ route('faqs') }}">FAQs</a></li>
-                                    <li><a href="{{ route('get.quote') }}">Get a quoat</a></li>
-                                    <li><a href="{{ route('free.trial') }}">free trial</a></li>
+                                    @endforeach
                                     <li>
                                         <a href="{{ route('home') }}" class="order_btn">
                                             <i class="fa-solid fa-shopping-cart"></i>
@@ -134,28 +131,28 @@
                 </div>
             </div>
             <ul class="mobile-nav">
-                <li><a href="{{ route('home') }}">Home</a></li>
-                <li><a href="{{ route('about_us') }}">About Us</a></li>
-                <li>
-                    <button class="" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                        aria-expanded="false" aria-controls="collapseExample">
-                        Services
-                    </button>
-                    <div class="collapse" id="collapseExample">
-                        <ul>
-                            @foreach ($allservices as $key => $value)
-                                <li>
-                                    <a href="{{ route('service.details', $value->slug) }}">{{ $value->title }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </li>
-                <li><a href="{{ route('portfolios') }}">Portfolios</a></li>
-                <li><a href="{{ route('pricings') }}">Pricing</a></li>
-                <li><a href="{{ route('faqs') }}">FAQs</a></li>
-                <li><a href="{{ route('home') }}">Get a quoat</a></li>
-                <li><a href="{{ route('home') }}">free trial</a></li>
+
+                @foreach($menusetups as $key=>$menu)
+                    @if($menu->id == 3)
+                    <li>
+                        <button class="" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Services
+                        </button>
+                        <div class="collapse" id="collapseExample">
+                            <ul>
+                                @foreach ($allservices as $key => $value)
+                                    <li>
+                                        <a href="{{ route('service.details', $value->slug) }}">{{ $value->title }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </li>
+                    @else
+                    <li><a href="{{ route($menu->route) }}">{{$menu->name}}</a></li>
+                    @endif
+                @endforeach
 
             </ul>
         </div>
@@ -173,8 +170,8 @@
                                 <h4 class="title">Suscribe Us</h4>
                             </div>
                             <div class="widget-body">
-                                <form method="post" action="">
-
+                                <form method="POST" action="{{route('free.subscribe')}}">
+                                    @csrf
                                     <div class="form-element">
                                         <input type="text" class="input-field" name="name"
                                             placeholder="Type Your Name" required="">
@@ -249,16 +246,16 @@
                             </div>
                             <div class="widget-body">
                                 <ul>
-                                    <li><a href="{{ route('about_us') }}">About Us</a></li>
-                                    <li><a href="{{ route('portfolios') }}">Portfolios</a></li>
-                                    <li><a href="{{ route('pricings') }}">Pricing</a></li>
-                                    <li><a href="{{ route('faqs') }}">Faqs</a></li>
-                                    <li><a href="{{ route('contact') }}">Contact Us</a></li>
-                                    {{-- <li><a href="">Get A Quate</a></li>
-                                    <li><a href="">Free Trial</a></li> --}}
+                                   @foreach($menusetups as $key=>$menu)
+                                    @if($menu->id != 1 && $menu->id != 3 && $menu->id != 6 && $menu->id != 7)
+                                        <li><a href="{{ route($menu->route) }}">{{$menu->name}}</a></li>
+                                    @endif
+                                    @endforeach
+
                                     @foreach ($pages as $page)
                                         <li><a href="{{ route('page', $page->slug) }}">{{ $page->name }}</a></li>
                                     @endforeach
+                                     <li><a href="{{ route('contact') }}">Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -269,31 +266,52 @@
         <div class="copyright-area">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12 text-center">© {{ date('Y') }} all right reserved By
-                        {{ $generalsetting->name }} | Developed By <a href="https://websolutionit.com/"
-                            target="_blank">Websolution IT</a>
+                    <div class="col-lg-12 text-center">© {{ date('Y') }} {{$generalsetting->copyright}}</a>
                     </div>
                 </div>
             </div>
         </div>
         <!-- //.copyright area -->
     </footer>
+    <div class="scrolltop" style="">
+        <div class="scroll">
+            <i class="fa-solid fa-arrow-up"></i>
+        </div>
+    </div>
     <script src="{{ asset('public/frontEnd/js/popper.min.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/imagesloaded.pkgd.min.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/jquery.event.move.js') }}"></script>
+    <script src="{{ asset('public/backEnd/') }}/assets/libs//summernote/summernote-lite.min.js"></script>
+    <script>
+        $(".summernote").summernote({
+            placeholder: "Enter Your Text Here",
+        });
+    </script>
+    <script>
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 50) {
+                $(".scrolltop:hidden").stop(true, true).fadeIn();
+            } else {
+                $(".scrolltop").stop(true, true).fadeOut();
+            }
+        });
+        $(function () {
+            $(".scroll").click(function () {
+                $("html,body").animate({ scrollTop: $(".gotop").offset().top }, "1000");
+                return false;
+            });
+        });
+    </script>
     <script src="{{ asset('public/frontEnd/js/jquery.twentytwenty.js') }}"></script>
     <script src="{{ asset('public/frontEnd/js/script.js') }}"></script>
     <script src="{{asset('public/backEnd/')}}/assets/js/toastr.min.js"></script>
         {!! Toastr::message() !!}
     <script>
-        /*-----------------------------
-        -------  twentytwenty  --------
-        ------------------------------*/
         $(window).on('load', function() {
-            $(".portfolio-images").twentytwenty({
+            $(".portfolio-item").twentytwenty({
                 before_label: '',
                 after_label: '',
                 move_slider_on_hover: true,

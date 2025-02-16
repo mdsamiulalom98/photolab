@@ -7,7 +7,7 @@ use App\Http\Controllers\Frontend\MemberController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\ShoppingController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\MerchantManageController;
+use App\Http\Controllers\Admin\MemberManageController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -22,9 +22,11 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\BannerCategoryController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CreatePageController;
+use App\Http\Controllers\Admin\MenuSetupController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\MissionVissionController;
@@ -34,7 +36,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\HowItWorkController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\TrialOrderController;
-
+use Brian2694\Toastr\Facades\Toastr;
 Auth::routes();
 
 Route::get('/cc', function () {
@@ -42,7 +44,9 @@ Route::get('/cc', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
     Artisan::call('view:clear');
-    return "Cleared!";
+    
+    Toastr::success('Success','System cache clear successfully');
+    return back();
 });
 
 Route::group(['namespace' => 'Frontend', 'middleware' => ['check_refer']], function () {
@@ -54,12 +58,13 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['check_refer']], funct
     Route::get('services', [FrontendController::class, 'services'])->name('services');
     Route::get('service-details/{slug}', [FrontendController::class, 'service_details'])->name('service.details');
     Route::get('faqs', [FrontendController::class, 'faqs'])->name('faqs');
-    Route::get('pricing', [FrontendController::class, 'pricings'])->name('pricings');
+    Route::get('pricing', [FrontendController::class, 'pricings'])->name('pricing');
     Route::get('contact', [FrontendController::class, 'contact'])->name('contact');
     Route::get('page/{slug}', [FrontendController::class, 'page'])->name('page');
     Route::get('free-trial', [FrontendController::class, 'free_trial'])->name('free.trial');
     Route::get('get-quote', [FrontendController::class, 'get_quote'])->name('get.quote');
     Route::post('free-trial-store', [FrontendController::class, 'free_trial_store'])->name('order.free_trial');
+    Route::post('subscribe', [FrontendController::class, 'subscribe'])->name('free.subscribe');
 
     // ajax routes
     Route::get('ajax-services', [FrontendController::class, 'ajax_services'])->name('ajax.services');
@@ -112,19 +117,14 @@ Route::group(['namespace' => 'FrontEnd', 'middleware' => ['member', 'check_refer
     Route::post('/payment-method', [MemberController::class, 'payment_method'])->name('member.payment_method');
     Route::get('/change-password', [MemberController::class, 'change_pass'])->name('member.change_pass');
     Route::post('/password-update', [MemberController::class, 'password_update'])->name('member.password_update');
-    Route::get('/payment', [MemberController::class, 'member_payment'])->name('member.parcel.payment');
-    Route::get('/parcel/payable', [MemberController::class, 'payable_parcel'])->name('member.parcel.payable');
-    Route::post('/payment/request', [MemberController::class, 'payment_request'])->name('member.payment.request');
-    Route::get('/payment/invoice/{id}', [MemberController::class, 'payment_invoice'])->name('member.payment.invoice');
-    Route::get('/parcel/fraud-checker', [MemberController::class, 'fraud_checker'])->name('member.parcel.fraud_checker');
-    Route::get('/buyer/notice', [MemberController::class, 'notice'])->name('member.notice');
-    Route::get('/buyer/notification', [MemberController::class, 'notification'])->name('member.notification');
-    Route::get('/buyer/pricing', [MemberController::class, 'pricing'])->name('member.parcel.pricing');
+    Route::get('/member/notice', [MemberController::class, 'notice'])->name('member.notice');
+    Route::get('/member/notification', [MemberController::class, 'notification'])->name('member.notification');
     Route::get('consignment-search', [MemberController::class, 'consignment_search'])->name('member.consignment.search');
     Route::post('order/destroy', [MemberController::class, 'order_destroy'])->name('member.order.destroy');
     Route::get('/orders', [MemberController::class, 'orders'])->name('member.orders');
     Route::get('/order/{id}/details', [MemberController::class, 'order_details'])->name('member.order.details');
-    Route::get('/invoice', [MemberController::class, 'invoice'])->name('member.invoice');
+    Route::get('/payment', [MemberController::class, 'payment'])->name('member.order.payment');
+    Route::get('/invoice/{id}', [MemberController::class, 'invoice'])->name('member.order.invoice');
 
     Route::post('message/update', [MemberController::class, 'message_update'])->name('member.message.update');
     Route::get('message/reload', [MemberController::class, 'message_reload'])->name('member.message.reload');
@@ -191,6 +191,16 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('about/active', [AboutController::class, 'active'])->name('abouts.active');
     Route::post('about/destroy', [AboutController::class, 'destroy'])->name('abouts.destroy');
 
+    // our team routes
+    Route::get('team/manage', [TeamController::class, 'index'])->name('teams.index');
+    Route::get('team/create', [TeamController::class, 'create'])->name('teams.create');
+    Route::post('team/save', [TeamController::class, 'store'])->name('teams.store');
+    Route::get('team/{id}/edit', [TeamController::class, 'edit'])->name('teams.edit');
+    Route::post('team/update', [TeamController::class, 'update'])->name('teams.update');
+    Route::post('team/inactive', [TeamController::class, 'inactive'])->name('teams.inactive');
+    Route::post('team/active', [TeamController::class, 'active'])->name('teams.active');
+    Route::post('team/destroy', [TeamController::class, 'destroy'])->name('teams.destroy');
+
     // mission vision
     Route::get('missionvission/manage', [MissionVissionController::class, 'index'])->name('missionvission.index');
     Route::get('missionvission/create', [MissionVissionController::class, 'create'])->name('missionvission.create');
@@ -202,21 +212,16 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('missionvission/destroy', [MissionVissionController::class, 'destroy'])->name('missionvission.destroy');
 
 
-    // buyer manage route
-    Route::get('buyer/payment/{status}', [MerchantManageController::class, 'payment'])->name('merchants.payment');
-    Route::get('buyer/invoice/{id}', [MerchantManageController::class, 'invoice'])->name('merchants.invoice');
-    Route::post('buyer/payment/status', [MerchantManageController::class, 'payment_status'])->name('merchants.payment.status');
-    Route::get('buyer/create', [MerchantManageController::class, 'create'])->name('merchants.create');
-    Route::post('buyer/store', [MerchantManageController::class, 'store'])->name('merchants.store');
-    Route::get('buyer/manage', [MerchantManageController::class, 'index'])->name('merchants.index');
-    Route::get('buyer/{id}/edit', [MerchantManageController::class, 'edit'])->name('merchants.edit');
-    Route::post('buyer/update', [MerchantManageController::class, 'update'])->name('merchants.update');
-    Route::post('buyer/inactive', [MerchantManageController::class, 'inactive'])->name('merchants.inactive');
-    Route::post('buyer/active', [MerchantManageController::class, 'active'])->name('merchants.active');
-    Route::get('buyer/profile', [MerchantManageController::class, 'profile'])->name('merchants.profile');
-    Route::post('buyer/adminlog', [MerchantManageController::class, 'adminlog'])->name('merchants.adminlog');
-    Route::get('buyer/manual-payment', [MerchantManageController::class, 'menual_payment'])->name('merchants.menual_payment');
-    Route::post('buyer/manual-payment/paid', [MerchantManageController::class, 'menual_payment_paid'])->name('merchants.menual_payment.paid');
+    // member manage route
+    Route::get('member/create', [MemberManageController::class, 'create'])->name('admin.members.create');
+    Route::post('member/store', [MemberManageController::class, 'store'])->name('admin.members.store');
+    Route::get('member/manage/', [MemberManageController::class, 'index'])->name('admin.members.index');
+    Route::get('member/{id}/edit', [MemberManageController::class, 'edit'])->name('admin.members.edit');
+    Route::post('member/update', [MemberManageController::class, 'update'])->name('admin.members.update');
+    Route::post('member/inactive', [MemberManageController::class, 'inactive'])->name('admin.members.inactive');
+    Route::post('member/active', [MemberManageController::class, 'active'])->name('admin.members.active');
+    Route::get('member/profile', [MemberManageController::class, 'profile'])->name('admin.members.profile');
+    Route::post('member/adminlog', [MemberManageController::class, 'adminlog'])->name('admin.members.adminlog');
 
     // brands
     Route::get('brands/manage', [BrandController::class, 'index'])->name('brands.index');
@@ -352,7 +357,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('banner/active', [BannerController::class, 'active'])->name('banners.active');
     Route::post('banner/destroy', [BannerController::class, 'destroy'])->name('banners.destroy');
 
-    // contact routes
+    // page routes
     Route::get('page/manage', [CreatePageController::class, 'index'])->name('pages.index');
     Route::get('page/create', [CreatePageController::class, 'create'])->name('pages.create');
     Route::post('page/save', [CreatePageController::class, 'store'])->name('pages.store');
@@ -361,6 +366,14 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('page/inactive', [CreatePageController::class, 'inactive'])->name('pages.inactive');
     Route::post('page/active', [CreatePageController::class, 'active'])->name('pages.active');
     Route::post('page/destroy', [CreatePageController::class, 'destroy'])->name('pages.destroy');
+
+    // page routes
+    Route::get('menu-setup/manage', [MenuSetupController::class, 'index'])->name('menu_setup.index');
+    Route::get('menu-setup/{id}/edit', [MenuSetupController::class, 'edit'])->name('menu_setup.edit');
+    Route::post('menu-setup/update', [MenuSetupController::class, 'update'])->name('menu_setup.update');
+    Route::post('menu-setup/inactive', [MenuSetupController::class, 'inactive'])->name('menu_setup.inactive');
+    Route::post('menu-setup/active', [MenuSetupController::class, 'active'])->name('menu_setup.active');
+    Route::post('menu-setup/destroy', [MenuSetupController::class, 'destroy'])->name('menu_setup.destroy');
 
     // portfolio routes
     Route::get('portfolio/manage', [PortfolioController::class, 'index'])->name('portfolios.index');
@@ -384,7 +397,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('faq/active', [FaqController::class, 'active'])->name('faqs.active');
     Route::post('faq/destroy', [FaqController::class, 'destroy'])->name('faqs.destroy');
 
-    // faq routes
+    // howitwork routes
     Route::get('howitwork/manage', [HowItWorkController::class, 'index'])->name('howitworks.index');
     Route::get('howitwork/{id}/show', [HowItWorkController::class, 'show'])->name('howitworks.show');
     Route::get('howitwork/create', [HowItWorkController::class, 'create'])->name('howitworks.create');
@@ -407,10 +420,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
 
     // Order route
     Route::get('orders/{slug}', [OrderController::class, 'index'])->name('admin.orders');
-    Route::get('order/edit/{invoice_id}', [OrderController::class, 'order_edit'])->name('admin.order.edit');
+    Route::get('order/edit/{id}', [OrderController::class, 'order_edit'])->name('admin.order.edit');
     Route::post('order/update', [OrderController::class, 'order_update'])->name('admin.order.update');
-    Route::get('order/invoice/{invoice_id}', [OrderController::class, 'invoice'])->name('admin.order.invoice');
-    Route::get('order/process/{invoice_id}', [OrderController::class, 'process'])->name('admin.order.process');
     Route::post('order/change', [OrderController::class, 'order_process'])->name('admin.order_change');
     Route::post('order/destroy', [OrderController::class, 'destroy'])->name('admin.order.destroy');
     Route::get('order-status', [OrderController::class, 'order_status'])->name('admin.order.status');
@@ -434,8 +445,17 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::get('order/cart-clear', [OrderController::class, 'cart_clear'])->name('admin.order.cart_clear');
     Route::get('order/members', [OrderController::class, 'members'])->name('admin.order.members');
     Route::post('order/member-add', [OrderController::class, 'member_add'])->name('admin.order.member_add');
+    Route::get('order/invoice-generate/{type}', [OrderController::class, 'invoice_generate'])->name('admin.orders.invoice_generate');
+    Route::post('order/invoice-save', [OrderController::class, 'invoice_save'])->name('admin.orders.invoice_save');
+    Route::get('order/payment/{type}', [OrderController::class, 'payment'])->name('admin.orders.payment');
+    Route::get('order/invoice/{id}', [OrderController::class, 'invoice'])->name('admin.order.invoice');
 
-    Route::get('trial/index', [TrialOrderController::class, 'index'])->name('admin.trials');
-    Route::get('trial/{id}/details', [TrialOrderController::class, 'trial_details'])->name('admin.trial.details');
-    Route::get('trial/image-zip', [TrialOrderController::class, 'downloadImagesAsZip'])->name('admin.trial.zip');
+    Route::get('website/{slug}', [TrialOrderController::class, 'index'])->name('admin.trial');
+    Route::get('website/{id}/details', [TrialOrderController::class, 'trial_details'])->name('admin.trial.details');
+    Route::get('/website/image-zip/{id}', [TrialOrderController::class, 'downloadImagesAsZip'])->name('admin.trial.zip');
+    Route::post('free-trial/status', [TrialOrderController::class, 'trial_status'])->name('admin.free_trial.status');
+    Route::post('get-quote/status', [TrialOrderController::class, 'get_quote'])->name('admin.get_quote.status');
+    Route::post('trial-delete', [TrialOrderController::class, 'trial_delete'])->name('admin.trial_order.destroy');
+    Route::get('trial-order/bulk-destroy', [TrialOrderController::class, 'bulk_destroy'])->name('admin.trial_order.bulk_destroy');
+
 });

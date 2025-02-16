@@ -12,6 +12,6 @@ class OrderDetails extends Model
         return $this->belongsTo(Shipping::class, 'order_id','order_id')->select('id','order_id','name','phone','address');
     }
     public function order(){
-        return $this->belongsTo(Order::class, 'order_id')->select('id','invoice_id');
+        return $this->belongsTo(Order::class, 'order_id')->select('id','order_name','invoice_id','currency');
     }
 }

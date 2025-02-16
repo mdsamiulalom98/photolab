@@ -13,6 +13,7 @@ use App\Models\Blog;
 use App\Models\Service;
 use App\Models\HowItWork;
 use App\Models\OrderStatus;
+use App\Models\MenuSetup;
 use App\Models\Message;
 use Config;
 use Session;
@@ -62,11 +63,15 @@ class AppServiceProvider extends ServiceProvider
                 return OrderStatus::where('status', 1)->get();
             });
 
+            $menusetups = Cache::remember('menusetups', now()->addDays(7), function () {
+                return MenuSetup::where('status', 1)->get();
+            });
+
             $categories = Category::where('status', 1)->select('id', 'name', 'slug', 'status', 'image')->get();
             $allservices = Service::where('status', 1)->limit(6)->orderBy('id', 'DESC')->select('id', 'title', 'slug', 'status', 'image')->get();
             $allhowitworks = HowItWork::where('status', 1)->limit(4)->get();
             $pending_messages = Message::where('status', 0)->whereNot('username', 'admin')->get();
-            
+
             $view->with([
                 'generalsetting' => $generalsetting,
                 'categories' => $categories,
@@ -77,6 +82,7 @@ class AppServiceProvider extends ServiceProvider
                 'allservices' => $allservices,
                 'allhowitworks' => $allhowitworks,
                 'orderstatus' => $orderstatus,
+                'menusetups' => $menusetups,
                 'pending_messages' => $pending_messages,
             ]);
         });

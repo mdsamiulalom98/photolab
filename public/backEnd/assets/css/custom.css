@@ -1,5 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Manrope:wght@200..800&display=swap');
 
+table {
+    width: 100%;
+    border-collapse: collapse !important;
+    color: #98a6ad !important;
+}
+
+table a {
+    color: #98a6ad !important;
+}
+
+table th, table td {
+    border: 1px solid #454d55;
+    padding: 8px;
+    text-align: left;
+}
+
+table .button-list i {
+    color: #fff !important;
+}
+
+table tr:nth-child(odd) {
+    background-color: #414954 !important;
+}
+
+table tr:nth-child(even) {
+    background-color: #323A46 !important;
+}
+
+.pos_form table {
+    width: 100%;
+    color: #212529 !important;
+    background-color: #fff !important;
+}
+
+.pos_form table th,
+.pos_form table td {
+    border: 1px solid #dee2e6 !important;
+    padding: 8px;
+    text-align: left;
+}
+
+.pos_form table tr:nth-child(odd) {
+    background-color: #f8f9fa !important;
+}
+
+.pos_form table tr:nth-child(even) {
+    background-color: #ffffff !important;
+}
+
 .main-logo img {
     height: 80px;
     object-fit: contain;
@@ -16,6 +65,30 @@ img {
 
 body.authentication-bg {
     background: url('../images/login-bg.jpg') !important;
+}
+
+.card-header {
+    background: #ddd;
+}
+
+.table>:not(:first-child) {
+    border: none !important;
+}
+
+tr.coundown {
+    color: #ff3e3e !important;
+}
+
+tr.coundown td, tr.coundown a {
+    color: #ff3e3e !important;
+}
+
+tr.complete {
+    color: #0aff99 !important;
+}
+
+tr.complete td, tr.complete a {
+    color: #0aff99 !important;
 }
 
 .account-pages {
@@ -115,6 +188,7 @@ body.authentication-bg {
 .navbar-custom {
     background: #071251;
 }
+
 body[data-leftbar-size=condensed]:not([data-layout=compact]) .navbar-custom {
     margin-left: 70px;
 }
@@ -122,10 +196,12 @@ body[data-leftbar-size=condensed]:not([data-layout=compact]) .navbar-custom {
 body[data-leftbar-size=condensed] .left-side-menu #sidebar-menu>ul>li>a {
     padding: 15px 5px;
 }
+
 body[data-leftbar-size=condensed] .left-side-menu #sidebar-menu>ul>li:hover>.collapse>ul a,
 body[data-leftbar-size=condensed] .left-side-menu #sidebar-menu>ul>li:hover>.collapsing>ul a {
     color: #000;
 }
+
 .navbar-custom .topnav-menu .nav-link {
     color: #fff;
 }
@@ -484,6 +560,13 @@ footer {
     margin-left: 260px;
 }
 
+@media (max-width: 991.98px) {
+    .left-side-menu.sidebar-enable .side-nav .nav-link span {
+        display: inline-block !important;
+        /* Show menu text */
+    }
+}
+
 @media only screen and (min-width:320px) and (max-width:767px) {
     form.custom_form {
         margin-bottom: 15px;
@@ -491,6 +574,10 @@ footer {
 
     .action2-btn a, .action2-btn button {
         padding: 3px 12px;
+    }
+
+    footer.footer .text-end {
+        text-align: center !important;
     }
 }
 
@@ -707,7 +794,7 @@ div#customerItems {
     padding: 15px 25px;
     padding-left: 25px;
     padding-right: 25px;
-    font-size: 0.75rem;
+    font-size: 14px;
     text-align: center;
     white-space: nowrap;
 }
@@ -721,8 +808,7 @@ div#customerItems {
 }
 
 #datatable-buttons tbody tr td {
-    font-size: 0.8125rem;
-    color: #5b6e88;
+    font-size: 14px;
     text-align: center;
     font-weight: 500;
     padding: 15px 25px;
@@ -733,26 +819,30 @@ div#customerItems {
 #datatable-buttons tbody {
     background-color: #f1f1f1;
 }
+
 .footer {
     background-color: #071251;
     left: 0;
 }
+
 body[data-leftbar-size=condensed] .footer {
-    left: 0px!important;
+    left: 0px !important;
     margin-left: 0;
 }
+
 @media only screen and (min-width: 320px) and (max-width: 767px) {
     body[data-leftbar-size=condensed]:not([data-layout=compact]) .navbar-custom {
         margin-left: 0;
     }
+
     .navbar-custom, .content-page {
         margin-left: 0;
     }
+
     footer {
         margin-left: 0;
     }
 }
-
 
 .avatar-preview a {
     display: block;
