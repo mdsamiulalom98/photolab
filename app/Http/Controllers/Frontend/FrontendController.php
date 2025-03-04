@@ -17,6 +17,7 @@ use App\Models\WhyChoose;
 use App\Models\Counter;
 use App\Models\MissionVission;
 use App\Models\About;
+use App\Models\Team;
 use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\Testimonial;
@@ -25,6 +26,10 @@ use App\Models\PortfolioCategory;
 use App\Models\Faq;
 use App\Models\TrialOrder;
 use App\Models\Trialimage;
+use App\Models\Country;
+use App\Models\SubscribeMail;
+use App\Models\SectionDescription;
+use App\Models\ContactData;
 use Cache;
 use DB;
 use Log;
@@ -41,7 +46,12 @@ class FrontendController extends Controller
         $blogs = Blog::where('status', 1)->get();
         $brands = Brand::where('status', 1)->get();
         $testimonials = Testimonial::where('status', 1)->get();
-        return view('frontEnd.layouts.pages.index', compact('sliders', 'service_all', 'whychoose', 'counters', 'counter_banner', 'blogs', 'brands', 'testimonials'));
+        $title_howitworks = SectionDescription::where(['type'=>'how-it-works', 'status'=>1])->first();
+        $title_ourservices = SectionDescription::where(['type'=>'our-services', 'status'=>1])->first();
+        $title_whychoose = SectionDescription::where(['type'=>'why-choose-us', 'status'=>1])->first();
+        $title_testimonial = SectionDescription::where(['type'=>'client-testimonial', 'status'=>1])->first();
+
+        return view('frontEnd.layouts.pages.index', compact('sliders', 'service_all', 'whychoose', 'counters', 'counter_banner', 'blogs', 'brands', 'testimonials', 'title_whychoose', 'title_howitworks', 'title_ourservices', 'title_testimonial'));
     }
     public function about_us()
     {
@@ -51,7 +61,8 @@ class FrontendController extends Controller
         $whychoose = WhyChoose::where('status', 1)->get();
         $counter_banner = Banner::where(['status' => 1, 'category_id' => 1])->first();
         $counters = Counter::where('status', 1)->get();
-        return view('frontEnd.layouts.pages.about_us', compact('about', 'mission', 'vision', 'whychoose', 'counters', 'counter_banner'));
+        $teams = Team::where('status', 1)->get();
+        return view('frontEnd.layouts.pages.about_us', compact('about', 'mission', 'vision', 'whychoose', 'counters', 'counter_banner','teams'));
     }
 
     public function blog_details($slug)
@@ -127,12 +138,14 @@ class FrontendController extends Controller
 
     public function free_trial() {
         $services = Service::where('status', 1)->get();
-        return view('frontEnd.layouts.pages.freetrial', compact('services'));
+        $countries = Country::get();
+        return view('frontEnd.layouts.pages.freetrial', compact('services','countries'));
     }
 
     public function get_quote() {
         $services = Service::where('status', 1)->get();
-        return view('frontEnd.layouts.pages.getquote', compact('services'));
+        $countries = Country::get();
+        return view('frontEnd.layouts.pages.getquote', compact('services','countries'));
     }
 
 
@@ -143,19 +156,23 @@ class FrontendController extends Controller
         $trial_order = new TrialOrder();
         $trial_order->name = $request->name;
         $trial_order->email = $request->email;
-        $trial_order->type = $request->type;
+        $trial_order->type = $request->type == 1 ? 'free-trial' : 'get-quote' ;
         $trial_order->phone = $request->phone;
         $trial_order->country = $request->country;
         $trial_order->company = $request->company;
         $trial_order->website = $request->website;
         $trial_order->services = json_encode($services);
         $trial_order->image_size = $request->image_size;
+        $trial_order->resolution = $request->resolution;
+        $trial_order->format = $request->format;
         $trial_order->width = $request->width;
         $trial_order->height = $request->height;
         $trial_order->quantity = $request->quantity;
         $trial_order->margin = $request->margin;
         $trial_order->message = $request->message;
         $trial_order->pre_delivery_time = $request->pre_delivery_time;
+        $trial_order->seen = 'unread';
+        $trial_order->status = 'pending';
         $trial_order->save();
 
         $images = $request->file('image');
@@ -175,5 +192,25 @@ class FrontendController extends Controller
         }
 
         return redirect()->route('home');
+    }
+    public function subscribe(Request $request) {
+
+        $subscribe = new SubscribeMail();
+        $subscribe->name = $request->name;
+        $subscribe->email = $request->email;
+        $subscribe->save();
+        return back();
+    }
+    public function contact_info(Request $request) {
+        // return $request->all();
+        $contact = new ContactData();
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->phone = $request->phone;
+        $contact->message = $request->email;
+        $contact->save();
+
+        Toastr::success('Your contact info sent to us.', 'Success');
+        return back();
     }
 }

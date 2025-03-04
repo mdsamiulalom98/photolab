@@ -1,5 +1,10 @@
 @extends('backEnd.layouts.master')
 @section('title', 'FAQ Edit')
+@section('css')
+    <link href="{{ asset('public/backEnd') }}/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('public/backEnd') }}/assets/libs/summernote/summernote-lite.min.css" rel="stylesheet"
+        type="text/css" />
+@endsection
 @section('content')
     <div class="container-fluid">
 
@@ -27,7 +32,8 @@
                                 <div class="form-group mb-3">
                                     <label for="question" class="form-label">Question</label>
                                     <input type="text" class="form-control @error('question') is-invalid @enderror"
-                                        name="question" value="{{ $edit_data->question ?? old('question') }}" id="question">
+                                        name="question" value="{{ $edit_data->question ?? old('question') }}"
+                                        id="question">
                                     @error('question')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -39,8 +45,8 @@
                             <div class="col-sm-12">
                                 <div class="form-group mb-3">
                                     <label for="answer" class="form-label">Answer</label>
-                                    <input type="text" class="form-control @error('answer') is-invalid @enderror"
-                                        name="answer" value="{{ $edit_data->answer ?? old('answer') }}" id="answer">
+                                    <textarea type="text" class="summernote form-control @error('answer') is-invalid @enderror"
+                                        name="answer" value="" id="answer">{{ $edit_data->answer ?? old('answer') }}</textarea>
                                     @error('answer')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -77,11 +83,17 @@
         </div>
     </div>
 @endsection
-
-
 @section('script')
     <script src="{{ asset('public/backEnd/') }}/assets/libs/parsleyjs/parsley.min.js"></script>
     <script src="{{ asset('public/backEnd/') }}/assets/js/pages/form-validation.init.js"></script>
     <script src="{{ asset('public/backEnd/') }}/assets/libs/select2/js/select2.min.js"></script>
     <script src="{{ asset('public/backEnd/') }}/assets/js/pages/form-advanced.init.js"></script>
+    <script src="{{ asset('public/backEnd/') }}/assets/js/switchery.min.js"></script>
+    <!-- Plugins js -->
+    <script src="{{ asset('public/backEnd/') }}/assets/libs//summernote/summernote-lite.min.js"></script>
+    <script>
+        $(".summernote").summernote({
+            placeholder: "Enter Your Text Here",
+        });
+    </script>
 @endsection

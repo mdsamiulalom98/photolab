@@ -25,7 +25,7 @@
 
         <div class="row">
 
-            <div class="col-md-6 col-xl-4">
+            <div class="col-md-6 col-xl-3">
                 <div class="card">
                     <div class="card-body border border-success rounded">
                         <div class="row">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div> <!-- end col-->
-            <div class="col-md-6 col-xl-4">
+            <div class="col-md-6 col-xl-3">
                 <div class="card">
                     <div class="card-body border border-secondary rounded">
                         <div class="row">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div> <!-- end col-->
-            <div class="col-md-6 col-xl-4">
+            <div class="col-md-6 col-xl-3">
                 <div class="card">
                     <div class="card-body border border-warning rounded">
                         <div class="row">
@@ -83,7 +83,7 @@
                 </div>
             </div> <!-- end col-->
             
-            <div class="col-md-6 col-xl-4">
+            <div class="col-md-6 col-xl-3">
                 <div class="card">
                     <div class="card-body border border-danger rounded">
                         <div class="row">
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div> <!-- end col-->
-            <div class="col-md-6 col-xl-4">
+            <div class="col-md-6 col-xl-3">
                 <div class="card">
                     <div class="card-body border-primary border rounded">
                         <div class="row">
@@ -114,6 +114,101 @@
                                 <div class="float-right">
                                     <div class="avatar-md bg-primary bg-opacity-25 rounded">
                                         <i class="fe-users avatar-title font-22 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col-->
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body border-primary border rounded">
+                        <div class="row">
+                            <div class="col-6">
+                                <h3 class="text-dark my-1"><span data-plugin="counterup">{{ $get_quote }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Get Quote</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="float-right">
+                                    <div class="avatar-md bg-primary bg-opacity-25 rounded">
+                                        <i class="fe-info avatar-title font-22 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col-->
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body border-primary border rounded">
+                        <div class="row">
+                            <div class="col-6">
+                                <h3 class="text-dark my-1"><span data-plugin="counterup">{{ $free_trial }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Free Trial</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="float-right">
+                                    <div class="avatar-md bg-primary bg-opacity-25 rounded">
+                                        <i class="fe-gift avatar-title font-22 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col-->
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body border-primary border rounded">
+                        <div class="row">
+                            <div class="col-6">
+                                <h3 class="text-dark my-1"><span data-plugin="counterup">{{ $subscribes }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Subscribe</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="float-right">
+                                    <div class="avatar-md bg-primary bg-opacity-25 rounded">
+                                        <i class="fe-mail avatar-title font-22 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col-->
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body border-primary border rounded">
+                        <div class="row">
+                            <div class="col-6">
+                                <h3 class="text-dark my-1"><span data-plugin="counterup">{{ $total_blog }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Blog</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="float-right">
+                                    <div class="avatar-md bg-primary bg-opacity-25 rounded">
+                                        <i class="fe-book avatar-title font-22 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col-->
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body border-primary border rounded">
+                        <div class="row">
+                            <div class="col-6">
+                                <h3 class="text-dark my-1"><span data-plugin="counterup">{{ $total_portfolio }}</span></h3>
+                                <p class="text-muted mb-1 text-truncate">Portfolio</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="float-right">
+                                    <div class="avatar-md bg-primary bg-opacity-25 rounded">
+                                        <i class="fe-image avatar-title font-22 text-primary"></i>
                                     </div>
                                 </div>
                             </div>

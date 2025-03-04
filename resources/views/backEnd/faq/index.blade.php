@@ -27,7 +27,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>SL</th>
@@ -44,7 +44,8 @@
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$value->question}}</td>
-                            <td>{{ Str::limit($value->answer, 50) }}</td>
+                            <td>{{ Str::words(strip_tags($value->answer), 5) }}
+                            </td>
                             <td>@if($value->status==1)<span class="badge bg-soft-success text-success">Active</span> @else <span class="badge bg-soft-danger text-danger">Inactive</span> @endif</td>
                             <td>
                                 <div class="button-list">

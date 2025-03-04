@@ -1,0 +1,164 @@
+[09-Feb-2025 13:27:03 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/About.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/About.php on line 8
+[09-Feb-2025 13:27:05 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Bank.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Bank.php on line 7
+[09-Feb-2025 13:27:08 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Banner.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Banner.php on line 8
+[09-Feb-2025 13:27:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/BannerCategory.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/BannerCategory.php on line 8
+[09-Feb-2025 13:27:12 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Blog.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Blog.php on line 7
+[09-Feb-2025 13:27:15 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/BlogCategory.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/BlogCategory.php on line 7
+[09-Feb-2025 13:27:17 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Brand.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Brand.php on line 7
+[09-Feb-2025 13:27:19 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Category.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Category.php on line 8
+[09-Feb-2025 13:27:22 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Contact.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Contact.php on line 8
+[09-Feb-2025 13:27:24 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Counter.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Counter.php on line 7
+[09-Feb-2025 13:27:26 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Country.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Country.php on line 7
+[09-Feb-2025 13:27:28 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/CreatePage.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/CreatePage.php on line 8
+[09-Feb-2025 13:27:30 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Faq.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Faq.php on line 7
+[09-Feb-2025 13:27:33 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/GeneralSetting.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/GeneralSetting.php on line 8
+[09-Feb-2025 13:27:35 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/HowItWork.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/HowItWork.php on line 7
+[09-Feb-2025 13:27:37 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Auth\User" not found in /home/phlaboto/public_html/app/Models/Member.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Member.php on line 8
+[09-Feb-2025 13:27:40 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/MemberMethod.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/MemberMethod.php on line 7
+[09-Feb-2025 13:27:42 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/MenuSetup.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/MenuSetup.php on line 7
+[09-Feb-2025 13:27:44 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Message.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Message.php on line 7
+[09-Feb-2025 13:27:46 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/MessageSubject.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/MessageSubject.php on line 7
+[09-Feb-2025 13:27:49 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/MissionVission.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/MissionVission.php on line 8
+[09-Feb-2025 13:27:51 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Order.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Order.php on line 8
+[09-Feb-2025 13:27:54 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/OrderDetails.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/OrderDetails.php on line 8
+[09-Feb-2025 13:27:56 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/OrderStatus.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/OrderStatus.php on line 8
+[09-Feb-2025 13:27:58 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Orderimage.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Orderimage.php on line 7
+[09-Feb-2025 13:28:00 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Payment.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Payment.php on line 8
+[09-Feb-2025 13:28:03 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/PaymentDetails.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/PaymentDetails.php on line 7
+[09-Feb-2025 13:28:05 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Portfolio.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Portfolio.php on line 7
+[09-Feb-2025 13:28:07 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/PortfolioCategory.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/PortfolioCategory.php on line 7
+[09-Feb-2025 13:28:09 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Pricing.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Pricing.php on line 7
+[09-Feb-2025 13:28:12 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Service.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Service.php on line 7
+[09-Feb-2025 13:28:14 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Shipping.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Shipping.php on line 8
+[09-Feb-2025 13:28:16 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Slider.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Slider.php on line 7
+[09-Feb-2025 13:31:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/SocialMedia.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/SocialMedia.php on line 8
+[09-Feb-2025 13:31:38 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/SubscribeMail.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/SubscribeMail.php on line 7
+[09-Feb-2025 13:31:40 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Team.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Team.php on line 7
+[09-Feb-2025 13:31:42 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Testimonial.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Testimonial.php on line 7
+[09-Feb-2025 13:31:44 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/TrialOrder.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/TrialOrder.php on line 7
+[09-Feb-2025 13:31:46 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/Trialimage.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/Trialimage.php on line 7
+[09-Feb-2025 13:31:48 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Auth\User" not found in /home/phlaboto/public_html/app/Models/User.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/User.php on line 12
+[09-Feb-2025 13:31:50 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/phlaboto/public_html/app/Models/WhyChoose.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/phlaboto/public_html/app/Models/WhyChoose.php on line 7

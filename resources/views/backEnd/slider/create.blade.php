@@ -55,7 +55,7 @@
                             
                             <div class="col-sm-12 mb-3">
                                 <div class="form-group">
-                                    <label for="image" class="form-label">Image *</label>
+                                    <label for="image" class="form-label">Image (1900px * 630px)  *</label>
                                     <input type="file" class="form-control @error('image') is-invalid @enderror "
                                         name="image" value="{{ old('image') }}" id="image" required="">
                                     @error('image')

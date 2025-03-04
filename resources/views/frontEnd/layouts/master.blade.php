@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/') }}/css/twentytwenty.css" />
     <link href="{{ asset('public/backEnd') }}/assets/libs/summernote/summernote-lite.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.2') }}" />
+    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=1.0.3') }}" />
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=1.0.0') }}" />
     <script src="{{ asset('public/frontEnd/js/jquery-3.7.1.min.js') }}"></script>
 </head>
@@ -131,7 +131,7 @@
                 </div>
             </div>
             <ul class="mobile-nav">
-
+                 
                 @foreach($menusetups as $key=>$menu)
                     @if($menu->id == 3)
                     <li>
@@ -251,7 +251,7 @@
                                         <li><a href="{{ route($menu->route) }}">{{$menu->name}}</a></li>
                                     @endif
                                     @endforeach
-
+                                    
                                     @foreach ($pages as $page)
                                         <li><a href="{{ route('page', $page->slug) }}">{{ $page->name }}</a></li>
                                     @endforeach

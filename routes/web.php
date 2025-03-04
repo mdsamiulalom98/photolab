@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\WorknameController;
 use App\Http\Controllers\Admin\WhyChooseController;
 use App\Http\Controllers\Admin\CounterController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -36,6 +37,8 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\HowItWorkController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\TrialOrderController;
+use App\Http\Controllers\Admin\SectionDescriptionController;
+use App\Http\Controllers\Admin\ContactDataController;
 use Brian2694\Toastr\Facades\Toastr;
 Auth::routes();
 
@@ -44,8 +47,12 @@ Route::get('/cc', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
     Artisan::call('view:clear');
-    
-    Toastr::success('Success','System cache clear successfully');
+    Toastr::success('Success', 'System cache clear successfully');
+    return back();
+});
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    Toastr::success('Success', 'model created successfully');
     return back();
 });
 
@@ -65,13 +72,14 @@ Route::group(['namespace' => 'Frontend', 'middleware' => ['check_refer']], funct
     Route::get('get-quote', [FrontendController::class, 'get_quote'])->name('get.quote');
     Route::post('free-trial-store', [FrontendController::class, 'free_trial_store'])->name('order.free_trial');
     Route::post('subscribe', [FrontendController::class, 'subscribe'])->name('free.subscribe');
+    Route::post('contact-info', [FrontendController::class, 'contact_info'])->name('contact.info');
 
     // ajax routes
     Route::get('ajax-services', [FrontendController::class, 'ajax_services'])->name('ajax.services');
     Route::post('ajax-service-add', [FrontendController::class, 'ajax_service_add'])->name('ajax.service.add');
 });
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['customer', 'ipcheck', 'check_refer']], function () {
+Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_refer'], 'prefix' => 'admin'], function () {
     Route::get('locked', [DashboardController::class, 'locked'])->name('locked');
     Route::post('unlocked', [DashboardController::class, 'unlocked'])->name('unlocked');
 });
@@ -169,18 +177,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('permissions/update', [PermissionController::class, 'update'])->name('permissions.update');
     Route::post('permissions/destroy', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
-    // categories
-    Route::get('categories/manage', [CategoryController::class, 'index'])->name('categories.index');
-    Route::get('categories/{id}/show', [CategoryController::class, 'show'])->name('categories.show');
-    Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
-    Route::post('categories/save', [CategoryController::class, 'store'])->name('categories.store');
-    Route::get('categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::post('categories/update', [CategoryController::class, 'update'])->name('categories.update');
-    Route::post('categories/inactive', [CategoryController::class, 'inactive'])->name('categories.inactive');
-    Route::post('categories/active', [CategoryController::class, 'active'])->name('categories.active');
-    Route::post('categories/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');
-
-
     // about us routes
     Route::get('about/manage', [AboutController::class, 'index'])->name('abouts.index');
     Route::get('about/create', [AboutController::class, 'create'])->name('abouts.create');
@@ -222,6 +218,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('member/active', [MemberManageController::class, 'active'])->name('admin.members.active');
     Route::get('member/profile', [MemberManageController::class, 'profile'])->name('admin.members.profile');
     Route::post('member/adminlog', [MemberManageController::class, 'adminlog'])->name('admin.members.adminlog');
+    Route::post('member/destroy', [MemberManageController::class, 'destroy'])->name('admin.members.destroy');
+    Route::get('member/bulk-destroy', [MemberManageController::class, 'bulk_destroy'])->name('admin.members.bulk_destroy');
+    Route::get('member/bulk-active', [MemberManageController::class, 'bulk_active'])->name('admin.members.bulk_active');
+    Route::get('member/bulk-inactive', [MemberManageController::class, 'bulk_inactive'])->name('admin.members.bulk_inactive');
 
     // brands
     Route::get('brands/manage', [BrandController::class, 'index'])->name('brands.index');
@@ -255,6 +255,16 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('service/active', [ServiceController::class, 'active'])->name('service.active');
     Route::post('service/destroy', [ServiceController::class, 'destroy'])->name('service.destroy');
     Route::get('service/pricing/{id}', [ServiceController::class, 'price_destroy'])->name('service.price.destroy');
+
+    // service
+    Route::get('work-name/manage', [WorknameController::class, 'index'])->name('worknames.index');
+    Route::get('work-name/create', [WorknameController::class, 'create'])->name('worknames.create');
+    Route::post('work-name/save', [WorknameController::class, 'store'])->name('worknames.store');
+    Route::get('work-name/{id}/edit', [WorknameController::class, 'edit'])->name('worknames.edit');
+    Route::post('work-name/update', [WorknameController::class, 'update'])->name('worknames.update');
+    Route::post('work-name/inactive', [WorknameController::class, 'inactive'])->name('worknames.inactive');
+    Route::post('work-name/active', [WorknameController::class, 'active'])->name('worknames.active');
+    Route::post('work-name/destroy', [WorknameController::class, 'destroy'])->name('worknames.destroy');
 
     // whychoose
     Route::get('whychoose/manage', [WhyChooseController::class, 'index'])->name('whychoose.index');
@@ -407,6 +417,21 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('howitwork/inactive', [HowItWorkController::class, 'inactive'])->name('howitworks.inactive');
     Route::post('howitwork/active', [HowItWorkController::class, 'active'])->name('howitworks.active');
     Route::post('howitwork/destroy', [HowItWorkController::class, 'destroy'])->name('howitworks.destroy');
+
+    // howitwork routes
+    Route::get('section-description/manage', [SectionDescriptionController::class, 'index'])->name('sectiondescriptions.index');
+    Route::get('section-description/{id}/show', [SectionDescriptionController::class, 'show'])->name('sectiondescriptions.show');
+    Route::get('section-description/create', [SectionDescriptionController::class, 'create'])->name('sectiondescriptions.create');
+    Route::post('section-description/save', [SectionDescriptionController::class, 'store'])->name('sectiondescriptions.store');
+    Route::get('section-description/{id}/edit', [SectionDescriptionController::class, 'edit'])->name('sectiondescriptions.edit');
+    Route::post('section-description/update', [SectionDescriptionController::class, 'update'])->name('sectiondescriptions.update');
+    Route::post('section-description/inactive', [SectionDescriptionController::class, 'inactive'])->name('sectiondescriptions.inactive');
+    Route::post('section-description/active', [SectionDescriptionController::class, 'active'])->name('sectiondescriptions.active');
+    Route::post('section-description/destroy', [SectionDescriptionController::class, 'destroy'])->name('sectiondescriptions.destroy');
+
+    // howitwork routes
+    Route::get('contact-data/manage', [ContactDataController::class, 'index'])->name('contactdatas.index');
+    Route::post('contact-data/destroy', [ContactDataController::class, 'destroy'])->name('contactdatas.destroy');
 
     // portfolio categories
     Route::get('portfolio-category/manage', [PortfolioCategoryController::class, 'index'])->name('portfolio_category.index');

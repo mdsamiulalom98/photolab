@@ -44,8 +44,8 @@ class SliderController extends Controller
         $imageUrl = $uploadpath.$name;
         $img=Image::make($image->getRealPath());
         $img->encode('webp', 90);
-        $width = 100;
-        $height = 100;
+        $width = '';
+        $height = '';
         $img->height() > $img->width() ? $width=null : $height=null;
         $img->resize($width, $height, function ($constraint) {
             $constraint->aspectRatio();
@@ -85,8 +85,8 @@ class SliderController extends Controller
             $imageUrl = $uploadpath.$name;
             $img=Image::make($image->getRealPath());
             $img->encode('webp', 90);
-            $width = 100;
-            $height = 100;
+            $width = '';
+            $height = '';
             $img->height() > $img->width() ? $width=null : $height=null;
             $img->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();

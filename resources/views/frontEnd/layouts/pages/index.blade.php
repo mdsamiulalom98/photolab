@@ -18,7 +18,7 @@
     <section class="slider-section">
         <div class="main-slider owl-carousel">
             @foreach ($sliders as $key => $value)
-                <div class="slider-item" style="background: url({{ asset($value->image) }})">
+                <div class="slider-item" style="background-image: url({{ asset($value->image) }})">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-12">
@@ -45,9 +45,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="section-title">
-                        <h2>Here's How It Works</h2>
-                        <p>We probably operate the best offshore Graphics design studio in Asia. To make sure we keep
-                            delivering top quality we only employ the best DTP professionals.</p>
+                        <h2>{{ $title_howitworks->title ?? "Here's How It Works" }}</h2>
+                        <p>{{ $title_howitworks->description ?? '' }}</p>
                     </div>
                 </div>
             </div>
@@ -78,9 +77,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="section-title white-title">
-                        <h2>Our services</h2>
-                        <p>We probably operate the best offshore Graphics design studio in Asia. To make sure we keep
-                            delivering top quality we only employ the best DTP professionals.</p>
+                        <h2>{{ $title_ourservices->title ?? 'Our services' }}</h2>
+                        <p>{{ $title_ourservices->description ?? '' }}</p>
                     </div>
                 </div>
             </div>
@@ -111,9 +109,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="section-title">
-                        <h2>Why Choose Us</h2>
-                        <p>We probably operate the best offshore Graphics design studio in Asia. To make sure we keep
-                            delivering top quality we only employ the best DTP professionals.</p>
+                        <h2>{{ $title_whychoose->title ?? 'Why Choose Us'}}</h2>
+                        <p>{{ $title_whychoose->description ?? '' }}</p>
                     </div>
                 </div>
             </div>
@@ -224,9 +221,8 @@
                 <div class="col-lg-8">
                     <div class="section-title">
                         <span class="separator"></span>
-                        <h2 class="title">Client Testimonials</h2>
-                        <p>We probably operate the best offshore Graphics design studio in Asia. To make sure we keep
-                            delivering top quality we only employ the best DTP professionals.<br></p>
+                        <h2 class="title">{{ $title_testimonial->title ?? 'Client Testimonials' }}</h2>
+                        <p>{{ $title_testimonial->description ?? '' }}<br></p>
                     </div>
                 </div>
             </div>

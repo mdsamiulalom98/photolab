@@ -1,5 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title',  ' Order')
+@section('title', ' Order')
 @section('content')
     @php
         $type = request()->get('type') ?? 'seller';
@@ -9,7 +9,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="page-title">{{ request()->get('type') == 2 ? 'Get Quote' : 'Free Trial' }} Orders ({{ $show_data->count() }})</h4>
+                    <h4 class="page-title">{{ request()->get('type') == 2 ? 'Get Quote' : 'Free Trial' }} Orders
+                        ({{ $show_data->count() }})</h4>
                 </div>
             </div>
         </div>
@@ -19,18 +20,29 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="mb-2">
+                            <a
+                                href="{{ route('admin.trial_order.bulk_destroy') }}"class="btn rounded-pill btn-danger order_delete"><i
+                                    class="fe-plus"></i> Delete All
+                            </a>
 
+                        </div>
                         <div class="table-responsive ">
-                            <table id="datatable-buttons" class="table table-striped   w-100">
+                            <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
                                 <thead>
                                     <tr>
-
-                                        <th class="white-space-nowrap">SL</th>
+                                        <th>
+                                            <div class="form-check">
+                                                <label class="form-check-label">All <input type="checkbox"
+                                                        class="form-check-input checkall" value=""></label>
+                                            </div>
+                                        </th>
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th class="white-space-nowrap">Order Placed</th>
                                         <th class="white-space-nowrap">Prefer Delivery</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -38,20 +50,31 @@
                                 <tbody>
                                     @foreach ($show_data as $key => $value)
                                         <tr>
-                                            <td><a href="{{ route('admin.trial.details', ['id' => $value->id]) }}">{{ $loop->iteration }}</a></td>
-                                            <td class="white-space-nowrap">
-                                                <strong>{{ $value->name ?? '' }}</strong>
+                                            <td><input type="checkbox" class="checkbox" value="{{ $value->id }}"></td>
+                                            <td
+                                                class="white-space-nowrap {{ $value->seen == 0 ? 'fw-bold text-danger' : '' }}">
+                                                {{ $value->name ?? '' }}
                                             </td>
                                             <td>{{ $value->phone ?? '' }}</td>
                                             <td>{{ $value->email ?? '' }}</td>
-                                            <td>{{ date('d-m-Y', strtotime($value->updated_at)) }}<br>
-                                                {{ date('h:i:s a', strtotime($value->updated_at)) }}</td>
+                                            <td>{{ date('d-M-Y', strtotime($value->create_at)) }} |
+                                                {{ date('h:i:s A', strtotime($value->create_at)) }}</td>
                                             <td>{{ $value->pre_delivery_time }}</td>
+                                            <td><span class="btn btn-info rounded-pill btn-xs">{{ $value->status }}</span>
+                                            </td>
                                             <td class="white-space-nowrap">
-                                                <div class="button-list custom-btn-list">
-                                                    <a href="{{ route('admin.trial.details', ['id' => $value->id]) }}" class="btn btn-outline-info px-1"
-                                                        title="Invoice"><i class="fe-eye"></i></a>
-
+                                                <div class="button-list">
+                                                    <a href="{{ route('admin.trial.details', ['id' => $value->id]) }}"
+                                                        class="btn btn-success  waves-effect btn-xs" title="Invoice"><i
+                                                            class="fe-eye"></i></a>
+                                                    <form method="post" action="{{ route('admin.trial_order.destroy') }}"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        <input type="hidden" value="{{ $value->id }}" name="id">
+                                                        <button type="submit"
+                                                            class="btn btn-xs btn-danger waves-effect waves-light delete-confirm"><i
+                                                                class="mdi mdi-close"></i></button>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
@@ -107,145 +130,8 @@
             $(".checkall").on('change', function() {
                 $(".checkbox").prop('checked', $(this).is(":checked"));
             });
-
-            // order assign
-            $(document).on('submit', 'form#order_assign', function(e) {
-                e.preventDefault();
-                var url = $(this).attr('action');
-                var method = $(this).attr('method');
-                let user_id = $(document).find('select#user_id').val();
-
-                var order = $('input.checkbox:checked').map(function() {
-                    return $(this).val();
-                });
-                var order_ids = order.get();
-
-                if (order_ids.length == 0) {
-                    toastr.error('Please Select An Order First !');
-                    return;
-                }
-
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    data: {
-                        user_id,
-                        order_ids
-                    },
-                    success: function(res) {
-                        if (res.status == 'success') {
-                            toastr.success(res.message);
-                            window.location.reload();
-
-                        } else {
-                            toastr.error('Failed something wrong');
-                        }
-                    }
-                });
-
-            });
-
-            // order status change
-            $(document).on('submit', 'form#order_status_form', function(e) {
-                e.preventDefault();
-                var url = $(this).attr('action');
-                var method = $(this).attr('method');
-                let order_status = $(document).find('select#order_status').val();
-
-                var order = $('input.checkbox:checked').map(function() {
-                    return $(this).val();
-                });
-                var order_ids = order.get();
-
-                if (order_ids.length == 0) {
-                    toastr.error('Please Select An Order First !');
-                    return;
-                }
-
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    data: {
-                        order_status,
-                        order_ids
-                    },
-                    success: function(res) {
-                        if (res.status == 'success') {
-                            toastr.success(res.message);
-                            window.location.reload();
-
-                        } else {
-                            toastr.error('Failed something wrong');
-                        }
-                    }
-                });
-
-            });
             // order delete
             $(document).on('click', '.order_delete', function(e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
-                var order = $('input.checkbox:checked').map(function() {
-                    return $(this).val();
-                });
-                var order_ids = order.get();
-
-                if (order_ids.length == 0) {
-                    toastr.error('Please Select An Order First !');
-                    return;
-                }
-
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    data: {
-                        order_ids
-                    },
-                    success: function(res) {
-                        if (res.status == 'success') {
-                            toastr.success(res.message);
-                            window.location.reload();
-
-                        } else {
-                            toastr.error('Failed something wrong');
-                        }
-                    }
-                });
-
-            });
-
-            // multiple print
-            $(document).on('click', '.multi_order_print', function(e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
-                var order = $('input.checkbox:checked').map(function() {
-                    return $(this).val();
-                });
-                var order_ids = order.get();
-
-                if (order_ids.length == 0) {
-                    toastr.error('Please Select Atleast One Order!');
-                    return;
-                }
-                $.ajax({
-                    type: 'GET',
-                    url,
-                    data: {
-                        order_ids
-                    },
-                    success: function(res) {
-                        if (res.status == 'success') {
-                            console.log(res.items, res.info);
-                            var myWindow = window.open("", "_blank");
-                            myWindow.document.write(res.view);
-                        } else {
-                            toastr.error('Failed something wrong');
-                        }
-                    }
-                });
-            });
-            // multiple courier
-            $(document).on('click', '.multi_order_courier', function(e) {
                 e.preventDefault();
                 var url = $(this).attr('href');
                 var order = $('input.checkbox:checked').map(function() {

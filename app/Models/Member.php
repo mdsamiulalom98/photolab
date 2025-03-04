@@ -10,4 +10,8 @@ class Member extends Authenticatable
     protected $guard = 'member';
 
     protected $guarded = [];
+    public function orders()
+    {
+        return $this->hasMany(Order::class,'member_id');
+    }
 }

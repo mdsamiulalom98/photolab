@@ -145,4 +145,57 @@
         </div>
     </section>
     <!-- WHY CHOOSE US END -->
+
+    <!-- OUR TEAM START -->
+    <section class="section-padding our-team-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="section-title">
+                        <h2>Our Team </h2>
+                        <p>We probably operate the best offshore Graphics design studio in Asia. To make sure we keep
+                            delivering top quality we only employ the best DTP professionals.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @foreach($teams as $key => $value)
+                    <div class="col-sm-6">
+                        <div class="team-inner">
+                           <div class="team-img">
+                               <img src="{{asset($value->image)}}" alt="">
+                           </div>
+                           <div class="team-info">
+                               <p class="designation">{{$value->designation}}</p>
+                               <h4 class="name">{{$value->name}}</h4>
+                               <p><i class="fa-solid fa-envelope"></i> {{$value->email}}</p>
+                               <p><i class="fa-solid fa-phone"></i> {{$value->phone}}</p>
+                               <ul>
+                                   @if($value->facebook)
+                                     <li><a href="{{$value->facebook}}" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                                   @endif
+                                   @if($value->youtube)
+                                     <li><a href="{{$value->youtube}}" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                                   @endif
+                                   @if($value->linked_in)
+                                     <li><a href="{{$value->linked_in}}" target="_blank"><i class="fa-brands fa-linked-in"></i></a></li>
+                                   @endif
+                                   @if($value->twitter)
+                                     <li><a href="{{$value->twitter}}" target="_blank"><i class="fa-brands fa-twitter"></i></a></li>
+                                   @endif
+                                   @if($value->instagram)
+                                     <li><a href="{{$value->instagram}}" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                                   @endif
+                                   @if($value->pinterest)
+                                     <li><a href="{{$value->pinterest}}" target="_blank"><i class="fa-brands fa-pinterest"></i></a></li>
+                                   @endif
+                               </ul>
+                           </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <!-- OUR TEAM END -->
 @endsection

@@ -34,7 +34,7 @@
 
                             @foreach ($portfolios as $key => $value)
                                 <div class=" col-sm-3 single-portfolio {{ $value->category->slug ?? '' }} " style="">
-                                    <div class="portfolio-item twentytwenty-container portfolio-images">
+                                    <div class="portfolio-item">
                                         <img src="{{ asset($value->image_one) }}" alt="">
                                         <img src="{{ asset($value->image_two) }}" alt="">
                                     </div>
@@ -48,6 +48,3 @@
         </div>
     </section>
 @endsection
-
-@push('script')
-@endpush

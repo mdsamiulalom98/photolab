@@ -37,10 +37,15 @@
                         <div class="row">
                             <div class="col-sm-5">
                                 <div class="form-group mb-3">
-                                    <input type="text"
-                                        class="form-control  {{ $errors->has('cart_name') ? 'is-invalid' : '' }}"
-                                        placeholder="Service Name" id="cart_name" name="cart_name"
-                                        value="{{ old('cart_name') }}">
+                                    <select type="text" id="cart_name" required id="cart_name"
+                                        class="select2 form-control @error('cart_name') is-invalid @enderror"
+                                        name="cart_name">
+                                        <option value="">Select Service</option>
+                                        @foreach ($services as $key => $service)
+                                            <option value="{{ $service->title }}">{{ $service->title }}</option>
+                                        @endforeach
+                                    </select>
+
                                     @if ($errors->has('cart_name'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('cart_name') }}</strong>
@@ -101,7 +106,6 @@
                                     <tbody id="cartTable">
                                         @foreach ($cartinfo as $key => $value)
                                             <tr>
-
                                                 <td>{{ $value->name }} </td>
                                                 <td>
                                                     <div class="qty-cart vcart-qty">
@@ -135,43 +139,20 @@
                             </div>
                             <div class="col-sm-6">
 
-                                <div class="row new_customer">
+                                <div class="row">
+
                                     <div class="col-sm-12">
                                         <div class="form-group mb-2">
-                                            <input type="text" id="name" required
-                                                class="form-control @error('name') is-invalid @enderror"
-                                                placeholder="Customer Name" name="name" value="" />
-                                            @error('name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- col-end -->
-                                    <div class="col-sm-12">
-                                        <div class="form-group mb-2 position-relative">
-                                            <input type="number" id="phone" required
-                                                class="form-control @error('phone') is-invalid @enderror"
-                                                placeholder="Customer Number" name="phone" value="" />
-                                            <div id="customerItems" style="display: none;">
-                                                @include('backEnd.order.customers')
-                                            </div>
-                                            @error('phone')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- col-end -->
-                                    <div class="col-sm-12">
-                                        <div class="form-group mb-2">
-                                            <label class="mb-1" for="order_name">Order Name *</label>
-                                            <input type="text" id="order_name"
-                                                class="form-control @error('order_name') is-invalid @enderror"
-                                                placeholder="Order Name" name="order_name" value="{{ old('order_name') }}" required />
-                                            @error('order_name')
+                                            <label class="mb-1" for="image">Seller *</label>
+                                            <select type="text" id="member_id" required
+                                                class="select2 form-control @error('member_id') is-invalid @enderror"
+                                                name="member_id">
+                                                <option value="">Select Seller</option>
+                                                @foreach ($members as $key => $member)
+                                                    <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('member_id')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -182,11 +163,68 @@
 
                                     <div class="col-sm-12">
                                         <div class="form-group mb-2">
+                                            <label class="mb-1" for="order_name">Order Name *</label>
+                                            <input type="text" id="order_name"
+                                                class="form-control @error('order_name') is-invalid @enderror"
+                                                placeholder="Order Name" name="order_name"
+                                                value="{{ old('order_name') }}" required />
+                                            @error('order_name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <!-- col-end -->
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-2">
                                             <label class="mb-1" for="prefer_delivery">Prefer Delivery *</label>
-                                            <input type="text" placeholder="Prefer Delivery" id="prefer_delivery"
+                                            <input type="number" placeholder="Prefer Delivery" id="prefer_delivery"
                                                 class="form-control @error('prefer_delivery') is-invalid @enderror"
-                                                name="prefer_delivery" value="{{ old('prefer_delivery') }}" required />
+                                                name="prefer_delivery" value="{{ old('prefer_delivery') }}"  />
                                             @error('prefer_delivery')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <!-- col-end -->
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-2">
+                                            <label class="mb-1" for="time_frame">Time Frame *</label>
+                                            <select id="time_frame"
+                                                class=" form-control form-select @error('time_frame') is-invalid @enderror"
+                                                name="time_frame"  >
+                                                <option value="">Select..</option>
+                                                <option value="hour">Hour</option>
+                                                <option value="day">Day</option>
+                                                <option value="month">Month</option>
+                                            </select>
+
+                                            @error('time_frame')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <!-- col-end -->
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-2">
+                                            <label class="mb-1" for="currency">Currency *</label>
+                                            <select id="currency"
+                                                class=" form-control form-select @error('currency') is-invalid @enderror"
+                                                name="currency" value="{{ old('currency') }}" required>
+                                                <option value="">Select..</option>
+                                                <option value="usd">
+                                                    USD</option>
+                                                <option value="bdt">
+                                                    BDT</option>
+                                            </select>
+                                            @error('currency')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -239,8 +277,9 @@
                                     <!-- col-end -->
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label class="mb-1" for="order_note">Order Note *</label>
-                                            <textarea id="order_note" name="order_note" class="form-control mb-3 @error('order_note') is-invalid @enderror">{{ $data->order_note ?? '' }}</textarea>
+                                            <label class="mb-1" for="order_note">Order Note</label>
+                                            <textarea id="order_note" name="order_note"
+                                                class="summernote form-control mb-3 @error('order_note') is-invalid @enderror">{{ $data->order_note ?? '' }}</textarea>
                                         </div>
                                         @error('phone')
                                             <span class="invalid-feedback" role="alert">
@@ -532,6 +571,32 @@
             });
             $("body").on("click", ".btn-danger", function() {
                 $(this).parents(".control-group").remove();
+            });
+        });
+    </script>
+
+    <script>
+        $('#cart_name').on('input', function() {
+            var name = $(this).val();
+            const targetElement = $(`#serviceItems`);
+            $.ajax({
+                url: '{{ route('ajax.services') }}',
+                type: 'GET',
+                data: {
+                    name: name,
+                },
+                success: function(services) {
+                    if (services) {
+                        targetElement.show();
+                        targetElement.html(services);
+                    } else {
+                        targetElement.hide();
+                        targetElement.html(services);
+                    }
+                },
+                error: function() {
+                    console.log('An error occurred while updating the cart.');
+                },
             });
         });
     </script>

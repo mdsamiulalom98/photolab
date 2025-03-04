@@ -3,7 +3,7 @@
 table {
     width: 100%;
     border-collapse: collapse !important;
-    color: #98a6ad !important;
+    color: #98a6ad;
 }
 
 table a {
@@ -20,12 +20,14 @@ table .button-list i {
     color: #fff !important;
 }
 
-table tr:nth-child(odd) {
-    background-color: #414954 !important;
+table#datatable-buttons>tbody>tr:nth-child(odd) {
+    background-color: #414954;
+    color: #fff;
 }
 
-table tr:nth-child(even) {
-    background-color: #323A46 !important;
+table#datatable-buttons>tbody>tr:nth-child(even) {
+    background-color: #323A46;
+    color: #fff;
 }
 
 .pos_form table {
@@ -76,19 +78,19 @@ body.authentication-bg {
 }
 
 tr.coundown {
-    color: #ff3e3e !important;
+    background-color: #f97a8d !important;
 }
 
 tr.coundown td, tr.coundown a {
-    color: #ff3e3e !important;
+    color: #fff !important;
 }
 
 tr.complete {
-    color: #0aff99 !important;
+    background-color: #1abc9c !important;
 }
 
 tr.complete td, tr.complete a {
-    color: #0aff99 !important;
+    color: #fff !important;
 }
 
 .account-pages {
@@ -634,13 +636,8 @@ div#customerItems {
 }
 
 .chatbox-footer {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0;
     position: relative;
-    display: flex;
     -webkit-box-align: center;
-    align-items: center;
     padding: 12px 20px;
     background-color: #f3f4f5;
     border-top: 1px solid #e1e7ec;
@@ -666,13 +663,6 @@ div#customerItems {
     padding: 0;
     outline: 0 !important;
     border: 0;
-}
-
-.chatbox-footer .chatbox-message-part {
-    width: calc(100% - 125px);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
 }
 
 .chatbox-send-part button {
@@ -843,6 +833,7 @@ body[data-leftbar-size=condensed] .footer {
         margin-left: 0;
     }
 }
+
 
 .avatar-preview a {
     display: block;

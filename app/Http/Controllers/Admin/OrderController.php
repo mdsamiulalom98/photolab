@@ -9,16 +9,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Brian2694\Toastr\Facades\Toastr;
-use App\Models\Order;
-use App\Models\Shipping;
+use App\Models\GeneralSetting;
+use App\Models\PaymentDetails;
 use App\Models\OrderDetails;
 use App\Models\OrderStatus;
-use App\Models\Member;
-use App\Models\Payment;
-use App\Models\PaymentDetails;
 use App\Models\Orderimage;
+use App\Models\Timeframe;
+use App\Models\Shipping;
+use App\Models\Payment;
+use App\Models\Service;
+use App\Models\Workname;
 use App\Models\Message;
-use App\Models\GeneralSetting;
+use App\Models\Member;
+use App\Models\Order;
 use ZipArchive;
 use Carbon\Carbon;
 
@@ -26,7 +29,7 @@ class OrderController extends Controller
 {
     public function index($slug, Request $request)
     {
-        if($slug == 'all') {
+        if ($slug == 'all') {
             $order_status = (object) [
                 'name' => 'All',
                 'orders_count' => Order::count(),
@@ -41,12 +44,14 @@ class OrderController extends Controller
                 });
             }
             $show_data = $show_data->paginate(50);
-        }else{
+        } else {
             $order_status = OrderStatus::where('slug', $slug)
-                ->withCount(['orders' => function ($query) use ($request) {
-                    $query->where('order_type', $request->type);
-                }])->first();
-            $show_data = Order::where(['order_status' => $order_status->id, 'order_type'=> $request->type])->latest()->with('member', 'status')->paginate(50);
+                ->withCount([
+                    'orders' => function ($query) use ($request) {
+                        $query->where('order_type', $request->type);
+                    }
+                ])->first();
+            $show_data = Order::where(['order_status' => $order_status->id, 'order_type' => $request->type])->latest()->with('member', 'status')->paginate(50);
         }
 
         return view('backEnd.order.index', compact('show_data', 'order_status'));
@@ -54,8 +59,9 @@ class OrderController extends Controller
 
     public function order_edit($id)
     {
-        $data = Order::where(['id' => $id])->select('id', 'id', 'order_status', 'member_id', 'order_name', 'prefer_delivery', 'external_link','order_note')->with('orderdetails','member')->first();
+        $data = Order::where(['id' => $id])->select('id', 'id', 'order_status', 'member_id', 'order_name', 'prefer_delivery', 'external_link', 'order_note', 'currency')->with('orderdetails', 'member')->first();
         $order = Order::where('id', $id)->first();
+        $timeframes = Timeframe::where('status', 1)->get();
         Cart::instance('sale')->destroy();
         Session::put('product_discount', $order->discount);
         $orderdetails = OrderDetails::where('order_id', $order->id)->get();
@@ -69,7 +75,7 @@ class OrderController extends Controller
             ]);
         }
         $cartinfo = Cart::instance('sale')->content();
-        return view('backEnd.order.edit', compact('cartinfo', 'order', 'data'));
+        return view('backEnd.order.edit', compact('cartinfo', 'order', 'data', 'timeframes'));
     }
 
     public function cart_clear(Request $request)
@@ -89,10 +95,13 @@ class OrderController extends Controller
         Session::forget('product_discount');
         Session::forget('cpaid');
         Session::forget('cdue');
-        $members = Member::where(['status'=>1,'type'=>'seller'])->get();
-        return view('backEnd.order.create', compact('cartinfo', 'members'));
+        $members = Member::where(['status' => 1, 'type' => 'seller'])->get();
+        $services = Workname::where('status', 1)->get();
+        $timeframes = Timeframe::where('status', 1)->get();
+        return view('backEnd.order.create', compact('cartinfo', 'members', 'services', 'timeframes'));
     }
-    public function members (Request $request) {
+    public function members(Request $request)
+    {
         $members = Member::where('phone', 'LIKE', '%' . $request->phone . "%")->where('type', $request->type)->get();
         if (empty($request->phone || !$members)) {
             $members = [];
@@ -100,7 +109,8 @@ class OrderController extends Controller
         return view('backEnd.order.customers', compact('members'));
     }
 
-    public function member_add(Request $request) {
+    public function member_add(Request $request)
+    {
         $member = Member::find($request->id);
         return response()->json([
             'success' => $member ? true : false,
@@ -114,6 +124,7 @@ class OrderController extends Controller
             'currency' => 'required',
             'member_id' => 'required',
             'prefer_delivery' => 'required',
+            'time_frame' => 'required',
         ]);
         if (Cart::instance('sale')->count() <= 0) {
             Toastr::error('Your shopping empty', 'Failed!');
@@ -122,41 +133,49 @@ class OrderController extends Controller
         $subtotal = Cart::instance('sale')->subtotal();
         $subtotal = str_replace(',', '', $subtotal);
 
-        if($request->time_frame == 'hour'){
+        if ($request->time_frame == 'hour') {
             $prefer_delivery = Carbon::now()->addHours((int) $request->prefer_delivery);
-        }elseif($request->time_frame == 'day'){
+        } elseif ($request->time_frame == 'day') {
             $prefer_delivery = Carbon::now()->addDays((int) $request->prefer_delivery);
-        }elseif($request->time_frame == 'month'){
+        } elseif ($request->time_frame == 'month') {
             $prefer_delivery = Carbon::now()->addMonths((int) $request->prefer_delivery);
         }
-        
-        if($request->currency == 'usd'){
-            $setting = GeneralSetting::select('id','usd_rate')->first();
+
+        $prefer_time = '';
+        if($request->prefer_delivery && $request->time_frame) {
+            $prefer_time = $request->prefer_delivery . ' ' . $request->time_frame;
+        }
+
+        // return $prefer_delivery;
+
+        if ($request->currency == 'usd') {
+            $setting = GeneralSetting::select('id', 'usd_rate')->first();
             $subtotal = $subtotal * $setting->usd_rate;
         }
         // order data save
-        $order                  = new Order();
-        $order->invoice_id      = rand(11111, 99999);
-        $order->order_name      = $request->order_name;
-        $order->amount          = $subtotal;
-        $order->discount        = 0;
+        $order = new Order();
+        $order->invoice_id = rand(11111, 99999);
+        $order->order_name = $request->order_name;
+        $order->amount = $subtotal;
+        $order->discount = 0;
         $order->shipping_charge = 0;
-        $order->currency        = $request->currency;
-        $order->member_id       = $request->member_id;
-        $order->order_type      = 'seller';
-        $order->order_status    = 1;
-        $order->order_note      = $request->order_note;
-        $order->external_link   = $request->external_link;
-        $order->prefer_delivery = $prefer_delivery;
+        $order->currency = $request->currency;
+        $order->member_id = $request->member_id;
+        $order->order_type = 'seller';
+        $order->order_status = 1;
+        $order->order_note = $request->order_note;
+        $order->external_link = $request->external_link;
+        $order->delivery_time = $prefer_delivery;
+        $order->prefer_delivery = $prefer_time;
         $order->save();
 
         foreach (Cart::instance('sale')->content() as $cart) {
-            $order_details                  = new OrderDetails();
-            $order_details->order_id        = $order->id;
-            $order_details->service_id      = $cart->id;
-            $order_details->service_name    = $cart->name;
-            $order_details->sale_price      = $cart->price;
-            $order_details->qty             = $cart->qty;
+            $order_details = new OrderDetails();
+            $order_details->order_id = $order->id;
+            $order_details->service_id = $cart->id;
+            $order_details->service_name = $cart->name;
+            $order_details->sale_price = $cart->price;
+            $order_details->qty = $cart->qty;
             $order_details->save();
         }
 
@@ -249,6 +268,7 @@ class OrderController extends Controller
 
     public function order_update(Request $request)
     {
+        // return $request->all();
         $this->validate($request, [
             'name' => 'required',
             'phone' => 'required',
@@ -327,7 +347,8 @@ class OrderController extends Controller
         return redirect('admin/orders/pending');
     }
 
-    public function message_update(Request $request) {
+    public function message_update(Request $request)
+    {
         $receipient_id = $request->member_id;
         $message = new Message();
         $message->order_id = $request->order_id;
@@ -338,20 +359,21 @@ class OrderController extends Controller
         $message->save();
         return redirect()->back();
     }
-    public function message_reload(Request $request) {
-        Message::where(['order_id' => $request->id, 'status'=> 0])->whereNot('username', 'admin')->select('id', 'order_id', 'status')->update(['status'=>1]);
-        $messages = Message::where('order_id',$request->id)->get();
+    public function message_reload(Request $request)
+    {
+        Message::where(['order_id' => $request->id, 'status' => 0])->whereNot('username', 'admin')->select('id', 'order_id', 'status')->update(['status' => 1]);
+        $messages = Message::where('order_id', $request->id)->get();
         return view('backEnd.order.messages', compact('messages'));
-    } 
+    }
     public function change_status(Request $request)
     {
         $order = Order::find($request->order_id);
-        $order->order_status = $request->order_status??$order->order_status;
+        $order->order_status = $request->order_status ?? $order->order_status;
         $order->download_link = $request->download_link;
         $order->save();
         return redirect()->back();
     }
-    
+
 
     public function downloadImagesAsZip(Request $request)
     {
@@ -377,68 +399,72 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
-    public function order_approve(Request $request) {
-        $order_data = Order::where('id' , $request->order_id)->first();
+    public function order_approve(Request $request)
+    {
+        $order_data = Order::where('id', $request->order_id)->first();
         $order_data->order_status = 2;
         $order_data->save();
         Toastr::success('Success', 'Order status change successfully');
         return redirect()->back();
     }
-    public function order_reject(Request $request) {
-        $order_data = Order::where('id' , $request->order_id)->first();
+    public function order_reject(Request $request)
+    {
+        $order_data = Order::where('id', $request->order_id)->first();
         $order_data->order_status = 7;
         $order_data->save();
         Toastr::success('Success', 'Order status change successfully');
         return redirect()->back();
     }
-    public function invoice_generate(Request $request,$type) {
-        $members = Member::where(['status'=>1,'type'=>$type])->select('id','name','status')->get();
+    public function invoice_generate(Request $request, $type)
+    {
+        $members = Member::where(['status' => 1, 'type' => $type])->select('id', 'name', 'status')->get();
         $member_info = Member::find($request->member_id);
         $orderdetails = [];
         $order_ids = [];
         if ($request->member_id && $request->start_date && $request->end_date) {
-           $orderdetails = OrderDetails::whereHas('order', function ($query) use ($request) {
+            $orderdetails = OrderDetails::whereHas('order', function ($query) use ($request) {
                 $query->where([
                     'member_id' => $request->member_id,
                     'payment_status' => 'unpaid',
                     'order_status' => 4
                 ])->whereBetween('created_at', [$request->start_date, $request->end_date]);
             })
-            ->with('order')
-            ->get();
+                ->with('order')
+                ->get();
             $order_ids = $orderdetails->pluck('order_id')->unique()->values()->toArray();
         }
         // return $order_ids;
-        return view('backEnd.order.invoice_generate', compact('orderdetails','members','member_info','order_ids'));
+        return view('backEnd.order.invoice_generate', compact('orderdetails', 'members', 'member_info', 'order_ids'));
     }
-    public function invoice_save(Request $request) {
+    public function invoice_save(Request $request)
+    {
 
         $member = Member::find($request->member_id);
         $order_ids = json_decode($request->order_ids, true);
-        $orders = Order::whereIn('id',$order_ids)->get();
-         
-        $payment                    = new Payment();
-        $payment->member_id         = $member->id;
-        $payment->type              = $member->type;
-        $payment->amount            = $orders->sum('amount');
-        $payment->currency          = $member->type == 'buyer' ? 'usd' :'bdt';
-        $payment->trx_id            = $request->trx;
-        $payment->trx_id            = $request->trx_id;
-        $payment->payment_method    = $request->payment_method;
-        $payment->account_number    = $request->account_number;
-        $payment->payment_status    = 'pending';
+        $orders = Order::whereIn('id', $order_ids)->get();
+
+        $payment = new Payment();
+        $payment->member_id = $member->id;
+        $payment->type = $member->type;
+        $payment->amount = $orders->sum('amount');
+        $payment->currency = $member->type == 'buyer' ? 'usd' : 'bdt';
+        $payment->trx_id = $request->trx;
+        $payment->trx_id = $request->trx_id;
+        $payment->payment_method = $request->payment_method;
+        $payment->account_number = $request->account_number;
+        $payment->payment_status = 'pending';
         $payment->save();
 
-        foreach($orders as $order){
+        foreach ($orders as $order) {
 
-            foreach($order->orderdetails as $details){
-                $payment_details                = new PaymentDetails();
-                $payment_details->payment_id    = $payment->id;
-                $payment_details->service_id    = $details->service_id;
-                $payment_details->order_id      = $details->order_id;
-                $payment_details->service_name  = $details->service_name;
-                $payment_details->sale_price    = $details->sale_price;
-                $payment_details->qty           = $details->qty;
+            foreach ($order->orderdetails as $details) {
+                $payment_details = new PaymentDetails();
+                $payment_details->payment_id = $payment->id;
+                $payment_details->service_id = $details->service_id;
+                $payment_details->order_id = $details->order_id;
+                $payment_details->service_name = $details->service_name;
+                $payment_details->sale_price = $details->sale_price;
+                $payment_details->qty = $details->qty;
                 $payment_details->save();
             }
             $order->payment_status = 'process';
@@ -447,18 +473,28 @@ class OrderController extends Controller
         Toastr::success('Success', 'Invoice create  successfully');
         return redirect()->back();
     }
-    public function payment($type) {
-        $show_data = Payment::where('type',$type)->paginate(50);
+    public function payment($type)
+    {
+        $show_data = Payment::where('type', $type)->paginate(50);
         return view('backEnd.order.payment', compact('show_data'));
     }
-     public function invoice($id) {
-        $payment = Payment::where('id',$id)->with('paymentdetails')->first();
+    public function invoice($id)
+    {
+        $payment = Payment::where('id', $id)->with('paymentdetails')->first();
         $member_info = Member::find($payment->member_id);
         $order = Order::where(['id' => $id])->firstOrFail();
         // return $order;
-        return view('backEnd.order.invoice', compact('payment','member_info','order'));
+        return view('backEnd.order.invoice', compact('payment', 'member_info', 'order'));
     }
 
-    
+    public function destroy(Request $request)
+    {
+        $delete_data = Order::find($request->id);
+        $delete_data->delete();
+        Toastr::success('Success', 'Data delete successfully');
+        return redirect()->back();
+    }
+
+
 }
 

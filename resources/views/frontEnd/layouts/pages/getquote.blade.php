@@ -65,10 +65,9 @@
                             <select id="country" name="country" class="input-field custom-select borderd" required="">
                                 <option value="">Select One</option>
 
-                                <option value="United States">United States</option>
-                                <option value="England">England</option>
-                                <option value="Australia">Australia</option>
-                                <option value="India">India</option>
+                                @foreach ($countries as $key => $country)
+                                <option value="{{$country->nicename}}">{{$country->nicename}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -177,7 +176,7 @@
                     <div class="col-md-12">
                         <div class="form-element margin-bottom-30">
                             <label for="message">Additional Comments (optional)</label>
-                            <textarea rows="20" id="message" name="message" placeholder="Type Additional Comments..."
+                            <textarea rows="20" class="summernote"  id="message" name="message" placeholder="Type Additional Comments..."
                                 class="input-field textarea borderd"></textarea>
                         </div>
                     </div>
@@ -248,6 +247,12 @@
         $("body").on("click", ".btn-danger", function() {
             $(this).parents(".control-group").remove();
         });
+    });
+</script>
+<script src="{{ asset('public/backEnd/') }}/assets/libs//summernote/summernote-lite.min.js"></script>
+<script>
+    $(".summernote").summernote({
+        placeholder: "Enter Your Text Here",
     });
 </script>
 @endpush

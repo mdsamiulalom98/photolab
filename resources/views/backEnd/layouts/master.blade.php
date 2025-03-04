@@ -18,10 +18,12 @@
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/all.min.css') }}" />
     <!-- icons -->
     <link href="{{ asset('public/backEnd/') }}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('public/backEnd/') }}/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet"
+        type="text/css" />
     <!-- toastr css -->
     <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
     <!-- custom css -->
-    <link href="{{ asset('public/backEnd/') }}/assets/css/custom.css?v=1.0.0" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('public/backEnd/') }}/assets/css/custom.css?v=1.0.1" rel="stylesheet" type="text/css" />
     <!-- Head js -->
     @yield('css')
     <script src="{{ asset('public/backEnd/') }}/assets/js/head.js"></script>
@@ -145,10 +147,14 @@
                             </a>
 
                             <!-- item-->
-                            <a href="{{ route('locked') }}" class="dropdown-item notify-item">
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();"
+                                class="dropdown-item notify-item">
                                 <i class="fe-lock"></i>
                                 <span>Lock Screen</span>
                             </a>
+                            <!-- item-->
 
                             <div class="dropdown-divider"></div>
 
@@ -256,8 +262,12 @@
                     <ul id="side-menu">
                         @php
                             $trial_orders = \App\Models\TrialOrder::select('id', 'type');
-                            $free_trial_count = (clone $trial_orders)->where('type', 1)->count();
-                            $get_quote_count = (clone $trial_orders)->where('type', 2)->count();
+                            $free_trial_count = (clone $trial_orders)
+                                ->where(['type' => 'free-trial', 'seen' => 0])
+                                ->count();
+                            $get_quote_count = (clone $trial_orders)
+                                ->where(['type' => 'get-quote', 'seen' => 0])
+                                ->count();
                         @endphp
                         <li>
                             <a href="{{ url('admin/dashboard') }}">
@@ -266,7 +276,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.trials', ['type' => 2]) }}" class="d-flex align-items-center">
+                            <a href="{{ route('admin.trial', 'get-quote') }}" class="d-flex align-items-center">
                                 <i class="fa-quote-left fa-solid"></i>
                                 <span>Get Quote</span>
                                 <span class="badge bg-danger ms-auto mt-0"
@@ -274,7 +284,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.trials', ['type' => 1]) }}" class="d-flex align-items-center">
+                            <a href="{{ route('admin.trial', 'free-trial') }}" class="d-flex align-items-center">
                                 <i class="fa-solid fa-gift"></i>
                                 <span> Free Trial </span>
                                 <span class="badge bg-danger ms-auto mt-0"
@@ -324,6 +334,20 @@
                                             </a>
                                         </li>
                                     @endforeach
+                                    <li>
+                                        <a href="{{ route('admin.orders.invoice_generate', 'seller') }}"
+                                            class="d-flex align-items-center">
+                                            <i data-feather="minus"></i>
+                                            <span>Invoice Generate </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.orders.payment', 'seller') }}"
+                                            class="d-flex align-items-center">
+                                            <i data-feather="minus"></i>
+                                            <span>Payment</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -366,31 +390,24 @@
                                             </a>
                                         </li>
                                     @endforeach
+                                    <li>
+                                        <a href="{{ route('admin.orders.invoice_generate', 'buyer') }}"
+                                            class="d-flex align-items-center">
+                                            <i data-feather="minus"></i>
+                                            <span>Invoice Generate </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.orders.payment', 'buyer') }}"
+                                            class="d-flex align-items-center">
+                                            <i data-feather="minus"></i>
+                                            <span>Payment</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
                         <!-- nav items -->
-                        <li>
-                            <a href="#sidebar-category" data-bs-toggle="collapse">
-                                <i data-feather="airplay"></i>
-                                <span> Categories </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebar-category">
-                                <ul class="nav-second-level">
-
-                                    <li>
-                                        <a href="{{ route('categories.create') }}"><i data-feather="minus"></i>
-                                            Create</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('categories.index') }}"><i data-feather="minus"></i>
-                                            Campaign</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- nav items end -->
 
                         <li>
                             <a href="#sidebar-users" data-bs-toggle="collapse">
@@ -416,13 +433,63 @@
                             </div>
                         </li>
                         <!-- nav items -->
+
                         <li>
-                            <a href="#siebar-slider" data-bs-toggle="collapse">
+                            <a href="#sidebar-sellers" data-bs-toggle="collapse">
+                                <i data-feather="users"></i>
+                                <span> Sellers </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebar-sellers">
+                                <ul class="nav-second-level">
+                                    <li>
+                                        <a
+                                            href="{{ route('admin.members.index', ['member' => 'seller', 'status' => 'pending']) }}"><i
+                                                data-feather="minus"></i>
+                                            Pending Sellers</a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ route('admin.members.index', ['member' => 'seller', 'status' => 'active']) }}"><i
+                                                data-feather="minus"></i>
+                                            All Sellers</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items -->
+
+                        <li>
+                            <a href="#sidebar-buyers" data-bs-toggle="collapse">
+                                <i data-feather="users"></i>
+                                <span> Buyers </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebar-buyers">
+                                <ul class="nav-second-level">
+                                    <li>
+                                        <a
+                                            href="{{ route('admin.members.index', ['member' => 'buyer', 'status' => 'pending']) }}"><i
+                                                data-feather="minus"></i>
+                                            Pending Buyers</a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ route('admin.members.index', ['member' => 'buyer', 'status' => 'active']) }}"><i
+                                                data-feather="minus"></i>
+                                            All Buyers</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items -->
+                        <li>
+                            <a href="#sidebar-slider" data-bs-toggle="collapse">
                                 <i data-feather="image"></i>
                                 <span> Slider </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="siebar-slider">
+                            <div class="collapse" id="sidebar-slider">
                                 <ul class="nav-second-level">
                                     <li>
                                         <a href="{{ route('slider.create') }}"><i data-feather="minus"></i>
@@ -437,12 +504,12 @@
                         </li>
                         <!-- nav items end -->
                         <li>
-                            <a href="#siebar-service" data-bs-toggle="collapse">
+                            <a href="#sidebar-service" data-bs-toggle="collapse">
                                 <i data-feather="list"></i>
                                 <span> Service </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="siebar-service">
+                            <div class="collapse" id="sidebar-service">
                                 <ul class="nav-second-level">
                                     <li>
                                         <a href="{{ route('service.create') }}"><i data-feather="minus"></i>
@@ -457,12 +524,32 @@
                         </li>
                         <!-- nav items end -->
                         <li>
-                            <a href="#siebar-whychoose" data-bs-toggle="collapse">
+                            <a href="#sidebar-work" data-bs-toggle="collapse">
+                                <i data-feather="list"></i>
+                                <span> Work Name </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebar-work">
+                                <ul class="nav-second-level">
+                                    <li>
+                                        <a href="{{ route('worknames.create') }}"><i data-feather="minus"></i>
+                                            Create</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('worknames.index') }}"><i data-feather="minus"></i>
+                                            Manage</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items end -->
+                        <li>
+                            <a href="#sidebar-whychoose" data-bs-toggle="collapse">
                                 <i data-feather="check-circle"></i>
                                 <span> Why Choose </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="siebar-whychoose">
+                            <div class="collapse" id="sidebar-whychoose">
                                 <ul class="nav-second-level">
                                     <li>
                                         <a href="{{ route('whychoose.create') }}"><i data-feather="minus"></i>
@@ -477,12 +564,12 @@
                         </li>
                         <!-- nav items end -->
                         <li>
-                            <a href="#siebar-counter" data-bs-toggle="collapse">
+                            <a href="#sidebar-counter" data-bs-toggle="collapse">
                                 <i data-feather="package"></i>
                                 <span> Counter </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="siebar-counter">
+                            <div class="collapse" id="sidebar-counter">
                                 <ul class="nav-second-level">
                                     <li>
                                         <a href="{{ route('counter.create') }}"><i data-feather="minus"></i>
@@ -497,12 +584,12 @@
                         </li>
                         <!-- nav items end -->
                         <li>
-                            <a href="#siebar-company" data-bs-toggle="collapse">
+                            <a href="#sidebar-company" data-bs-toggle="collapse">
                                 <i data-feather="package"></i>
                                 <span> About Company </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="siebar-company">
+                            <div class="collapse" id="sidebar-company">
                                 <ul class="nav-second-level">
                                     <li>
                                         <a href="{{ route('abouts.index') }}"><i data-feather="minus"></i> About
@@ -512,17 +599,26 @@
                                         <a href="{{ route('missionvission.index') }}"><i data-feather="minus"></i>
                                             Mission & Vision</a>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('teams.index') }}"><i data-feather="minus"></i>
+                                            Team</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('sectiondescriptions.index') }}"><i
+                                                data-feather="minus"></i>
+                                            Section Description</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
                         <!-- nav items end -->
                         <li>
-                            <a href="#siebar-blog" data-bs-toggle="collapse">
+                            <a href="#sidebar-blog" data-bs-toggle="collapse">
                                 <i data-feather="edit"></i>
                                 <span> BLog </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="siebar-blog">
+                            <div class="collapse" id="sidebar-blog">
                                 <ul class="nav-second-level">
                                     <li>
                                         <a href="{{ route('blog_category.index') }}"><i data-feather="minus"></i>
@@ -638,12 +734,12 @@
                         <!-- nav items end -->
 
                         <li>
-                            <a href="#siebar-banner" data-bs-toggle="collapse">
+                            <a href="#sidebar-banner" data-bs-toggle="collapse">
                                 <i data-feather="image"></i>
                                 <span> Banner & Ads </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="siebar-banner">
+                            <div class="collapse" id="sidebar-banner">
                                 <ul class="nav-second-level">
                                     <li>
                                         <a href="{{ route('banner_category.index') }}"><i data-feather="minus"></i>
@@ -659,12 +755,12 @@
                         <!-- nav items end -->
 
                         <li>
-                            <a href="#siebar-sitesetting" data-bs-toggle="collapse">
+                            <a href="#sidebar-sitesetting" data-bs-toggle="collapse">
                                 <i data-feather="settings"></i>
                                 <span> Website Setting </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="siebar-sitesetting">
+                            <div class="collapse" id="sidebar-sitesetting">
                                 <ul class="nav-second-level">
                                     <li>
                                         <a href="{{ route('settings.index') }}"><i data-feather="minus"></i>
@@ -683,10 +779,37 @@
                                         <a href="{{ route('pages.index') }}"><i data-feather="minus"></i> Create
                                             Page</a>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('menu_setup.index') }}"><i data-feather="minus"></i> Menu
+                                            Setup</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
                         <!-- nav items end -->
+                        <li>
+                            <a href="#sidebar-contactinfo" data-bs-toggle="collapse">
+                                <i data-feather="settings"></i>
+                                <span> Contact Data </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebar-contactinfo">
+                                <ul class="nav-second-level">
+                                    <li>
+                                        <a href="{{ route('contactdatas.index') }}"><i data-feather="minus"></i>
+                                            Contact Data</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items end -->
+                        <li>
+                            <a href="{{ url('cc') }}">
+                                <i data-feather="trash"></i>
+                                <span> Cache Clear </span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Sidebar -->
@@ -899,6 +1022,7 @@
     <!-- App js -->
     <script src="{{ asset('public/backEnd/') }}/assets/js/app.min.js"></script>
     <script src="{{ asset('public/backEnd/') }}/assets/js/toastr.min.js"></script>
+    <script src="{{ asset('public/backEnd/') }}/assets/libs/flatpickr/flatpickr.min.js"></script>
     {!! Toastr::message() !!}
     <script src="{{ asset('public/backEnd/') }}/assets/js/sweetalert.min.js"></script>
     <script type="text/javascript">
@@ -929,6 +1053,21 @@
                 if (willDelete) {
                     form.submit();
                 }
+            });
+        });
+        flatpickr(".flatpickr", {});
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.button-menu-mobile').on('click', function(e) {
+                e.preventDefault();
+                // Toggle between collapsed and expanded states
+                if ($('body').hasClass('sidebar-collapsed')) {
+                    $('body').removeClass('sidebar-collapsed').addClass('sidebar-enable');
+                } else {
+                    $('body').removeClass('sidebar-enable').addClass('sidebar-collapsed');
+                }
+                console.log('Toggled sidebar state:', $('body').attr('class'));
             });
         });
     </script>

@@ -83,7 +83,20 @@
                                 </div>
                             </div>
                         <!-- col end -->
-                            <div class="col-sm-12 mb-3">
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-group">
+                                    <label for="usd_rate" class="form-label">USD Rate</label>
+                                    <input type="text" class="form-control @error('usd_rate') is-invalid @enderror"
+                                    name="usd_rate" value="{{ $edit_data->usd_rate }}" id="usd_rate">
+                                    @error('usd_rate')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <!-- col end -->
+                            <div class="col-sm-6 mb-3">
                                 <div class="form-group">
                                     <label for="meta_title" class="form-label">Meta Title (SEO)</label>
                                     <input type="text" class="form-control @error('meta_title') is-invalid @enderror"
@@ -99,8 +112,8 @@
                              <div class="col-sm-12 mb-3">
                                 <div class="form-group">
                                     <label for="meta_description" class="form-label">Meta Description (SEO)</label>
-                                    <textarea name="meta_description" rows="6"
-                                        class="summernote form-control @error('meta_description') is-invalid @enderror">{{ $edit_data->meta_description }}</textarea>
+                                    <textarea name="meta_description" rows="5"
+                                        class="form-control @error('meta_description') is-invalid @enderror">{{ $edit_data->meta_description }}</textarea>
                                     @error('meta_description')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -112,9 +125,22 @@
                              <div class="col-sm-12 mb-3">
                                 <div class="form-group">
                                     <label for="meta_keyword" class="form-label">Meta Keyword  (SEO)</label>
-                                    <textarea name="meta_keyword" rows="6"
-                                        class="summernote form-control @error('meta_keyword') is-invalid @enderror">{{ $edit_data->meta_keyword }}</textarea>
+                                    <textarea name="meta_keyword" rows="5"
+                                        class="form-control @error('meta_keyword') is-invalid @enderror">{{ $edit_data->meta_keyword }}</textarea>
                                     @error('meta_keyword')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <!-- col end -->
+                             <div class="col-sm-12 mb-3">
+                                <div class="form-group">
+                                    <label for="copyright" class="form-label">Copyright</label>
+                                    <textarea name="copyright" rows="5"
+                                        class="form-control @error('copyright') is-invalid @enderror">{{$edit_data->copyright}}</textarea>
+                                    @error('copyright')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

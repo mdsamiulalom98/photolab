@@ -1,18 +1,17 @@
 @extends('backEnd.layouts.master')
 @section('title', $order_status->name . ' Order')
 @section('content')
-    @php
-        $type = request()->get('type') ?? 'seller';
-    @endphp
     <div class="container-fluid">
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
+                    @if(request()->get('type') == 'seller')
                     <div class="page-title-right">
                         <a href="{{ route('admin.order.create', ['type' => 'seller']) }}" class="btn btn-danger rounded-pill"><i
                                 class="fe-shopping-cart"></i> Add New</a>
                     </div>
+                    @endif
                     <h4 class="page-title">{{ $order_status->name }} Order ({{ $show_data->count() }})</h4>
                 </div>
             </div>
@@ -23,10 +22,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-8">
-
-                            </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-8"></div>
                             <div class="col-sm-4">
                                 <form class="custom_form">
                                     <div class="form-group">
@@ -37,54 +34,50 @@
                             </div>
                         </div>
                         <div class="table-responsive ">
-                            <table id="datatable-buttons" class="table table-striped   w-100">
+                            <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
                                 <thead>
                                     <tr>
-
                                         <th class="white-space-nowrap">SL</th>
                                         <th class="white-space-nowrap">Order No</th>
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th class="white-space-nowrap">Order Placed</th>
+                                        <th class="white-space-nowrap">Delivery Time</th>
                                         <th class="white-space-nowrap">Prefer Delivery</th>
+                                        <th>Amount</th>
                                         <th>Status</th>
-                                        <th>Payment</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     @foreach ($show_data as $key => $value)
-                                        <tr>
-
+                                        <tr class="{{$value->order_status == 4 ? 'complete' : (\Carbon\Carbon::parse($value->prefer_delivery)->subHour() <= Carbon\Carbon::now() ? 'coundown' : '') }}">
                                             <td>{{ $loop->iteration }}</td>
-
                                             <td><a href="{{ route('admin.order.details', ['id' => $value->id]) }}">{{ $value->order_name }}</a> </td>
                                             <td class="white-space-nowrap">
-                                                <strong>{{ $value->member->name ?? '' }}</strong>
+                                                {{ $value->member->name ?? '' }}
                                                 <p>{{ $value->member->address ?? '' }}</p>
                                             </td>
                                             <td>{{ $value->member->phone ?? '' }}</td>
                                             <td>{{ $value->member->email ?? '' }}</td>
-                                            <td>{{ date('d-m-Y', strtotime($value->updated_at)) }}<br>
-                                                {{ date('h:i:s a', strtotime($value->updated_at)) }}</td>
+                                            <td>{{ date('d M Y, h:i A', strtotime($value->created_at)) }}</td>
+                                            <td>{{ date('d M Y, h:i A', strtotime($value->delivery_time)) }}</td>
                                             <td>{{ $value->prefer_delivery }}</td>
-                                            <td>{{ $value->payment->payment_status ?? '' }}</td>
+                                            <td>{{$value->currency == 'usd' ? '$' : '৳'}} {{ $value->amount }}</td>
                                             <td>{{ $value->status ? $value->status->name : '' }}</td>
                                             <td class="white-space-nowrap">
-                                                <div class="button-list custom-btn-list">
-                                                    <a href="{{ route('admin.order.details', ['id' => $value->id]) }}" class="btn btn-outline-info px-1"
+                                                <div class="button-list">
+                                                    <a href="{{ route('admin.order.details', ['id' => $value->id]) }}" class="btn btn-xs btn-info waves-effect waves-light"
                                                         title="Invoice"><i class="fe-eye"></i></a>
-                                                    <a href="{{ route('admin.order.process', ['invoice_id' => $value->invoice_id]) }}" class="btn btn-outline-secondary px-1"
-                                                        title="Process"><i class="fe-settings"></i></a>
-                                                    <a href="{{ route('admin.order.edit', ['invoice_id' => $value->invoice_id]) }}" class="btn btn-outline-success px-1"
+                                                    <a href="{{ route('admin.order.edit', ['id' => $value->id]) }}" class="btn btn-xs btn-success waves-effect waves-light"
                                                         title="Edit"><i class="fe-edit"></i></a>
                                                     <form method="post" action="{{ route('admin.order.destroy') }}"
                                                         class="d-inline">
                                                         @csrf
                                                         <input type="hidden" value="{{ $value->id }}" name="id">
-                                                        <button type="submit" title="Delete" class="btn btn-outline-danger px-1 delete-confirm "><i
+                                                        <button type="submit" title="Delete" class="btn btn-xs btn-danger waves-effect waves-light delete-confirm "><i
                                                                 class="fe-trash-2"></i></button>
                                                     </form>
                                                 </div>

@@ -93,13 +93,11 @@
                                 <table class="table table-bordered table-responsive-sm">
                                     <thead>
                                         <tr>
-                                        <tr>
                                             <th style="width:25%">Name</th>
                                             <th style="width:15%">Quantity</th>
                                             <th style="width:15%">Sell Price</th>
                                             <th style="width:15%">Sub Total</th>
                                             <th style="width:15%">Action</th>
-                                        </tr>
                                         </tr>
                                     </thead>
                                     <tbody id="cartTable">
@@ -186,14 +184,18 @@
                                         </div>
                                     </div>
                                     <!-- col-end -->
-
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="form-group mb-2">
                                             <label class="mb-1" for="prefer_delivery">Prefer Delivery *</label>
-                                            <input type="text" placeholder="Prefer Delivery" id="prefer_delivery"
-                                                class="form-control @error('prefer_delivery') is-invalid @enderror"
-                                                name="prefer_delivery" required
-                                                value="{{ $data->prefer_delivery ?? old('prefer_delivery') }}" />
+                                            <select id="prefer_delivery"
+                                                class=" form-control form-select @error('prefer_delivery') is-invalid @enderror"
+                                                name="prefer_delivery" value="{{ old('prefer_delivery') }}" required>
+                                                <option value="">Select..</option>
+                                                @foreach ($timeframes as $key => $value)
+                                                <option {{ $data->prefer_delivery == $value->name ? 'selected': '' }} value="{{ $value->name }}">{{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+
                                             @error('prefer_delivery')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -202,6 +204,28 @@
                                         </div>
                                     </div>
                                     <!-- col-end -->
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group mb-2">
+                                            <label class="mb-1" for="currency">Currency *</label>
+                                            <select id="currency"
+                                                class=" form-control form-select @error('currency') is-invalid @enderror"
+                                                name="currency" value="{{ old('currency') }}" required >
+                                            <option value="">Select..</option>
+                                            <option {{ $data->currency == 'usd' ? 'selected' : '' }} value="usd">
+                                                USD</option>
+                                            <option {{ $data->currency == 'bdt' ? 'selected' : '' }} value="bdt">
+                                                BDT</option>
+                                            </select>
+                                            @error('currency')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <!-- col-end -->
+
 
                                     <div class="col-sm-12">
                                         <div class="form-group mb-2">
@@ -255,7 +279,8 @@
                                     <div class="col-sm-12">
                                         <div class="form-group mb-3">
                                             <label class="mb-1" for="order_note">Order Note *</label>
-                                            <textarea id="order_note" name="order_note" class="form-control summernote mb-3 @error('order_note') is-invalid @enderror">{{ $data->order_note ?? '' }}</textarea>
+                                            <textarea id="order_note" name="order_note"
+                                                class="form-control summernote mb-3 @error('order_note') is-invalid @enderror">{{ $data->order_note ?? '' }}</textarea>
                                         </div>
                                         @error('phone')
                                             <span class="invalid-feedback" role="alert">

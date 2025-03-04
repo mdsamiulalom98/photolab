@@ -11,7 +11,7 @@
                 <img src="{{ asset($value->username == 'admin' ? $admin->image : Auth::guard('member')->user()->image) }}" />
             </div>
             <div class="content">
-                <p>{{ $value->message }}</p>
+                <p>{!! $value->message !!}</p>
             </div>
         </li>
     @endforeach

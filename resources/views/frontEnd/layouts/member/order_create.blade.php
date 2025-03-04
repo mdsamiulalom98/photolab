@@ -11,7 +11,7 @@
     <form action="{{ route('member.order.store') }}" method="POST" class="row pos_form" data-parsley-validate=""
         enctype="multipart/form-data">
         @csrf
-        <div class="order-content-inner">
+        <div class="page-content">
             <div class="container">
                 <div class="page-header">
                     <h5>Order Create</h5>
@@ -95,13 +95,13 @@
                         <div class="col-sm-6">
 
                             <div class="row ">
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <div class="form-group mb-2">
-                                        <label class="mb-2" for="order_name">Order Name *</label>
-                                        <input type="text" id="order_name" required
-                                            class="form-control @error('order_name') is-invalid @enderror"
-                                            placeholder="Order Name" name="order_name" value="{{ old('order_name') }}" />
-                                        @error('order_name')
+                                        <label class="mb-2" for="prefer_delivery">Prefer Delivery *</label>
+                                        <input type="number" placeholder="Prefer Delivery" id="prefer_delivery" required
+                                            class="form-control @error('prefer_delivery') is-invalid @enderror"
+                                            name="prefer_delivery" value="{{ old('prefer_delivery') }}" />
+                                        @error('prefer_delivery')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -109,14 +109,18 @@
                                     </div>
                                 </div>
                                 <!-- col-end -->
-
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <div class="form-group mb-2">
-                                        <label class="mb-2" for="prefer_delivery">Prefer Delivery *</label>
-                                        <input type="text" placeholder="Prefer Delivery" id="prefer_delivery" required
-                                            class="form-control @error('prefer_delivery') is-invalid @enderror"
-                                            name="prefer_delivery" value="{{ old('prefer_delivery') }}" />
-                                        @error('prefer_delivery')
+                                        <label class="mb-1" for="time_frame">Time Frame *</label>
+                                        <select  id="time_frame"
+                                            class="select2 form-control @error('time_frame') is-invalid @enderror"
+                                            name="time_frame" value="{{ old('time_frame') }}" required />
+                                            <option value="">Select..</option>
+                                            <option value="hour">Hour</option>
+                                            <option value="day">Day</option>
+                                            <option value="month">Month</option>
+                                        </select>
+                                        @error('time_frame')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

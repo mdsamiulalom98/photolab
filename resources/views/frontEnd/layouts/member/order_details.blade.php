@@ -18,19 +18,22 @@
                     <div class="card-body">
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Date <span class="fw-bold">{{ $order->created_at->format('Y-m-d h:m A') }}</span>
+                                Order Place <span class="fw-bold">{{ date('d M Y, h:i A', strtotime($order->created_at)) }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Order ID <span class="fw-bold">{{ $order->order_name }}</span>
+                                Delivery Time <span class="fw-bold">{{ date('d M Y, h:i A', strtotime($order->prefer_delivery)) }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 username <span class="fw-bold"><a
                                         >{{ $order->member->name ?? '' }}</a></span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Order ID <span class="fw-bold">{{ $order->order_name }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Services <span class="fw-bold">
                                     @foreach ($order->orderdetails as $index => $details)
-                                        {{ $index > 0 ? ', ' : '' }}{{ $details->product_name }}
+                                        {{ $index > 0 ? ', ' : '' }}{{ $details->service_name }}
                                     @endforeach
                                 </span>
                             </li>
@@ -40,7 +43,7 @@
                             </li>
 
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Total Price <span class="fw-bold">${{ $order->amount }}</span>
+                                Total Price <span class="fw-bold">{{$order->currency == 'usd' ? '$' : '৳'}} {{ $order->amount }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Status <span class="fw-bold"><span
@@ -48,15 +51,26 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Payment Status <span class="fw-bold"><span
-                                        class="badge bg-warning">{{ $order->payment->payment_status ?? '' }}</span></span>
+                                        class="badge bg-warning">{{ $order->payment_status}}</span></span>
                             </li>
+                             @if($order->download_link)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Download Link <span class="fw-bold"><span
+                                        class="badge {{ $order->status->color ?? 'bg-dark' }} font-12" ><a href="{{$order->download_link}}" download><i class="fa-solid fa-download"></i> Download File</a></span></span>
+                            </li>
+                            @endif
+                             @if($order->external_link)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                External Link <span class="fw-bold"><span
+                                        class="badge {{ $order->status->color ?? 'bg-dark' }} font-12" ><a href="{{$order->external_link}}" target="_blank"><i class="fa-solid fa-download"></i> External Link</a></span></span>
+                            </li>
+                            @endif
 
                         </ul>
 
 
                     </div>
                 </div>
-                {{-- status change --}}
                 @if ($order->orderimages->count() > 0)
                 <div class="card custom--card mb-4">
                     <div class="card-header">
@@ -88,7 +102,18 @@
                     </div>
                 </div>
                 @endif
-                {{-- status change --}}
+                <div class="card custom-card mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="">Instruction </h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="order-images-row">
+                            <div>{!! $order->order_note !!}</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card custom--card mb-4">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
@@ -114,6 +139,16 @@
                                             @endforeach
                                         </select>
                                         @error('order_status')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="download_link" class="form-label">Download Link</label>
+                                        <input class="form-control @error('download_link') is-invalid @enderror"
+                                            name="download_link">
+                                        @error('download_link')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

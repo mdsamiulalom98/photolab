@@ -47,7 +47,7 @@
                     <h5>{{ Str::limit($member->name, 15) }}
                         <br>({{ $member->type }})
                     </h5>
-                    <p>ID: {{ $member->id }}</p>
+                    <p>ID: {{ $member->member_id }}</p>
                 </div>
             </div>
             <div class="sidebar-menu">
@@ -59,15 +59,6 @@
                             Dashboard
                         </a>
                     </li>
-                    @if ($member->type == 'seller')
-                        <li class="d-none">
-                            <a href="{{ route('member.parcel.payment') }}"
-                                class="{{ request()->is('parcel/payment') ? 'active' : '' }}">
-                                <i class="fa-solid fa-sack-dollar"></i>
-                                Payment
-                            </a>
-                        </li>
-                    @endif
                     @if ($member->type == 'buyer')
                         <li>
                             <a href="{{ route('member.order.create') }}"
@@ -77,10 +68,17 @@
                         </li>
                     @endif
                     <li>
-                        <a href="{{ route('member.orders', ['slug' => 'pending']) }}"
+                        <a href="{{ route('member.orders', ['slug' => 'all']) }}"
                             class="{{ request()->is('orders') ? 'active' : '' }}"><i
                                 class="fa-solid fa-shopping-cart"></i>
                             Orders</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('member.order.payment') }}"
+                            class="{{ request()->is('order/payment') ? 'active' : '' }}">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                            Payment
+                        </a>
                     </li>
                     <li>
                         <a href="{{ route('member.settings') }}"
@@ -113,8 +111,9 @@
                     <button><i class="fa-solid fa-bars"></i></button>
                 </div>
                 <div class="user-search">
-                    <form>
-                        <input type="text" placeholder="Search Parcel" class="search_click keyword">
+                    <form action="{{ route('member.orders') }}">
+                        <input type="hidden" name="slug" value="{{ request()->get('slug') }}">
+                        <input type="text" placeholder="Search Order" name="order_name" class="search_click keyword">
                         <button><i class="fa-solid fa-search"></i></button>
                     </form>
                     <div class="search_result"></div>
@@ -190,7 +189,7 @@
                     <i class="fa-solid fa-times"></i>
                     <form>
 
-                        <input type="text" placeholder="Search Parcel" class="msearch_click mkeyword">
+                        <input type="text" placeholder="Search Order" class="msearch_click mkeyword">
                         <button><i class="fa-solid fa-search"></i></button>
                     </form>
                     <div class="search_result"></div>

@@ -4,12 +4,10 @@
     --secondary-color: #f47b6d;
     --secondary-color-extra: #153e58;
 }
-
 @media only screen and (min-width: 767px) {
     .mobile-menu {
         display: none;
     }
-
     .mobile-search {
         display: none;
     }
@@ -23,26 +21,21 @@
     .mobile-auth {
         padding: 0 10px;
     }
-
     .order-content-inner {
         padding: 20px;
     }
-
     .slider-content {
         padding: 40px 10px;
         padding-right: 0;
     }
-
     .slider-content p {
         font-size: 18px;
         font-weight: 400;
     }
-
     .slider-content h2 {
         font-size: 22px;
         font-weight: 700;
     }
-
     .slider-content ul li a {
         margin-right: 10px;
         height: 40px;
@@ -55,16 +48,13 @@
     .section-title p {
         padding: 0 0px;
     }
-
     .work-process {
         grid-template-columns: repeat(2, 1fr);
     }
-
     .wrok-process-item.step-up::after,
     .wrok-process-item.step-down::before {
         display: none;
     }
-
     .why-choose-item {
         margin: 15px 0;
     }
@@ -73,7 +63,6 @@
         margin-bottom: 40px;
         overflow: hidden;
     }
-
     .footer-top-area .footer-widget.subscribe .submit-btn {
         margin: 0;
     }
@@ -126,7 +115,6 @@
     .mobile-menu::-webkit-scrollbar-thumb {
         background-color: var(--secondary-color);
     }
-
     .mobilemenu-bottom {
         border: 1px solid #ddd;
         padding: 20px 20px;
@@ -136,24 +124,19 @@
         display: block;
         padding: 8px 0;
     }
-
     .mobilemenu-bottom ul li a {
         color: #222;
     }
-
     .footer-menu.use_link_m ul li {
         font-size: 16px;
     }
-
     .footer-menu.use_link_m ul li a {
         padding: 0 !important;
         margin: 0 !important;
     }
-
     .footer-menu ul li a {
         margin-bottom: 5px;
     }
-
     .mobile-search {
         background-color: #fff;
         padding: 0px 6px;
@@ -224,7 +207,6 @@
         justify-content: center;
         align-items: center;
     }
-
     li.parent-category img {
         width: 30px;
         height: 30px;
@@ -277,11 +259,9 @@
         text-align: left;
         text-transform: uppercase;
     }
-
     ul.mobile-nav li button {
         position: relative;
     }
-
     ul.mobile-nav li button::after {
         content: "";
         display: inline-block;
@@ -370,11 +350,9 @@
         padding: 8px 15px;
         background: #153e58;
     }
-
     .main-search.mobile-search form {
         height: 40px;
     }
-
     .mobile-menu-social .mobile-social-list .mobile-social-link {
         border: 2px solid #c0c0c0;
         padding: 5px 13px;
@@ -403,7 +381,6 @@
     .header-right {
         display: none;
     }
-
     .footer-top {
         padding: 30px 0;
     }
@@ -442,7 +419,6 @@
         visibility: visible !important;
         opacity: 1 !important;
     }
-
     .footer_nav ul {
         margin-top: -8px;
     }
@@ -455,7 +431,6 @@
         width: 150px;
         height: auto;
     }
-
     .footer-menu {
         padding-left: 20px;
     }
@@ -463,7 +438,6 @@
     ul.social_link {
         margin-top: 10px;
     }
-
     a.mobile-social-link {
         text-align: center !important;
     }
@@ -482,15 +456,12 @@
         opacity: 1;
         visibility: visible;
     }
-
     .toggle.show .bar-one {
         transform: rotate(45deg) translateX(4.5px) translateY(4.5px);
     }
-
     .toggle.show .bar-three {
         transform: rotate(-45deg) translateX(7px) translateY(-7px);
     }
-
     .toggle.show .bar-two {
         transform: translateX(-90px);
         visibility: hidden;
@@ -549,16 +520,13 @@
         top: -9px;
         right: -9px;
     }
-
     .section-title h3 {
         font-size: 14px;
         font-weight: 600;
     }
-
     .category-title h3 {
         font-size: 14px;
     }
-
     .footer_nav ul li i {
         font-size: 20px;
         width: 35px;
@@ -570,19 +538,15 @@
     .footer-bottom {
         padding: 12px 0;
     }
-
     .footer-about p {
         margin: 0px 0px;
     }
-
     .footer-menu .title {
         margin-top: 15px;
     }
-
     .footer-about {
         padding-left: 20px;
     }
-
     .social_link {
         justify-content: left;
     }
@@ -604,7 +568,6 @@
         border-radius: 0 !important;
         margin-right: 22px;
     }
-
     .fixed_whats {
         display: none;
     }
@@ -615,7 +578,6 @@
         left: -200px;
         transition: 0.35s all;
     }
-
     .user-sidebar.active {
         position: fixed;
         top: 0;
@@ -632,7 +594,6 @@
     .website-logo img {
         width: 60px;
     }
-
     .user-logo img {
         width: auto;
         height: 35px;
@@ -643,7 +604,6 @@
     .user-logo {
         text-align: center;
     }
-
     .user-mheader {
         display: block;
     }
@@ -652,19 +612,16 @@
         padding-left: 0;
         padding-bottom: 80px;
     }
-
     .user-header {
         display: none;
     }
-
     .user-mheader {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3,1fr);
         align-items: center;
         padding: 10px 20px;
         background: var(--primary-color);
     }
-
     .user-toggle button {
         color: #fff;
         font-size: 20px;
@@ -682,14 +639,13 @@
 
     .user-footer ul {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(5,1fr);
         align-items: center;
         padding: 12px 0;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
-
     .parcel-counter {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
         gap: 15px;
     }
 
@@ -699,18 +655,15 @@
         justify-items: center;
         padding: 0;
     }
-
     .counter-item .icon i {
         font-size: 30px;
     }
-
     .counter-item h6 {
         font-weight: 600;
         text-align: center;
         margin: 10px;
         font-size: 1.4rem;
     }
-
     .user-footer ul li {
         text-align: center;
     }
@@ -719,7 +672,6 @@
         text-align: center;
         color: #777 !important;
     }
-
     .user-footer ul li.active p {
         color: var(--primary-color) !important;
     }
@@ -733,7 +685,6 @@
         line-height: 35px;
         text-align: center;
     }
-
     .user-footer ul li.active i {
         background: var(--primary-color);
         color: #fff;
@@ -746,6 +697,8 @@
     }
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1140px) {}
+@media only screen and (min-width: 992px) and (max-width: 1140px) {
+}
 
-@media only screen and (min-width: 1141px) {}
+@media only screen and (min-width: 1141px) {
+}

@@ -55,7 +55,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group mb-3">
                                     <label for="description" class="form-label">Description*</label>
-                                    <textarea type="text" class="form-control @error('description') is-invalid @enderror" name="description"
+                                    <textarea type="text" class="form-control summernote @error('description') is-invalid @enderror" name="description"
                                         rows="6" value="{{ old('description') }}" id="description" required=""></textarea>
                                     @error('description')
                                         <span class="invalid-feedback" role="alert">

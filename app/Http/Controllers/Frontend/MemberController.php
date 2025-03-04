@@ -72,7 +72,7 @@ class MemberController extends Controller
         $store_data->phone = $request->phone;
         $store_data->agree = $request->agree;
         $store_data->type = $request->type;
-        $store_data->status = 0;
+        $store_data->status = 'pending';
         $store_data->verify = $verify;
         $store_data->password = bcrypt($request->password);
         $store_data->save();
@@ -108,13 +108,10 @@ class MemberController extends Controller
         $auth_check = Member::select('id', 'phone', 'verify')->where('phone', Session::get('verify_phone'))->first();
         if ($auth_check->verify == $request->otp) {
             $auth_check->verify = 1;
-            $auth_check->status = 1;
             $auth_check->save();
 
-            Auth::guard('member')->loginUsingId($auth_check->id);
-            Toastr::success('Your account verified successfully', 'Congratulations!');
             Session::forget('verify_phone');
-            return redirect()->route('member.dashboard');
+            return redirect()->route('member.login');
         } else {
             Toastr::error('Your token does not match', 'Failed!');
             return redirect()->back();
@@ -167,7 +164,7 @@ class MemberController extends Controller
                 curl_close($ch);
                 Toastr::error('Your account not verified, check your phone for OTP', 'Failed');
                 return redirect()->route('member.verify');
-            } elseif ($auth_check->status == 0) {
+            } elseif ($auth_check->status == 'pending') {
                 Toastr::error('Your account not active now', 'Failed');
                 return redirect()->back();
             } else {
@@ -313,15 +310,6 @@ class MemberController extends Controller
         }
     }
 
-
-    public function payment_invoice($invoice_id)
-    {
-        $payment = Payment::where(['user_id' => Auth::guard('member')->user()->id, 'user_type' => 'member', 'invoice_id' => $invoice_id])->with('paymentdetails.parcel', 'member')->first();
-        return view('frontEnd.layouts.member.invoice', compact('payment'));
-    }
-
-
-
     public function logout()
     {
         Session::flush();
@@ -342,7 +330,7 @@ class MemberController extends Controller
     public function order_store(Request $request)
     {
         $this->validate($request, [
-            'order_name' => 'required',
+            'prefer_delivery' => 'required',
             'order_note' => 'required',
         ]);
 
@@ -354,55 +342,40 @@ class MemberController extends Controller
         $subtotal = Cart::instance('shopping')->subtotal();
         $subtotal = str_replace(',', '', $subtotal);
         $subtotal = str_replace('.00', '', $subtotal);
-        if (Auth::guard('member')->user()) {
-            $member_id = Auth::guard('member')->user()->id;
-        } else {
-            $exits_member = Member::where('phone', $request->phone)->select('phone', 'id')->first();
-            if ($exits_member) {
-                $member_id = $exits_member->id;
-            } else {
-                $password = rand(111111, 999999);
-                $store = new Member();
-                $store->name = $request->name;
-                $store->slug = $request->name;
-                $store->phone = $request->phone;
-                $store->password = bcrypt($password);
-                $store->verify = 1;
-                $store->status = 'active';
-                $store->save();
-                $member_id = $store->id;
-            }
+
+        $memberId = Auth::guard('member')->user()->id;
+        $lastOrder = Order::where('member_id', $memberId)->latest('id')->count();
+        $newOrderNumber = $lastOrder ? ((int) substr($lastOrder, -6) + 1) : 1;
+        $orderId = $memberId . str_pad($newOrderNumber, 6, '0', STR_PAD_LEFT);
+        if ($request->time_frame == 'hour') {
+            $prefer_delivery = Carbon::now()->addHours((int) $request->prefer_delivery);
+        } elseif ($request->time_frame == 'day') {
+            $prefer_delivery = Carbon::now()->addDays((int) $request->prefer_delivery);
+        } elseif ($request->time_frame == 'month') {
+            $prefer_delivery = Carbon::now()->addMonths((int) $request->prefer_delivery);
         }
-        // order data save
+
         $order = new Order();
         $order->invoice_id = rand(11111, 99999);
-        $order->order_name = $request->order_name;
+        $order->order_name = $orderId;
         $order->amount = $subtotal;
         $order->discount = 0;
         $order->shipping_charge = 0;
-        $order->member_id = $member_id;
+        $order->currency = 'usd';
+        $order->member_id = Auth::guard('member')->user()->id;
+        $order->order_type = 'buyer';
         $order->order_status = 1;
         $order->order_note = $request->order_note;
         $order->external_link = $request->external_link;
-        $order->prefer_delivery = $request->prefer_delivery;
+        $order->prefer_delivery = $prefer_delivery;
         $order->save();
-
-
-        // payment data save
-        $payment = new Payment();
-        $payment->order_id = $order->id;
-        $payment->member_id = $member_id;
-        $payment->payment_method = $request->payment_method;
-        $payment->amount = $order->amount;
-        $payment->payment_status = 'pending';
-        $payment->save();
 
         // order details data save
         foreach (Cart::instance('shopping')->content() as $cart) {
             $order_details = new OrderDetails();
             $order_details->order_id = $order->id;
-            $order_details->product_id = $cart->id;
-            $order_details->product_name = $cart->name;
+            $order_details->service_id = $cart->id;
+            $order_details->service_name = $cart->name;
             $order_details->sale_price = $cart->price;
             $order_details->qty = $cart->qty;
             $order_details->save();
@@ -427,38 +400,58 @@ class MemberController extends Controller
         Cart::instance('shopping')->destroy();
 
         Toastr::success('Thanks, Your order place successfully', 'Success!');
-        return redirect('order-success/' . $order->id);
+        return redirect('orders?slug=all');
     }
 
     public function orders(Request $request)
     {
-        $order_status = OrderStatus::where('slug', $request->slug)->first();
-        $order_status = $order_status->id ?? 1;
-        $orders = Order::where('member_id', Auth::guard('member')->user()->id)->where('order_status', $order_status)->with('status')->latest()->get();
+
+        $orderQuery = Order::where('member_id', Auth::guard('member')->user()->id)
+            ->with('status')
+            ->orderBy('id', 'desc');
+
+        if ($request->all == 'all') {
+            $order_status = (object) ['name' => 'All'];
+        } else {
+            $order_status = OrderStatus::where('slug', $request->slug)->first();
+
+            // Filter orders by order_status ID if found
+            if ($order_status) {
+                $orderQuery->where('order_status', $order_status->id);
+            }
+        }
+
+        // Apply optional order_name filter
+        if ($request->filled('order_name')) {
+            $orderQuery->where('order_name', 'LIKE', '%' . $request->order_name . '%');
+        }
+
+        $orders = $orderQuery->paginate(50);
+
         return view('frontEnd.layouts.member.orders', compact('orders'));
     }
 
-    public function invoice(Request $request)
-    {
-        $order = Order::where(['id' => $request->id, 'member_id' => Auth::guard('member')->user()->id])->with('orderdetails', 'payment', 'shipping', 'member')->firstOrFail();
-
-        $payment = Payment::where(['order_id' => $order->id])->first();
-        // return $payment;
-        return view('frontEnd.layouts.member.invoice', compact('order', 'payment'));
-    }
 
     public function order_details($id, Request $request)
     {
-        $order = Order::where(['id' => $id, 'member_id' => Auth::guard('member')->user()->id])->with('orderdetails', 'payment', 'shipping', 'member')->firstOrFail();
-        $payment = Payment::where(['order_id' => $order->id])->first();
+        $order = Order::where(['id' => $id, 'member_id' => Auth::guard('member')->user()->id])->with('orderdetails', 'member')->firstOrFail();
         $messages = Message::where('order_id', $order->id)->get();
-        // $messages = Message::where(['order_id' => $request->id, 'status'=> 0])->where('username', 'admin')->select('id', 'order_id', 'status')->get();
-        // return $messages;
-        return view('frontEnd.layouts.member.order_details', compact('order', 'payment', 'messages'));
+        return view('frontEnd.layouts.member.order_details', compact('order', 'messages'));
+    }
+    public function payment()
+    {
+        $show_data = Payment::where(['member_id' => Auth::guard('member')->user()->id])->paginate(50);
+        return view('frontEnd.layouts.member.payment', compact('show_data'));
+    }
+    public function invoice($id)
+    {
+        $payment = Payment::where(['id' => $id, 'member_id' => Auth::guard('member')->user()->id])->with('paymentdetails')->first();
+        $member_info = Member::where(['id' => $payment->member_id])->first();
+        return view('frontEnd.layouts.member.invoice', compact('payment', 'member_info'));
     }
     public function message_reload(Request $request)
     {
-        Message::where(['order_id' => $request->id, 'status'=> 0])->where('username', 'admin')->select('id', 'order_id', 'status')->update(['status'=>1]);
+        Message::where(['order_id' => $request->id, 'status' => 0])->where('username', 'admin')->select('id', 'order_id', 'status')->update(['status' => 1]);
         $messages = Message::where('order_id', $request->id)->get();
         return view('frontEnd.layouts.ajax.messages', compact('messages'));
     }
@@ -524,35 +517,6 @@ class MemberController extends Controller
         return view('frontEnd.layouts.member.payment', compact('memberpay', 'payments'));
     }
 
-    public function payment_request(Request $request)
-    {
-        $orders = Order::where(['member_id' => Auth::guard('member')->user()->id, 'order_status' => 6, 'member_payment_status' => 'unpaid'])->select('id', 'member_id', 'order_status', 'member_payment_status', 'amount')->get();
-        $memberpay = MemberMethod::where(['member_id' => Auth::guard('member')->user()->id])->with('bankname')->first();
-
-        if ($request->payment_method == 'bank') {
-            $member_note = 'Bank Name: ' . ($memberpay->bankname ? $memberpay->bankname->name : '') . ', Account Name: ' . $memberpay->account_name . ', Account Number: ' . $memberpay->account_number . ', Routing: ' . $memberpay->routing;
-        } elseif ($request->payment_method == 'bkash') {
-            $member_note = 'Receive Number: ' . $memberpay->bkash;
-        } elseif ($request->payment_method == 'nagad') {
-            $member_note = 'Receive Number: ' . $memberpay->nagad;
-        } elseif ($request->payment_method == 'rocket') {
-            $member_note = 'Receive Number: ' . $memberpay->rocket;
-        }
-        $payment = new MemberPayment();
-        $payment->invoice_id = $this->invoiceIdGenerate();
-        $payment->member_id = Auth::guard('member')->user()->id;
-        $payment->member_type = 'seller';
-        $payment->amount = $orders->sum('amount');
-        $payment->payable_amount = $orders->sum('amount');
-        $payment->payment_method = $request->payment_method;
-        $payment->member_note = $member_note;
-        $payment->status = 'process';
-        $payment->save();
-
-        Toastr::success('Your payment request has been place successfully', 'success!');
-        return redirect()->back();
-    }
-
     private function invoiceIdGenerate()
     {
         do {
@@ -594,7 +558,8 @@ class MemberController extends Controller
     public function change_status(Request $request)
     {
         $order = Order::find($request->order_id);
-        $order->order_status = $request->order_status;
+        $order->order_status = $request->order_status ?? $order->order_status;
+        $order->download_link = $request->download_link;
         $order->save();
         return redirect()->back();
     }

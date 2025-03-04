@@ -57,7 +57,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group mb-3">
                                     <label for="description" class="form-label">Description*</label>
-                                    <textarea class="form-control @error('description')  is-invalid @enderror" name="description" rows="6"
+                                    <textarea class="form-control summernote @error('description')  is-invalid @enderror" name="description" rows="6"
                                         id="description" required="">{!! $edit_data->description !!}</textarea>
                                     @error('description')
                                         <span class="invalid-feedback" role="alert">

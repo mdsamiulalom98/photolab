@@ -65,11 +65,9 @@
                             </label>
                             <select id="country" name="country" class="input-field custom-select borderd" required="">
                                 <option value="">Select One</option>
-
-                                <option value="United States">United States</option>
-                                <option value="England">England</option>
-                                <option value="Australia">Australia</option>
-                                <option value="India">India</option>
+                                 @foreach ($countries as $key => $country)
+                                <option value="{{$country->nicename}}">{{$country->nicename}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -156,6 +154,41 @@
                                         value="" class="input-field borderd">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-element margin-bottom-30">
+                                    <label for="resolution">Resolution (DPI)</label>
+                                    <input type="number" id="resolution" name="resolution" placeholder="Resolution (DPI)"
+                                        value="" class="input-field borderd">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-element margin-bottom-30">
+                                    <label for="format">Formart</label>
+                                    <select class="input-field borderd" name="format">
+                                          <option value="">Select..</option>
+                                          <option value="JPG">JPG/JPEG</option>
+                                          <option value="PNG">PNG</option>
+                                          <option value="GIF">GIF</option>
+                                          <option value="WEBP">WebP</option>
+                                          <option value="TIFF">TIFF</option>
+                                          <option value="BMP">BMP</option>
+                                          <option value="PSD">PSD</option>
+                                          <option value="HEIC">HEIF/HEIC</option>
+                                          <option value="APNG">APNG</option>
+                                          <option value="AVIF">AVIF</option>
+                                          <option value="SVG">SVG</option>
+                                          <option value="EPS">EPS</option>
+                                          <option value="AI">AI</option>
+                                          <option value="PDF">PDF</option>
+                                          <option value="XCF">XCF</option>
+                                          <option value="KRA">KRA</option>
+                                          <option value="DDS">DDS</option>
+                                          <option value="ICO">ICO</option>
+                                          <option value="PSB">PSB</option>
+                                          <option value="PPM">PPM</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -178,7 +211,7 @@
                     <div class="col-md-12">
                         <div class="form-element margin-bottom-30">
                             <label for="message">Additional Comments (optional)</label>
-                            <textarea rows="20" id="message" name="message" placeholder="Type Additional Comments..."
+                            <textarea rows="20" class="summernote"  id="message" name="message" placeholder="Type Additional Comments..."
                                 class="input-field textarea borderd"></textarea>
                         </div>
                     </div>
@@ -249,6 +282,12 @@
         $("body").on("click", ".btn-danger", function() {
             $(this).parents(".control-group").remove();
         });
+    });
+</script>
+<script src="{{ asset('public/backEnd/') }}/assets/libs//summernote/summernote-lite.min.js"></script>
+<script>
+    $(".summernote").summernote({
+        placeholder: "Enter Your Text Here",
     });
 </script>
 @endpush

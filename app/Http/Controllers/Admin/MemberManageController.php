@@ -5,17 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Brian2694\Toastr\Facades\Toastr;
 use App\Models\District;
-use App\Models\Thana;
 use App\Models\Order;
-use App\Models\PaymentDetails;
 use App\Models\Member;
-use Toastr;
 use Image;
 use File;
 use Auth;
 use Hash;
-use Str;
+
 class MemberManageController extends Controller
 {
 
@@ -28,12 +26,12 @@ class MemberManageController extends Controller
         $this->validate($request, [
             'shop_name' => 'required',
             'name' => 'required',
-            'phone' => 'required|unique:merchants',
-            'email' => 'required|unique:merchants',
+            'phone' => 'required|unique:members',
+            'email' => 'required|unique:members',
             'password' => 'required'
         ]);
         $verify                     = rand(1111, 9999);
-        $store_data                 = new Merchant();
+        $store_data                 = new Member();
         $store_data->shop_id        = $this->generateShopId();
         $store_data->shop_name      = $request->shop_name;
         $store_data->name           = $request->name;
@@ -44,17 +42,17 @@ class MemberManageController extends Controller
         $store_data->address        = $request->address;
         $store_data->verify         = 1;
         $store_data->agree          = 1;
-        $store_data->status         = 1;
+        $store_data->status         = 'pending';
         $store_data->password       = bcrypt($request->password);
         $store_data->save();
 
         Toastr::success('Success','Merchant added successfully');
-        return redirect()->route('merchants.index');
+        return redirect()->route('members.index');
     }
     public function index(Request $request){
         $show_data = Member::where('type',$request->member);
         if($request->status == 'pending'){
-           $show_data = $show_data->where('status',$request->status);    
+           $show_data = $show_data->where('status',$request->status);
         }
         if($request->keyword){
             $show_data = $show_data->orWhere('phone',$request->keyword)->orWhere('name',$request->keyword);
@@ -90,7 +88,7 @@ class MemberManageController extends Controller
             $name =  time().'-'.$image->getClientOriginalName();
             $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
             $name = strtolower(preg_replace('/\s+/', '-', $name));
-            $uploadpath = 'public/uploads/merchant/';
+            $uploadpath = 'public/uploads/member/';
             $imageUrl = $uploadpath.$name;
             $img=Image::make($image->getRealPath());
             $img->encode('webp', 90);
@@ -133,10 +131,43 @@ class MemberManageController extends Controller
         $parcels = $parcels->paginate(50);
         return view('backEnd.member.profile',compact('profile','total_cod','parcels'));
     }
-    
+
     public function adminlog(Request $request){
         $customer = Member::find($request->hidden_id);
-        Auth::guard('merchant')->loginUsingId($customer->id);
+        Auth::guard('member')->loginUsingId($customer->id);
         return redirect()->route('member.dashboard');
+    }
+
+    public function destroy(Request $request)
+    {
+        $delete_data = Member::find($request->hidden_id);
+        $delete_data->delete();
+        Toastr::success('Success', 'Data delete successfully');
+        return redirect()->back();
+    }
+
+    public function bulk_destroy(Request $request)
+    {
+        $customers_id = $request->customer_ids;
+        foreach ($customers_id as $customer_id) {
+            $order = Member::where('id', $customer_id)->delete();
+        }
+        return response()->json(['status' => 'success', 'message' => 'Member delete successfully']);
+    }
+    public function bulk_active(Request $request)
+    {
+        $customers_id = $request->customer_ids;
+        foreach ($customers_id as $customer_id) {
+            Member::where('id', $customer_id)->update(['status' => 'active']);
+        }
+        return response()->json(['status' => 'success', 'message' => 'Member delete successfully']);
+    }
+    public function bulk_inactive(Request $request)
+    {
+        $customers_id = $request->customer_ids;
+        foreach ($customers_id as $customer_id) {
+            Member::where('id', $customer_id)->update(['status' => 'inactive']);
+        }
+        return response()->json(['status' => 'success', 'message' => 'Member delete successfully']);
     }
 }

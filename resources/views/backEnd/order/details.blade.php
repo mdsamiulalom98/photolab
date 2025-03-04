@@ -2,10 +2,14 @@
 @section('title', 'Customer Account')
 @section('css')
     <link rel="stylesheet" href="{{ asset('public/frontEnd/css/lightcase.css') }}" />
+    <link href="{{ asset('public/backEnd') }}/assets/libs/summernote/summernote-lite.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('public/backEnd') }}/assets/libs/summernote/summernote-lite.min.css" rel="stylesheet"
+        type="text/css" />
 @endsection
 @section('content')
     <div class="page-header">
-        <h5>My Order</h5>
+        <h5>Order Details {{ $order->order_name }}</h5>
     </div>
     <div class="page-content sm-order-1">
         <div class="row">
@@ -18,7 +22,12 @@
                     <div class="card-body">
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Date <span class="fw-bold">{{ $order->created_at->format('Y-m-d h:m A') }}</span>
+                                Order Place <span
+                                    class="fw-bold">{{ date('d M Y, h:i A', strtotime($order->created_at)) }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Delivery Time <span
+                                    class="fw-bold">{{ date('d M Y, h:i A', strtotime($order->prefer_delivery)) }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Order ID <span class="fw-bold">{{ $order->order_name }}</span>
@@ -29,30 +38,30 @@
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Services <span class="fw-bold">
                                     @foreach ($order->orderdetails as $index => $details)
-                                        {{ $index > 0 ? ', ' : '' }}{{ $details->product_name }}
+                                        {{ $index > 0 ? ', ' : '' }}{{ $details->service_name }}
                                     @endforeach
                                 </span>
                             </li>
-
-                            {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Minimum image quantity <span class="fw-bold">4</span>
-                            </li> --}}
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Images <span class="fw-bold">{{ $order->orderimages->count() }}</span>
                             </li>
 
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Total Price <span class="fw-bold">${{ $order->amount }}</span>
+                                Total Price <span class="fw-bold">{{ $order->currency == 'usd' ? '$' : '৳' }}
+                                    {{ $order->amount }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Status <span class="fw-bold"><span
-                                        class="badge {{ $order->status->color ?? 'bg-dark' }} font-12" >{{ $order->status->name ?? '' }}</span></span>
+                                        class="badge {{ $order->status->color ?? 'bg-dark' }} font-12">{{ $order->status->name ?? '' }}</span></span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Payment Status <span class="fw-bold"><span
-                                        class="badge bg-warning font-12">{{ $order->payment->payment_status ?? '' }}</span></span>
-                            </li>
-
+                            @if ($order->download_link)
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Download Link <span class="fw-bold"><span
+                                            class="badge {{ $order->status->color ?? 'bg-dark' }} font-12"><a
+                                                href="{{ $order->download_link }}" download><i
+                                                    class="fa-solid fa-download"></i> Download File</a></span></span>
+                                </li>
+                            @endif
                         </ul>
                         <div class="d-flex justify-content-end mt-4">
                             @if ($order->order_status == 1)
@@ -102,8 +111,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="card custom-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="">Instruction </h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="order-images-row">
+                            <div>{!! $order->order_note !!}</div>
+                        </div>
+                    </div>
+                </div>
 
-                {{-- status change --}}
                 <div class="card custom-card mb-4">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
@@ -132,6 +152,16 @@
                                             @endforeach
                                         </select>
                                         @error('order_status')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="download_link" class="form-label">Download Link</label>
+                                        <input class="form-control @error('download_link') is-invalid @enderror"
+                                            name="download_link">
+                                        @error('download_link')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -173,14 +203,9 @@
                             <input type="hidden" name="member_id" value="{{ $order->member_id }}">
                             <div class="chatbox-footer">
                                 <div class="chatbox-message-part">
-                                    <div class="avatar">{{ Str::limit(Auth::user()->name, 1, '') }}</div>
-                                    <input class="chatbox-footer-input shadow-none" id="message" name="message"
-                                        type="text" placeholder="Write something" autocomplete="off">
-
+                                    <textarea class="chatbox-footer-input shadow-none summernote" id="message" name="message"></textarea>
                                 </div>
-                                <div class="chatbox-send-part d-flex align-items-center justify-content-end flex-wrap">
-                                    <a class="btn attach-btn" href="javascript:void(0)"
-                                        onclick="$('#attachment').click()"><i class="las la-paperclip"></i></a>
+                                <div class="chatbox-send-part d-flex align-items-center flex-wrap mt-2">
                                     <button class="btn btn-lg bg-primary" type="submit">Send</button>
                                 </div>
                             </div>
@@ -218,6 +243,7 @@
 
 @section('script')
     <script src="{{ asset('public/frontEnd/js/lightcase.js') }}"></script>
+    <script src="{{ asset('public/backEnd/') }}/assets/libs/summernote/summernote-lite.min.js"></script>
     <script>
         $('a[data-rel^=lightcase]').lightcase();
         $(document).on('click', '.chat-reload', function(e) {
@@ -264,5 +290,10 @@
                 modal.modal('show');
             });
         })(jQuery);
+    </script>
+    <script>
+        $(".summernote").summernote({
+            placeholder: "Enter Your Text Here",
+        });
     </script>
 @endsection

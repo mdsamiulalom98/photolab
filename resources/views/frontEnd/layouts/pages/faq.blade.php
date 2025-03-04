@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title">
-                    <h2>Frequently Asked Questions</h2>
+                        <h2>Frequently Asked Questions</h2>
                     </div>
                 </div>
             </div>
@@ -19,23 +19,23 @@
     <div class="faq_main_container">
         <div class="container">
             @foreach ($faqs as $key => $value)
-            <div class="faq_container">
-                <div class="faq_question">
-                    <div class="faq_question-text">
-                        <h3>{{ $value->question }}</h3>
+                <div class="faq_container">
+                    <div class="faq_question">
+                        <div class="faq_question-text">
+                            <h3>{{ $value->question }}</h3>
+                        </div>
+                        <div class="icon">
+                            <div class="icon-shape"></div>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <div class="icon-shape"></div>
+                    <div class="answercont">
+                        <div class="answer">
+                            <p>
+                                {!! $value->answer !!}
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="answercont">
-                    <div class="answer">
-                        <p>
-                           {{ $value->answer }}
-                        </p>
-                    </div>
-                </div>
-            </div>
             @endforeach
 
         </div>

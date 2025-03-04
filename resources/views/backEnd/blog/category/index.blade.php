@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="container-fluid">
-    
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -20,13 +20,13 @@
                 <h4 class="page-title">Blog Category Manage</h4>
             </div>
         </div>
-    </div>       
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
    <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>SL</th>
@@ -35,8 +35,8 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                
-                
+
+
                     <tbody>
                         @foreach($data as $key=>$value)
                         <tr>
@@ -46,14 +46,14 @@
                             <td>
                                 <div class="button-list">
                                     @if($value->status == 1)
-                                    <form method="post" action="{{route('blog_category.inactive')}}" class="d-inline"> 
+                                    <form method="post" action="{{route('blog_category.inactive')}}" class="d-inline">
                                     @csrf
-                                    <input type="hidden" value="{{$value->id}}" name="hidden_id">       
+                                    <input type="hidden" value="{{$value->id}}" name="hidden_id">
                                     <button type="button" class="btn btn-xs  btn-secondary waves-effect waves-light change-confirm"><i class="fe-thumbs-down"></i></button></form>
                                     @else
                                     <form method="post" action="{{route('blog_category.active')}}" class="d-inline">
                                         @csrf
-                                    <input type="hidden" value="{{$value->id}}" name="hidden_id">        
+                                    <input type="hidden" value="{{$value->id}}" name="hidden_id">
                                     <button type="button" class="btn btn-xs  btn-success waves-effect waves-light change-confirm"><i class="fe-thumbs-up"></i></button></form>
                                     @endif
 
@@ -65,7 +65,7 @@
                         @endforeach
                     </tbody>
                 </table>
- 
+
             </div> <!-- end card body-->
         </div> <!-- end card -->
     </div><!-- end col-->
