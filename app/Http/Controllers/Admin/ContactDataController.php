@@ -22,4 +22,13 @@ class ContactDataController extends Controller
         Toastr::success('Success', 'Data delete successfully');
         return redirect()->back();
     }
+
+    public function bulk_destroy(Request $request)
+    {
+        $infos = $request->info_ids;
+        foreach ($infos as $info) {
+            ContactData::where('id', $info)->delete();
+        }
+        return response()->json(['status' => 'success', 'message' => 'Data delete successfully']);
+    }
 }

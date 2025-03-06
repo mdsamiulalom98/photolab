@@ -33,18 +33,17 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="table-responsive ">
+                        <div class="table-responsive">
                             <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
                                 <thead>
                                     <tr>
-                                        <th class="white-space-nowrap">SL</th>
-                                        <th class="white-space-nowrap">Order No</th>
+                                        <th style="width: 10%" class="">SL</th>
+                                        <th style="width: 20%" class="">Order No</th>
                                         <th>Name</th>
-                                        <th>Phone</th>
                                         <th>Email</th>
-                                        <th class="white-space-nowrap">Order Placed</th>
-                                        <th class="white-space-nowrap">Delivery Time</th>
-                                        <th class="white-space-nowrap">Prefer Delivery</th>
+                                        <th class="">Order Placed</th>
+                                        <th class="">Delivery Time</th>
+                                        <th class="">Prefer Delivery</th>
                                         <th>Amount</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -56,18 +55,17 @@
                                         <tr class="{{$value->order_status == 4 ? 'complete' : (\Carbon\Carbon::parse($value->prefer_delivery)->subHour() <= Carbon\Carbon::now() ? 'coundown' : '') }}">
                                             <td>{{ $loop->iteration }}</td>
                                             <td><a href="{{ route('admin.order.details', ['id' => $value->id]) }}">{{ $value->order_name }}</a> </td>
-                                            <td class="white-space-nowrap">
+                                            <td class="">
                                                 {{ $value->member->name ?? '' }}
                                                 <p>{{ $value->member->address ?? '' }}</p>
                                             </td>
-                                            <td>{{ $value->member->phone ?? '' }}</td>
                                             <td>{{ $value->member->email ?? '' }}</td>
                                             <td>{{ date('d M Y, h:i A', strtotime($value->created_at)) }}</td>
                                             <td>{{ date('d M Y, h:i A', strtotime($value->delivery_time)) }}</td>
                                             <td>{{ $value->prefer_delivery }}</td>
                                             <td>{{$value->currency == 'usd' ? '$' : '৳'}} {{ $value->amount }}</td>
                                             <td>{{ $value->status ? $value->status->name : '' }}</td>
-                                            <td class="white-space-nowrap">
+                                            <td class="">
                                                 <div class="button-list">
                                                     <a href="{{ route('admin.order.details', ['id' => $value->id]) }}" class="btn btn-xs btn-info waves-effect waves-light"
                                                         title="Invoice"><i class="fe-eye"></i></a>

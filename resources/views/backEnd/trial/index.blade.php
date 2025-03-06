@@ -33,8 +33,10 @@
                                     <tr>
                                         <th>
                                             <div class="form-check">
-                                                <label class="form-check-label">All <input type="checkbox"
-                                                        class="form-check-input checkall" value=""></label>
+                                                <label class="form-check-label">All
+                                                    <input type="checkbox" class="form-check-input checkall" value="">
+                                                    (<span id="checkedCount">0</span>)
+                                                </label>
                                             </div>
                                         </th>
                                         <th>Name</th>
@@ -163,5 +165,25 @@
 
             });
         })
+    </script>
+    <script>
+        $(document).ready(function() {
+            function updateCheckedCount() {
+                let count = $(".checkbox:checked").length;
+                $("#checkedCount").text(count);
+            }
+
+            $(".checkbox").on("change", function() {
+                updateCheckedCount();
+            });
+
+            // Initial count on page load
+            updateCheckedCount();
+
+            $(".checkall").on('change', function() {
+                $(".checkbox").prop('checked', $(this).is(":checked"));
+                updateCheckedCount();
+            });
+        });
     </script>
 @endsection

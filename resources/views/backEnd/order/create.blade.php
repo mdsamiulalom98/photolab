@@ -38,7 +38,7 @@
                             <div class="col-sm-5">
                                 <div class="form-group mb-3">
                                     <select type="text" id="cart_name" required id="cart_name"
-                                        class="select2 form-control @error('cart_name') is-invalid @enderror"
+                                        class="form-control @error('cart_name') is-invalid @enderror"
                                         name="cart_name">
                                         <option value="">Select Service</option>
                                         @foreach ($services as $key => $service)
@@ -145,7 +145,7 @@
                                         <div class="form-group mb-2">
                                             <label class="mb-1" for="image">Seller *</label>
                                             <select type="text" id="member_id" required
-                                                class="select2 form-control @error('member_id') is-invalid @enderror"
+                                                class=" form-control @error('member_id') is-invalid @enderror"
                                                 name="member_id">
                                                 <option value="">Select Seller</option>
                                                 @foreach ($members as $key => $member)

@@ -207,7 +207,7 @@ class FrontendController extends Controller
         $contact->name = $request->name;
         $contact->email = $request->email;
         $contact->phone = $request->phone;
-        $contact->message = $request->email;
+        $contact->message = $request->message;
         $contact->save();
 
         Toastr::success('Your contact info sent to us.', 'Success');

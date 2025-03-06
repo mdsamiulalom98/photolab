@@ -62,6 +62,7 @@ class OrderController extends Controller
         $data = Order::where(['id' => $id])->select('id', 'id', 'order_status', 'member_id', 'order_name', 'prefer_delivery', 'external_link', 'order_note', 'currency')->with('orderdetails', 'member')->first();
         $order = Order::where('id', $id)->first();
         $timeframes = Timeframe::where('status', 1)->get();
+        $services = Workname::where('status', 1)->get();
         Cart::instance('sale')->destroy();
         Session::put('product_discount', $order->discount);
         $orderdetails = OrderDetails::where('order_id', $order->id)->get();
@@ -75,7 +76,7 @@ class OrderController extends Controller
             ]);
         }
         $cartinfo = Cart::instance('sale')->content();
-        return view('backEnd.order.edit', compact('cartinfo', 'order', 'data', 'timeframes'));
+        return view('backEnd.order.edit', compact('cartinfo', 'order', 'data', 'timeframes', 'services'));
     }
 
     public function cart_clear(Request $request)
@@ -95,7 +96,7 @@ class OrderController extends Controller
         Session::forget('product_discount');
         Session::forget('cpaid');
         Session::forget('cdue');
-        $members = Member::where(['status' => 1, 'type' => 'seller'])->get();
+        $members = Member::where(['status' => 'active', 'type' => 'seller'])->get();
         $services = Workname::where('status', 1)->get();
         $timeframes = Timeframe::where('status', 1)->get();
         return view('backEnd.order.create', compact('cartinfo', 'members', 'services', 'timeframes'));
@@ -417,7 +418,7 @@ class OrderController extends Controller
     }
     public function invoice_generate(Request $request, $type)
     {
-        $members = Member::where(['status' => 1, 'type' => $type])->select('id', 'name', 'status')->get();
+        $members = Member::where(['status' => 'active', 'type' => $type])->select('id', 'name', 'status')->get();
         $member_info = Member::find($request->member_id);
         $orderdetails = [];
         $order_ids = [];

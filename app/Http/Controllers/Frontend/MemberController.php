@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Brian2694\Toastr\Facades\Toastr;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -258,36 +259,29 @@ class MemberController extends Controller
 
     public function forgot_verify(Request $request)
     {
-        $auth_info = Member::where('phone', $request->phone)->first();
+        $auth_info = Member::where('email', $request->email)->first();
         if (!$auth_info) {
-            Toastr::error('Your phone number not found', 'Failed');
+            Toastr::error('Your email not found', 'Failed');
             return back();
         }
         $auth_info->forgot = rand(1111, 9999);
         $auth_info->save();
 
-        $apiKey = 'mPHNEo5pvdzYOfj7cyLJczoNyrSMZB4g0DGuAzBExOo=';
-        $clientId = '37574055-f638-4736-87af-c995ad7200ff';
-        $senderId = '8809617611899';
-        $message = "Dear $auth_info->name, Your account forgot OTP is $auth_info->forgot. Thanks for using " . $this->setting()->name;
-        $mobileNumbers = "88$auth_info->phone";
-        $isUnicode = '0';
-        $isFlash = '0';
-        $message = urlencode($message);
-        $mobileNumbers = urlencode($mobileNumbers);
-        $url = "http://sms.insafhost.com/api/v2/SendSMS?ApiKey=$apiKey&ClientId=$clientId&SenderId=$senderId&Message=$message&MobileNumbers=$mobileNumbers&Is_Unicode=$isUnicode&Is_Flash=$isFlash";
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        session::put('verify_phone', $request->phone);
-        Toastr::success('Verify OTP send your phone number', 'Success');
+        Session::put('verify_email', $auth_info->email);
+
+        $data = $auth_info->toArray();
+        Mail::send('emails.verify', $data, function ($textmsg) use ($data) {
+            $textmsg->to($data['email']);
+            $textmsg->subject('Account verify OTP');
+        });
+
+        Toastr::success('Verify OTP send your email address', 'Success');
         return redirect()->route('member.forgot.reset');
     }
 
     public function forgot_reset()
     {
-        if (!Session::get('verify_phone')) {
+        if (!Session::get('verify_email')) {
             Toastr::error('Something wrong please try again', 'Failed');
             return redirect()->route('member.forgot.password');
         }
@@ -295,7 +289,7 @@ class MemberController extends Controller
     }
     public function forgot_store(Request $request)
     {
-        $auth_info = Member::where('phone', session::get('verify_phone'))->first();
+        $auth_info = Member::where('phone', session::get('verify_email'))->first();
         if ($auth_info->forgot != $request->otp) {
             Toastr::error('Failed', 'Your OTP not match');
             return redirect()->back();
@@ -304,7 +298,7 @@ class MemberController extends Controller
         $auth_info->password = bcrypt($request->password);
         $auth_info->save();
         if (Auth::guard('member')->attempt(['phone' => $auth_info->phone, 'password' => $request->password])) {
-            Session::forget('verify_phone');
+            Session::forget('verify_email');
             Toastr::success('You are login successfully', 'success!');
             return redirect()->route('member.dashboard');
         }

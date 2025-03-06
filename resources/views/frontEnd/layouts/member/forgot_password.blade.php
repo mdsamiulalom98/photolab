@@ -10,12 +10,12 @@
                         <form action="{{ route('member.forgot.verify') }}" method="POST" data-parsley-validate="">
                             @csrf
                             <div class="form-group mb-3">
-                                <label for="phone" class="form-label">Phone Number<span>*</span></label>
-                                <input type="text" class="form-control  {{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                                    placeholder="Enter Phone Number *" name="phone" value="{{ old('phone') }}" required>
-                                @if ($errors->has('phone'))
+                                <label for="email" class="form-label">Email Address<span>*</span></label>
+                                <input type="email" class="form-control  {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                    placeholder="Enter Email Address *" name="email" value="{{ old('email') }}" required>
+                                @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('phone') }}</strong>
+                                        <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>

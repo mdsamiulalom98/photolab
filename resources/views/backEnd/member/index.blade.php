@@ -60,10 +60,9 @@
                                         <th>
                                             <div class="form-check">
                                                 <label class="form-check-label">All <input type="checkbox"
-                                                        class="form-check-input checkall" value=""></label>
+                                                        class="form-check-input checkall" value="">(<span id="checkedCount">0</span>)</label>
                                             </div>
                                         </th>
-                                        <th>SL</th>
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
@@ -76,7 +75,6 @@
                                     @foreach ($show_data as $key => $value)
                                         <tr>
                                             <td><input type="checkbox" class="checkbox" value="{{ $value->id }}"></td>
-                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $value->name }}</td>
                                             <td>{{ $value->phone }}</td>
                                             <td>{{ $value->email }}</td>
@@ -179,9 +177,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $(".checkall").on('change', function() {
-                $(".checkbox").prop('checked', $(this).is(":checked"));
-            });
             // order delete
             $(document).on('click', '.order_delete', function(e) {
                 e.preventDefault();
@@ -215,5 +210,25 @@
 
             });
         })
+    </script>
+    <script>
+        $(document).ready(function() {
+            function updateCheckedCount() {
+                let count = $(".checkbox:checked").length;
+                $("#checkedCount").text(count);
+            }
+
+            $(".checkbox").on("change", function() {
+                updateCheckedCount();
+            });
+
+            // Initial count on page load
+            updateCheckedCount();
+
+            $(".checkall").on('change', function() {
+                $(".checkbox").prop('checked', $(this).is(":checked"));
+                updateCheckedCount();
+            });
+        });
     </script>
 @endsection

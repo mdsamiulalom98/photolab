@@ -58,7 +58,7 @@
                                 @foreach ($blogs as $key => $value)
                                     <li>
                                         <div class="item">
-                                            <a href="{{ route('service.details', $value->slug) }}"  rel="nofollow">
+                                            <a href="{{ route('blog.details', $value->slug) }}"  rel="nofollow">
                                                 <span class="left">
                                                     <img loading="lazy"
                                                         src="{{ asset($value->image) }}"

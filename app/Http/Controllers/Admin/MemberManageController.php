@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Brian2694\Toastr\Facades\Toastr;
-use App\Models\District;
 use App\Models\Order;
 use App\Models\Member;
 use Image;
@@ -16,11 +15,6 @@ use Hash;
 
 class MemberManageController extends Controller
 {
-
-    public function create(){
-        $districts = District::select('id','name','status')->where('status',1)->orderBy('name','asc')->get();
-        return view('backEnd.member.create',compact('districts'));
-    }
     public function store(Request $request)
     {
         $this->validate($request, [
