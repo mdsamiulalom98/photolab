@@ -117,7 +117,6 @@ Route::group(['namespace' => 'FrontEnd', 'middleware' => ['check_refer']], funct
 });
 // member auth
 Route::group(['namespace' => 'FrontEnd', 'middleware' => ['member', 'check_refer']], function () {
-
     Route::get('/dashboard', [MemberController::class, 'dashboard'])->name('member.dashboard');
     Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile');
     Route::get('/settings', [MemberController::class, 'settings'])->name('member.settings');

@@ -35,6 +35,7 @@ class OrderController extends Controller
                 'orders_count' => Order::count(),
             ];
             $show_data = Order::latest()->with('member', 'status')->where('order_type', $request->type);
+
             if ($request->keyword) {
                 $show_data = $show_data->where(function ($query) use ($request) {
                     $query->orWhere('invoice_id', 'LIKE', '%' . $request->keyword . '%')
@@ -44,6 +45,13 @@ class OrderController extends Controller
                 });
             }
             $show_data = $show_data->paginate(50);
+            $prefer_delivery = Carbon::now();
+            foreach ($show_data as $order) {
+                $order->prefer_time = 1;
+                $order->time_frame = 'hour';
+                $order->delivery_time = $prefer_delivery->addHour();
+                $order->save();
+            }
         } else {
             $order_status = OrderStatus::where('slug', $slug)
                 ->withCount([
@@ -52,6 +60,13 @@ class OrderController extends Controller
                     }
                 ])->first();
             $show_data = Order::where(['order_status' => $order_status->id, 'order_type' => $request->type])->latest()->with('member', 'status')->paginate(50);
+            $prefer_delivery = Carbon::now();
+            foreach ($show_data as $order) {
+                $order->prefer_time = 1;
+                $order->time_frame = 'hour';
+                $order->delivery_time = $prefer_delivery->addHour();
+                $order->save();
+            }
         }
 
         return view('backEnd.order.index', compact('show_data', 'order_status'));
@@ -59,7 +74,7 @@ class OrderController extends Controller
 
     public function order_edit($id)
     {
-        $data = Order::where(['id' => $id])->select('id', 'id', 'order_status', 'member_id', 'order_name', 'prefer_delivery', 'external_link', 'order_note', 'currency')->with('orderdetails', 'member')->first();
+        $data = Order::where(['id' => $id])->select('id', 'id', 'order_status', 'member_id', 'order_name', 'prefer_time', 'time_frame', 'external_link', 'order_note', 'currency')->with('orderdetails', 'member')->first();
         $order = Order::where('id', $id)->first();
         $timeframes = Timeframe::where('status', 1)->get();
         $services = Workname::where('status', 1)->get();
@@ -124,7 +139,7 @@ class OrderController extends Controller
             'order_name' => 'required',
             'currency' => 'required',
             'member_id' => 'required',
-            'prefer_delivery' => 'required',
+            'prefer_time' => 'required',
             'time_frame' => 'required',
         ]);
         if (Cart::instance('sale')->count() <= 0) {
@@ -135,19 +150,12 @@ class OrderController extends Controller
         $subtotal = str_replace(',', '', $subtotal);
 
         if ($request->time_frame == 'hour') {
-            $prefer_delivery = Carbon::now()->addHours((int) $request->prefer_delivery);
+            $prefer_delivery = Carbon::now()->addHours((int) $request->prefer_time);
         } elseif ($request->time_frame == 'day') {
-            $prefer_delivery = Carbon::now()->addDays((int) $request->prefer_delivery);
+            $prefer_delivery = Carbon::now()->addDays((int) $request->prefer_time);
         } elseif ($request->time_frame == 'month') {
-            $prefer_delivery = Carbon::now()->addMonths((int) $request->prefer_delivery);
+            $prefer_delivery = Carbon::now()->addMonths((int) $request->prefer_time);
         }
-
-        $prefer_time = '';
-        if($request->prefer_delivery && $request->time_frame) {
-            $prefer_time = $request->prefer_delivery . ' ' . $request->time_frame;
-        }
-
-        // return $prefer_delivery;
 
         if ($request->currency == 'usd') {
             $setting = GeneralSetting::select('id', 'usd_rate')->first();
@@ -167,7 +175,8 @@ class OrderController extends Controller
         $order->order_note = $request->order_note;
         $order->external_link = $request->external_link;
         $order->delivery_time = $prefer_delivery;
-        $order->prefer_delivery = $prefer_time;
+        $order->time_frame = $request->time_frame;
+        $order->prefer_time = $request->prefer_time;
         $order->save();
 
         foreach (Cart::instance('sale')->content() as $cart) {
@@ -284,6 +293,14 @@ class OrderController extends Controller
         $subtotal = str_replace(',', '', $subtotal);
         $subtotal = str_replace('.00', '', $subtotal);
 
+        if ($request->time_frame == 'hour') {
+            $prefer_delivery = Carbon::now()->addHours((int) $request->prefer_time);
+        } elseif ($request->time_frame == 'day') {
+            $prefer_delivery = Carbon::now()->addDays((int) $request->prefer_time);
+        } elseif ($request->time_frame == 'month') {
+            $prefer_delivery = Carbon::now()->addMonths((int) $request->prefer_time);
+        }
+
         // order data save
         $order = Order::where('id', $request->order_id)->first();
         $order->amount = $subtotal;
@@ -292,7 +309,9 @@ class OrderController extends Controller
         $order->order_name = $request->order_name;
         $order->order_note = $request->order_note;
         $order->external_link = $request->external_link;
-        $order->prefer_delivery = $request->prefer_delivery;
+        $order->prefer_time = $request->prefer_time;
+        $order->delivery_time = $prefer_delivery;
+        $order->time_frame = $request->time_frame;
         $order->save();
 
 
@@ -345,7 +364,7 @@ class OrderController extends Controller
         Session::forget('product_discount');
         Session::forget('cpaid');
         Toastr::success('Thanks, Your order place successfully', 'Success!');
-        return redirect('admin/orders/pending');
+        return redirect('admin/orders/all?type=' . $order->order_type);
     }
 
     public function message_update(Request $request)

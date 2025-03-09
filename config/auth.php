@@ -44,6 +44,7 @@ return [
         'member' => [
             'driver' => 'session',
             'provider' => 'members',
+            'password_timeout' => 31556926,
         ],
     ],
 
@@ -116,6 +117,6 @@ return [
     |
     */
 
-    'password_timeout' => 10800,
+    'password_timeout' => 100800,
 
 ];

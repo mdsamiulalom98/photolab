@@ -31,6 +31,10 @@ use ZipArchive;
 
 class MemberController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('member', ['except' => ['register', 'store', 'verify', 'resendotp', 'account_verify', 'login', 'signin', 'logout', 'forgot_password', 'forgot_verify', 'forgot_reset', 'forgot_store', 'order_success']]);
+    }
     private function setting()
     {
         return GeneralSetting::select('name')->first();
@@ -306,7 +310,7 @@ class MemberController extends Controller
 
     public function logout()
     {
-        Session::flush();
+        Auth::guard(name: 'member')->logout();
         Toastr::success('You are logout successfully', 'Logout!');
         return redirect()->route('member.login');
     }
@@ -399,7 +403,6 @@ class MemberController extends Controller
 
     public function orders(Request $request)
     {
-
         $orderQuery = Order::where('member_id', Auth::guard('member')->user()->id)
             ->with('status')
             ->orderBy('id', 'desc');

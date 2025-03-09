@@ -178,11 +178,11 @@
                                     <!-- col-end -->
                                     <div class="col-sm-4">
                                         <div class="form-group mb-2">
-                                            <label class="mb-1" for="prefer_delivery">Prefer Delivery *</label>
-                                            <input type="number" placeholder="Prefer Delivery" id="prefer_delivery"
-                                                class="form-control @error('prefer_delivery') is-invalid @enderror"
-                                                name="prefer_delivery" value="{{ old('prefer_delivery') }}"  />
-                                            @error('prefer_delivery')
+                                            <label class="mb-1" for="prefer_time">Prefer Delivery *</label>
+                                            <input type="number" placeholder="Prefer Time" id="prefer_time"
+                                                class="form-control @error('prefer_time') is-invalid @enderror"
+                                                name="prefer_time" value="{{ old('prefer_time') }}"  />
+                                            @error('prefer_time')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>

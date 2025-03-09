@@ -189,11 +189,11 @@
                                     <!-- col-end -->
                                     <div class="col-sm-4">
                                         <div class="form-group mb-2">
-                                            <label class="mb-1" for="prefer_delivery">Prefer Delivery *</label>
-                                            <input type="number" placeholder="Prefer Delivery" id="prefer_delivery"
-                                                class="form-control @error('prefer_delivery') is-invalid @enderror"
-                                                name="prefer_delivery" value="{{ old('prefer_delivery') }}" />
-                                            @error('prefer_delivery')
+                                            <label class="mb-1" for="prefer_time">Prefer Delivery *</label>
+                                            <input type="number" placeholder="Prefer Delivery" id="prefer_time"
+                                                class="form-control @error('prefer_time') is-invalid @enderror"
+                                                name="prefer_time" value="{{ $order->prefer_time ?? old('prefer_time') }}" />
+                                            @error('prefer_time')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -209,9 +209,9 @@
                                                 class=" form-control form-select @error('time_frame') is-invalid @enderror"
                                                 name="time_frame">
                                                 <option value="">Select..</option>
-                                                <option value="hour">Hour</option>
-                                                <option value="day">Day</option>
-                                                <option value="month">Month</option>
+                                                <option {{ $order->time_frame == 'hour' ? 'selected' : '' }} value="hour">Hour</option>
+                                                <option {{ $order->time_frame == 'day' ? 'selected' : '' }} value="day">Day</option>
+                                                <option {{ $order->time_frame == 'month' ? 'selected' : '' }} value="month">Month</option>
                                             </select>
 
                                             @error('time_frame')

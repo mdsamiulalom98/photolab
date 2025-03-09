@@ -62,7 +62,7 @@
                                             <td>{{ $value->member->email ?? '' }}</td>
                                             <td>{{ date('d M Y, h:i A', strtotime($value->created_at)) }}</td>
                                             <td>{{ date('d M Y, h:i A', strtotime($value->delivery_time)) }}</td>
-                                            <td>{{ $value->prefer_delivery }}</td>
+                                            <td class="text-capitalize">{{ $value->prefer_time }} {{ $value->prefer_time > 1 ? $value->time_frame . 's' : $value->time_frame . '' }}</td>
                                             <td>{{$value->currency == 'usd' ? '$' : '৳'}} {{ $value->amount }}</td>
                                             <td>{{ $value->status ? $value->status->name : '' }}</td>
                                             <td class="">
