@@ -219,10 +219,9 @@
                                                 class=" form-control form-select @error('currency') is-invalid @enderror"
                                                 name="currency" value="{{ old('currency') }}" required>
                                                 <option value="">Select..</option>
-                                                <option value="usd">
-                                                    USD</option>
-                                                <option value="bdt">
-                                                    BDT</option>
+                                                @foreach ($currencies as $key => $currency)
+                                                    <option value="{{ $currency->slug }}">{{ $currency->name }}</option>
+                                                @endforeach
                                             </select>
                                             @error('currency')
                                                 <span class="invalid-feedback" role="alert">

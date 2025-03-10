@@ -22,6 +22,7 @@ use App\Models\Workname;
 use App\Models\Message;
 use App\Models\Member;
 use App\Models\Order;
+use App\Models\Currency;
 use ZipArchive;
 use Carbon\Carbon;
 
@@ -45,8 +46,8 @@ class OrderController extends Controller
                 });
             }
             $show_data = $show_data->paginate(50);
-            $prefer_delivery = Carbon::now();
             foreach ($show_data as $order) {
+                $prefer_delivery = Carbon::parse($order->created_at);
                 $order->prefer_time = 1;
                 $order->time_frame = 'hour';
                 $order->delivery_time = $prefer_delivery->addHour();
@@ -60,8 +61,8 @@ class OrderController extends Controller
                     }
                 ])->first();
             $show_data = Order::where(['order_status' => $order_status->id, 'order_type' => $request->type])->latest()->with('member', 'status')->paginate(50);
-            $prefer_delivery = Carbon::now();
             foreach ($show_data as $order) {
+                $prefer_delivery = Carbon::parse($order->created_at);
                 $order->prefer_time = 1;
                 $order->time_frame = 'hour';
                 $order->delivery_time = $prefer_delivery->addHour();
@@ -81,6 +82,7 @@ class OrderController extends Controller
         Cart::instance('sale')->destroy();
         Session::put('product_discount', $order->discount);
         $orderdetails = OrderDetails::where('order_id', $order->id)->get();
+        $currencies = Currency::where('status', 1)->get();
         foreach ($orderdetails as $ordetails) {
             $cartinfo = Cart::instance('sale')->add([
                 'id' => $ordetails->id,
@@ -91,7 +93,7 @@ class OrderController extends Controller
             ]);
         }
         $cartinfo = Cart::instance('sale')->content();
-        return view('backEnd.order.edit', compact('cartinfo', 'order', 'data', 'timeframes', 'services'));
+        return view('backEnd.order.edit', compact('cartinfo', 'order', 'data', 'timeframes', 'services', 'currencies'));
     }
 
     public function cart_clear(Request $request)
@@ -114,7 +116,8 @@ class OrderController extends Controller
         $members = Member::where(['status' => 'active', 'type' => 'seller'])->get();
         $services = Workname::where('status', 1)->get();
         $timeframes = Timeframe::where('status', 1)->get();
-        return view('backEnd.order.create', compact('cartinfo', 'members', 'services', 'timeframes'));
+        $currencies = Currency::where('status', 1)->get();
+        return view('backEnd.order.create', compact('cartinfo', 'members', 'services', 'timeframes', 'currencies'));
     }
     public function members(Request $request)
     {

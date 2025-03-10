@@ -14,6 +14,11 @@ class ContactDataController extends Controller
         $show_data = ContactData::orderBy('id', 'DESC')->get();
         return view('backEnd.contactdata.index', compact('show_data'));
     }
+    public function show(Request $request)
+    {
+        $data = ContactData::where('id', $request->id)->first();
+        return response()->json(['status' => 'success', 'data' => $data]);
+    }
 
     public function destroy(Request $request)
     {

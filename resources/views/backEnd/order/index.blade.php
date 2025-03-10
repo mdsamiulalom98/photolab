@@ -52,7 +52,7 @@
 
                                 <tbody>
                                     @foreach ($show_data as $key => $value)
-                                        <tr class="{{$value->order_status == 4 ? 'complete' : (\Carbon\Carbon::parse($value->prefer_delivery)->subHour() <= Carbon\Carbon::now() ? 'coundown' : '') }}">
+                                        <tr class="{{$value->order_status == 4 ? 'complete' : (\Carbon\Carbon::parse($value->delivery_time)->subHour() <= Carbon\Carbon::now() ? 'coundown' : '') }}">
                                             <td>{{ $loop->iteration }}</td>
                                             <td><a href="{{ route('admin.order.details', ['id' => $value->id]) }}">{{ $value->order_name }}</a> </td>
                                             <td class="">

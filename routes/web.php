@@ -430,6 +430,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
 
     // howitwork routes
     Route::get('contact-data/manage', [ContactDataController::class, 'index'])->name('contactdatas.index');
+    Route::get('contact-data/show', [ContactDataController::class, 'show'])->name('contactdatas.show');
     Route::post('contact-data/destroy', [ContactDataController::class, 'destroy'])->name('contactdatas.destroy');
     Route::get('contact-data/bulk-destroy', [ContactDataController::class, 'bulk_destroy'])->name('contactdatas.bulk_destroy');
 

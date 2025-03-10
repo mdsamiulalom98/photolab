@@ -4,24 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Slider;
+use Illuminate\Support\Facades\File;
 use Brian2694\Toastr\Facades\Toastr;
-use Image;
-use File;
-use DB;
+use Intervention\Image\Facades\Image;
+use App\Models\Slider;
+
 class SliderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:slider-list|slider-create|slider-edit|slider-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:slider-create', ['only' => ['create','store']]);
-        $this->middleware('permission:slider-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:slider-list|slider-create|slider-edit|slider-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:slider-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:slider-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:slider-delete', ['only' => ['destroy']]);
     }
     public function index(Request $request)
     {
-        $show_data = Slider::orderBy('id','DESC')->get();
-        return view('backEnd.slider.index',compact('show_data'));
+        $show_data = Slider::orderBy('id', 'DESC')->get();
+        return view('backEnd.slider.index', compact('show_data'));
     }
 
     public function create()
@@ -37,16 +37,16 @@ class SliderController extends Controller
         ]);
         // image with intervention
         $image = $request->file('image');
-        $name =  time().'-'.$image->getClientOriginalName();
-        $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
+        $name = time() . '-' . $image->getClientOriginalName();
+        $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $name);
         $name = strtolower(preg_replace('/\s+/', '-', $name));
         $uploadpath = 'public/uploads/slider/';
-        $imageUrl = $uploadpath.$name;
-        $img=Image::make($image->getRealPath());
+        $imageUrl = $uploadpath . $name;
+        $img = Image::make($image->getRealPath());
         $img->encode('webp', 90);
         $width = '';
         $height = '';
-        $img->height() > $img->width() ? $width=null : $height=null;
+        $img->height() > $img->width() ? $width = null : $height = null;
         $img->resize($width, $height, function ($constraint) {
             $constraint->aspectRatio();
         });
@@ -55,14 +55,14 @@ class SliderController extends Controller
         $input = $request->all();
         $input['image'] = $imageUrl;
         $user = Slider::create($input);
-        Toastr::success('Success','Data insert successfully');
+        Toastr::success('Success', 'Data insert successfully');
         return redirect()->route('slider.index');
     }
 
     public function edit($id)
     {
         $edit_data = Slider::find($id);
-        return view('backEnd.slider.edit',compact('edit_data'));
+        return view('backEnd.slider.edit', compact('edit_data'));
     }
 
     public function update(Request $request)
@@ -76,32 +76,32 @@ class SliderController extends Controller
         $input = $request->except('hidden_id');
         // new image
         $image = $request->file('image');
-        if($image){
+        if ($image) {
             // image with intervention
-            $name =  time().'-'.$image->getClientOriginalName();
-            $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name);
+            $name = time() . '-' . $image->getClientOriginalName();
+            $name = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $name);
             $name = strtolower(preg_replace('/\s+/', '-', $name));
             $uploadpath = 'public/uploads/slider/';
-            $imageUrl = $uploadpath.$name;
-            $img=Image::make($image->getRealPath());
+            $imageUrl = $uploadpath . $name;
+            $img = Image::make($image->getRealPath());
             $img->encode('webp', 90);
             $width = '';
             $height = '';
-            $img->height() > $img->width() ? $width=null : $height=null;
+            $img->height() > $img->width() ? $width = null : $height = null;
             $img->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $img->save($imageUrl);
             $input['image'] = $imageUrl;
             File::delete($update_data->image);
-        }else{
+        } else {
             $input['image'] = $update_data->image;
         }
-        $input['status'] = $request->status?1:0;
+        $input['status'] = $request->status ? 1 : 0;
         // return $input;
         $update_data->update($input);
 
-        Toastr::success('Success','Data update successfully');
+        Toastr::success('Success', 'Data update successfully');
         return redirect()->route('slider.index');
     }
 
@@ -110,7 +110,7 @@ class SliderController extends Controller
         $inactive = Slider::find($request->hidden_id);
         $inactive->status = 0;
         $inactive->save();
-        Toastr::success('Success','Data inactive successfully');
+        Toastr::success('Success', 'Data inactive successfully');
         return redirect()->back();
     }
     public function active(Request $request)
@@ -118,7 +118,7 @@ class SliderController extends Controller
         $active = Slider::find($request->hidden_id);
         $active->status = 1;
         $active->save();
-        Toastr::success('Success','Data active successfully');
+        Toastr::success('Success', 'Data active successfully');
         return redirect()->back();
     }
     public function destroy(Request $request)
@@ -127,7 +127,7 @@ class SliderController extends Controller
         $delete_data = Slider::find($request->hidden_id);
         File::delete($delete_data->image);
         $delete_data->delete();
-        Toastr::success('Success','Data delete successfully');
+        Toastr::success('Success', 'Data delete successfully');
         return redirect()->back();
     }
 }
