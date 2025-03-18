@@ -161,8 +161,6 @@ svg {
 /*==== HEADER TOP CSS END ====  */
 
 /*==== MAIN HEADER CSS START ====  */
-.logo-area {}
-
 .logo-menu {
     display: flex;
     align-items: center;
@@ -181,8 +179,6 @@ svg {
 .mobile-header {
     display: none;
 }
-
-.main-menu ul li {}
 
 .main-menu ul li a {
     text-transform: uppercase;
@@ -1434,7 +1430,7 @@ section.blog-page-section {
     font-weight: 600;
 }
 
-.contact-form .form-control {
+.contact-form input.form-control {
     border: 1px solid #ddd;
     box-shadow: 0 0;
     transition: 0.35s ease-in-out;
@@ -1479,7 +1475,6 @@ button.btn-submit {
     border: 1px solid #ddd;
     box-shadow: 0 0;
     transition: 0.35s ease-in-out;
-    height: 42px;
     border-radius: 5px;
 }
 
@@ -1570,7 +1565,6 @@ p.quick_link a {
 
 .sidebar-menu {
     height: 100%;
-    scrollbar-width: none;
     max-height: 100%;
     position: relative;
     padding-bottom: 0px;
@@ -1607,12 +1601,9 @@ p.quick_link a {
     color: #ffffff;
     background-color: #4634ff;
     border-top: none;
-    padding: 15px 25px;
-    padding-left: 25px;
-    padding-right: 25px;
     font-size: 0.75rem;
     text-align: center;
-    white-space: nowrap;
+    vertical-align: middle;
 }
 
 .user-content table thead th:first-child {
@@ -1626,9 +1617,7 @@ p.quick_link a {
 .user-content table tbody tr td {
     font-size: 14px;
     text-align: center;
-    padding: 15px 25px;
     vertical-align: middle;
-    white-space: nowrap;
 }
 
 .user-content table tbody {
@@ -2367,7 +2356,6 @@ table tr:nth-child(even) {
 }
 .pos_form table {
     width: 100%;
-    border-collapse:;
     color: #212529 !important;
     background-color: #fff !important;
 }

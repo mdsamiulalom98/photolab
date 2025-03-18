@@ -1,6 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title', $member_type . 'Manage')
-
+@section('title', $member_type . ' Manage')
 @section('css')
     <link href="{{ asset('/public/backEnd/') }}/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css"
         rel="stylesheet" type="text/css" />
@@ -14,7 +13,6 @@
 
 @section('content')
     <div class="container-fluid">
-
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -60,7 +58,8 @@
                                         <th>
                                             <div class="form-check">
                                                 <label class="form-check-label">All <input type="checkbox"
-                                                        class="form-check-input checkall" value="">(<span id="checkedCount">0</span>)</label>
+                                                        class="form-check-input checkall" value="">(<span
+                                                        id="checkedCount">0</span>)</label>
                                             </div>
                                         </th>
                                         <th>Name</th>

@@ -17,7 +17,6 @@
                                 <th>Sl</th>
                                 <th>Order No</th>
                                 <th>Name</th>
-                                <th>Phone</th>
                                 <th>Email</th>
                                 <th>Order Placed</th>
                                 <th>Delivery Time</th>
@@ -33,7 +32,6 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td><a href="{{ route('member.order.details', $value->id) }}">{{ $value->order_name }}</a></td>
                                     <td>{{ $member->name }}</td>
-                                    <td>{{ $member->phone }}</td>
                                     <td>{{ $member->email }}</td>
                                     <td>{{ date('d M Y, h:i A', strtotime($value->created_at)) }}</td>
                                     <td>{{ date('d M Y, h:i A', strtotime($value->delivery_time)) }}</td>

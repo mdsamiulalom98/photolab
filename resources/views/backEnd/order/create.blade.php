@@ -248,24 +248,13 @@
                                     <!-- col-end -->
 
                                     <div class="col-sm-12 mb-3">
-                                        <label class="mb-1" for="image">Image *</label>
-                                        <div class="clone hide" style="display: none;">
-                                            <div class="control-group input-group mb-3 gap-3 align-items-center">
-                                                <input type="file" name="image[]" class="form-control" />
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-danger" type="button"><i
-                                                            class="fa fa-trash"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <label class="mb-1" for="image">Image  (Select multiple) *</label>
+
                                         <div
                                             class="input-group control-group increment align-items-center gap-3 input-group mb-3">
-                                            <input type="file" name="image[]"
+                                            <input type="file" name="image[]" multiple
                                                 class="form-control @error('image') is-invalid @enderror" />
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-success btn-increment" type="button"><i
-                                                        class="fa fa-plus"></i></button>
-                                            </div>
+
                                             @error('image')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

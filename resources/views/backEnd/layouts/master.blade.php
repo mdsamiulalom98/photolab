@@ -23,7 +23,7 @@
     <!-- toastr css -->
     <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
     <!-- custom css -->
-    <link href="{{ asset('public/backEnd/') }}/assets/css/custom.css?v=1.0.1" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('public/backEnd/') }}/assets/css/custom.css?v=1.0.2" rel="stylesheet" type="text/css" />
     <!-- Head js -->
     @yield('css')
     <script src="{{ asset('public/backEnd/') }}/assets/js/head.js"></script>

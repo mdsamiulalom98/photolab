@@ -36,7 +36,7 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'mail.digitaltoolsbd.com'),
+            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
@@ -92,8 +92,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@digitaltoolsbd.com'),
-        'name' => env('MAIL_FROM_NAME', 'Digitaltoolsbd'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@photo-lab.net'),
+        'name' => env('MAIL_FROM_NAME', 'Photo Lab'),
     ],
 
     /*

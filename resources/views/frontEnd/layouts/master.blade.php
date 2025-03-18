@@ -86,7 +86,7 @@
                                     </li>
                                     @endforeach
                                     <li>
-                                        <a href="{{ route('home') }}" class="order_btn">
+                                        <a href="{{ route('member.order.create') }}" class="order_btn">
                                             <i class="fa-solid fa-shopping-cart"></i>
                                             Order
                                         </a>
@@ -122,7 +122,7 @@
                 <div class="mobile-auth">
                     <ul>
                         <li>
-                            <a href="{{ route('member.login') }}">
+                            <a href="{{ route('member.order.create') }}">
                                 <i class="fa-solid fa-right-to-bracket"></i>
                                 Order
                             </a>
@@ -131,7 +131,7 @@
                 </div>
             </div>
             <ul class="mobile-nav">
-                 
+
                 @foreach($menusetups as $key=>$menu)
                     @if($menu->id == 3)
                     <li>
@@ -251,7 +251,7 @@
                                         <li><a href="{{ route($menu->route) }}">{{$menu->name}}</a></li>
                                     @endif
                                     @endforeach
-                                    
+
                                     @foreach ($pages as $page)
                                         <li><a href="{{ route('page', $page->slug) }}">{{ $page->name }}</a></li>
                                     @endforeach

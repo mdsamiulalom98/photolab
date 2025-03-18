@@ -88,7 +88,7 @@
                                                     required="" placeholder="Phone Number">
                                             </div>
                                             <div class="form-group mb-3">
-                                                <textarea name="message" id="" class="form-control" placeholder="Your Message"></textarea>
+                                                <textarea name="message" id="" rows="3" class="form-control" placeholder="Your Message"></textarea>
                                             </div>
                                             <div class="new">
                                                 <button type="submit" class="btn-submit d-block">Submit</button>

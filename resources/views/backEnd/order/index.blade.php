@@ -37,8 +37,8 @@
                             <table id="datatable-buttons" class="table dt-responsive nowrap w-100">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10%" class="">SL</th>
-                                        <th style="width: 20%" class="">Order No</th>
+                                        <th  class="">SL</th>
+                                        <th  class="">Order No</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th class="">Order Placed</th>

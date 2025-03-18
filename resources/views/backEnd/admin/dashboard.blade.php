@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div> <!-- end col-->
-            
+
             <div class="col-md-6 col-xl-3">
                 <div class="card">
                     <div class="card-body border border-danger rounded">
@@ -132,7 +132,7 @@
                             <div class="col-6">
                                 <div class="float-right">
                                     <div class="avatar-md bg-primary bg-opacity-25 rounded">
-                                        <i class="fe-info avatar-title font-22 text-primary"></i>
+                                        <i class="fa fa-quote-left avatar-title font-22 text-primary text-center" style="line-height: 55px;"></i>
                                     </div>
                                 </div>
                             </div>

@@ -781,12 +781,8 @@ div#customerItems {
     color: #ffffff;
     background-color: #4634ff;
     border-top: none;
-    padding: 15px 25px;
-    padding-left: 25px;
-    padding-right: 25px;
     font-size: 14px;
     text-align: center;
-    white-space: nowrap;
 }
 
 #datatable-buttons thead th:first-child {
@@ -801,9 +797,7 @@ div#customerItems {
     font-size: 14px;
     text-align: center;
     font-weight: 500;
-    padding: 15px 25px;
     vertical-align: middle;
-    white-space: nowrap;
 }
 
 #datatable-buttons tbody {

@@ -22,8 +22,8 @@ class DashboardController extends Controller
         // $this->middleware('auth')->except(['locked','unlocked']);
     }
     public function dashboard(){
-        $buyer_count = Member::where(['status'=> 1, 'type'=>'buyer'])->count();
-        $seller_count = Member::where(['status'=> 1, 'type'=>'seller'])->count();
+        $buyer_count = Member::where(['type'=>'buyer'])->count();
+        $seller_count = Member::where(['type'=>'seller'])->count();
         $total_orders = Order::count();
         $buyer_orders = Order::where('order_type', 'buyer')->count();
         $seller_orders = Order::where('order_type', 'seller')->count();
